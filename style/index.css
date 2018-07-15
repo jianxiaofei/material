@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+    font: 15px/20px Arial;
+    user-select: none;
+}
+
+header {
+    background: rgba(36, 25, 25, 0.1);
+    height: 60px;
+    line-height: 40px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    border: none;
+    color: white;
+    z-index: 2000;
+}
+
+header ul.nav-header {
+    list-style: none;
+    width: 80%;
+    margin: 10px auto;
+}
+
+header img#log {
+    height: 30px;
+    width: 80px;
+}
+
+header ul.nav-header li {
+    display: inline-block;
+    margin: 0 30px;
+    height: 100%;
+}
+
+header ul.nav-header li:not(:last-child) {
+    float: left;
+}
+
+header ul.nav-header li a {
+    height: 100%;
+    padding: 5px;
+    color: rgb(245, 248, 248);
+    text-decoration: none;
+}
+
+header ul.nav-header li a:hover {
+    color: rgb(198, 201, 204);
+}
+
+header .login {
+    float: right;
+}
+
+header #login {}
+
+header #login b {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 15px;
+    box-shadow: #aaac;
+}
+header .user-name{
+
+}
+header .user-img{
+    height: 40px;
+    border-radius: 50%;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 0;
+    z-index: 1099;
+}
+/* *
+ * 轮播效果-----
+ */
+
+#box {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: #fff;
+    border-radius: 5px;
+    /* border: 8px solid #fff; */
+    margin: 0 auto;
+    background: url('../image/banner05.jpg');
+}
+
+#box .list {
+    position: relative;
+    width: 100%;
+    height: 595px;
+    overflow: hidden;
+    /* border: 1px solid #ccc; */
+}
+
+#box .list li {
+    position: absolute;
+    width: 100%;
+    height: 595px;
+    transform-origin: 0% 0%;
+}
+
+#box .list li img {
+    width: 100%;
+    height: 595px;
+    transform-origin: 0% 0%;
+}
+
+#box .list li.current {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+#box .list li:first-child {
+    z-index: 1;
+}
+
+#box .count {
+    position: absolute;
+    /* right: 50px; */
+    left: 43.5%;
+    bottom: 50px;
+    z-index: 2;
+}
+
+#box .count li {
+    color: #fff;
+    float: left;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+    overflow: hidden;
+    background: #f90;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    border-radius: 20px;
+}
+
+#box .count li.current {
+    color: #fff;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    font-weight: 700;
+    background: rgba(236, 228, 222, .5);
+}
+
+
+#box ul .right,
+#box ul .left,
+#box ul .changeShow {
+    clear: both;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 50px;
+    background: rgba(116, 90, 90, .1);
+    cursor: pointer;
+    color: #fff;
+    font: 700 30px/50px Arial;
+    display: none;
+    opacity: 1;
+    z-index: 2;
+}
+
+#box ul .changeShow {
+    right: -25px;
+    top: 30%;
+    height: 100px;
+    font: 300 5px/100px Arial;
+    border-radius: 1000px 0 0 1000px;
+    background: rgba(116, 90, 90, .4);
+    user-select: none;
+    word-wrap: break-word;
+    /*英文的时候需要加上这句，自动换行*/
+}
+
+#box ul .right:hover,
+#box ul .left:hover {
+    background: rgba(116, 90, 90, .5);
+}
+
+#box ul .left {
+    left: 50px;
+    top: 45%;
+}
+
+#box ul .right {
+    right: 50px;
+    top: 45%;
+}
+
+/* 
+    结束轮播---
+    */
+
+#panelize {
+    /*min-height: 1600px;*/
+    width: 100%;
+}
+
+section {
+    height: 400px;
+    overflow: hidden;
+    box-shadow: 0 5px 5px rgba(54, 52, 52, 0.07);
+    border-bottom: 1px solid #ccc;
+    background-color: white;
+    opacity: 1;
+    margin-bottom: 0;
+    /*position:fixed;*/
+    top: 0;
+    left: 0;
+}
+
+article {
+    max-width: 75%;
+    margin: 80px auto;
+}
+
+article p {
+    text-indent: 2em;
+    line-height: 2em;
+    text-align: left;
+}
+
+article h3 {
+    color: rgb(81, 133, 211);
+}
+
+.footer-ul {
+    position: absolute;
+    bottom: 5px;
+    z-index: 1001;
+    background: rgba(116, 90, 90, .4);
+    width: 100%;
+    height: 40px;
+    font: 12px/40px "微软雅黑";
+    color: rgb(255, 38, 0);
+    margin: 0 auto;
+    text-align: left;
+}
+
+.footer-ul>li {
+    display: inline-block;
+    margin: 0 100px;
+}
+
+.last-arrow {
+    list-style-type: none;
+    color: white;
+    position: absolute;
+}
+
+.litArrow li {
+    display: inline-block;
+    font-size: 15px;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.litArrow li:hover {
+    cursor: pointer;
+    color: yellow;
+    border-radius: 10px;
+    background: rgba(29, 26, 26, 0.432)
+}
+
+.litArrow li:nth-child(1) {
+    transform: rotate(90deg);
+}
+
+.litArrow li:nth-child(2) {
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+
+footer {
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid red;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖放</title>
+	<style type="text/css">
+	#d1{
+		position: relative;
+		width: 500px;
+		height: 600px;
+		background: green;
+		cursor: move;
+	}
+	#d2{
+		position: absolute;
+		width: 200px;
+		height: 200px;
+		background: yellow;
+	}
+</style>
+</head>
+<body>
+	<div id="d1">
+		<div id="d2" draggable = 'true'></div>
+	</div>
+	<script type="text/javascript">
+		var d1 = document.querySelector('#d1');
+		var d2 = document.querySelector('#d2');
+		var defaultX,defaultY;
+		d2.ondragstart = function(e){
+			e.dataTransfer.effectAllowed = 'all';
+			defaultX = e.clientX - d2.offsetLeft;
+			defaultY = e.clientY - d2.offsetTop;
+		};
+		d2.ondragend =function(e){
+			var left = e.clientX - defaultX;
+			var top = e.clientY - defaultY;
+			if (left < 0 ) {
+				left = 0;
+			}else if(left > d1.offsetWidth-d2.offsetWidth){
+				left = d1.offsetWidth-d2.offsetWidth;
+			}
+			if (top < 0 ){
+				top = 0;
+			}else if(top > d1.offsetHeight - d2.offsetHeight){
+				top = d1.offsetHeight - d2.offsetHeight;
+			}
+			d2.style.left = left + 'px';
+			d2.style.top = top + 'px';
+		};
+		d1.ondragover = function(e){
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+		};
+	</script>
+</body>
+</html>

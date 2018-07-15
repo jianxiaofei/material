@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>时光轴</title>
+    <style>
+    .container {
+        width: 500px;
+        margin: 100px auto;
+        border-left: 2px dashed red;
+        user-select: none;
+    }
+ .point-navgation{
+        position: fixed;
+        right: 100px
+    }
+    .last,
+    .top,
+    .first,
+    .second,
+    .third {
+        position: relative;
+        margin: 25px 0;
+    }
+    .point {
+        cursor: pointer;
+    }
+    .span:before{
+        content: '....';
+        transform: rotate(90deg);
+        font-size: 25px;
+        font-weight: bold;
+        color: red;
+        position: absolute;
+        bottom: -30px;
+        left: 4px
+    }
+    .span {
+        border: 1px solid black;
+        border-radius: 50%;
+        display: block;
+        position: absolute;
+        left: -12px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+    }
+    .last .span:before{
+        content: ''
+    }
+    .last .span:after {
+        content: '\21E3';
+        font-weight: bold;
+        font-size: 30px;
+        color: red;
+        position: absolute;
+        bottom: -35px;
+        left: 2px
+    }
+
+    p {
+        padding-left: 30px;
+    }
+    .content p {
+        height: 300px
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="point-navgation">
+            <div class="point first">
+                <a class="span" href="#A"></a>
+                <p>第一个</p>
+            </div>
+            <div class="point second">
+                <a class="span" href="#B"></a>
+                <p>第二个</p>
+            </div>
+            <div class="point third">
+                <a class="span" href="#C"></a>
+                <p>第三个</p>
+            </div>
+            <div class="point last">
+                <a class="span" href="#D"></a>
+                <p>第四个</p>
+            </div>
+        </div>
+        <div class="content">
+            <p id="A">A</p>
+            <p id="B">B</p>
+            <p id="C">C</p>
+            <p id="D">D</p>
+            <p id="D"></p>
+        </div>
+    </div>
+    <script>
+    function $j(el) {
+        var selector = document.querySelectorAll(el);
+        return (/^(\.|\w)/.test(el) && selector.length <= 1) || !/^(\.|\w)/.test(el) ?
+            document.querySelector(el) :
+            document.querySelectorAll(el);
+    }
+    var container = $j('.container');
+    var span = $j('.span');
+    $j('.span')[0].style['background-color'] = 'black'
+    container.addEventListener('click', function(e) {
+        for (var i = 0; i < span.length; i++) {
+            span[i].style['background-color'] = '';
+        }
+        try {
+            if (e.target.nodeName === "A") {
+                e.target.style['background-color'] = 'black';
+            }
+            e.target.previousElementSibling.style['background-color'] = 'black';
+        } catch (e) {}
+    })
+    </script>
+</body>
+
+</html>

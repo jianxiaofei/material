@@ -1,0 +1,7 @@
+
+1.双伪类选器-->:not(:first-child)\li:not(.selected):hover
+2.图片与文字剧中-->a->在img标签中加align="center"\b->样式表中vertical-align:middle(推荐使用)
+3.字体竖向排列： writing-mode: vertical-lr;/*从左向右 从右向左是 writing-mode: vertical-rl;
+4.不允许用户选中文本-->user-select:none; 
+5.flex-->让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容。
+

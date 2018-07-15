@@ -1,0 +1,26 @@
+1.解决mySql中文乱码
+	-1.修改my.ini（左键点击windows右下角的wampserver图标，鼠标移到MySQL，在列表里找到my.ini并打开）
+		在以下三部分里添加如下内容：
+		[client] 
+		default-character-set = utf8mb4 
+		[mysql] 
+		default-character-set = utf8mb4 
+		[mysqld] 
+		character-set-client-handshake = FALSE 
+		character-set-server = utf8mb4 
+		collation-server = utf8mb4_unicode_ci 
+		init_connect=’SET NAMES utf8mb4’
+
+	-2.查看数据库变量
+
+		重启wampserver，执行查看数据库变量的sql语句（show variables like 'character%'	
+		character_set_client，character_set_connection，character_set_database，character_set_results，character_set_server这五个变量的值是utf8mb4。
+	-3.将数据库转换为utf8mb4
+
+		sql语句为ALTER DATABASE DATABASE_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+	-4.将表转换为utf8mb4DATABASE
+
+		sql语句为ALTER TABLE TABLE_NAME CONVERT TO CHARACTER SET utf8mb4 COLLATEutf8mb4_general_ci;
+
+	-5.完成上面四步后，现在插入中文列就没问题啦！	

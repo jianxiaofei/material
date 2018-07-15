@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #container {
+        position: relative;
+    }
+
+    body {
+        overflow-x: hidden;
+        user-select: none;
+    }
+
+    ul {
+        list-style: none;
+        position: relative;
+    }
+
+    ul.img-box li {
+        position: absolute;
+    }
+
+    ul#count {
+        width: 200px;
+        margin: 0 auto;
+        position: absolute;
+        top: 550px;
+        z-index: 101;
+        left: 600px;
+    }
+
+    ul#count li {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: gold;
+        color: white;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+    }
+
+
+    ul.img-box li:last-child {
+        position: relative;
+        color: #fff;
+    }
+
+    ul#count li:last-child {
+        display: none;
+    }
+
+    ul#count li:first-child {
+        background: black;
+    }
+
+    ul.img-box li span {
+        width: 50px;
+        height: 50px;
+        line-height: 45px;
+        text-align: center;
+        font-size: 30px;
+        position: absolute;
+        bottom: -100px;
+        cursor: pointer;
+        z-index: 100;
+        top: 300px;
+        background: rgba(116, 90, 90, .4);
+        border-radius: 50%;
+    }
+    ul.img-box li span:hover{
+        background: rgba(116, 190, 190, .8);
+
+    }
+
+    .right {
+        right: 100px;
+    }
+
+    .left {
+        left: 100px;
+    }
+
+    .current {
+        z-index: 2;
+    }
+
+    .current0 {
+        z-index: 1;
+    }
+
+    ;
+    </style>
+</head>
+
+<body>
+    <div id='container'>
+        <div id="box">
+            <ul class="img-box">
+                <li class="current"><img src="../image/banner01.jpg" alt=""></li>
+                <li><img src="../image/banner02.jpg" alt=""></li>
+                <li><img src="../image/banner03.jpg" alt=""></li>
+                <li><img src="../image/banner04.jpg" alt=""></li>
+                <li><img src="../image/banner05.jpg" alt=""></li>
+                <li>
+                    <span class="right">&gt;</span>
+                    <span class="left">&lt;</span>
+                </li>
+            </ul>
+            <ul id="count">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+    function $(el) {
+        //简单选择器
+        var selector = document.querySelectorAll(el);
+        return (/^(\.|\w)/.test(el) && selector.length <= 1) || !/^(\.|\w)/.test(el) ?
+            document.querySelector(el) :
+            document.querySelectorAll(el);
+    }
+
+
+    var timer = null;
+    var play = null;
+    var index = -1;
+    var next = index + 1;
+    var imgBox = $('.img-box');
+    var countBox = $('#count');
+    var imgLi = imgBox.getElementsByTagName('li');
+    var countLi = countBox.getElementsByTagName('li');
+
+
+    function lunbo(index, next, ele) {
+
+        clearInterval(timer);
+
+        //初始化
+        for (var i = imgLi.length - 2; i >= 0; i--) {
+
+            countLi[i].style.background = 'gold';
+            imgLi[i].style.width = window.innerWidth + 'px';
+            imgLi[i].style.cssText = '';
+        }
+        var n = 0;
+        var Nx = window.innerWidth / 10;
+        var thisElement = imgLi[index];
+        var nextElement = imgLi[next];
+
+        //执行动画
+        timer = setInterval(function() {
+
+            ele == 'left' ? n -= parseInt(Nx) : n += parseInt(Nx);
+            thisElement.style.left = n + 'px';
+            nextElement.className = 'current0'; //显示下一张图片
+            countLi[next].style.background = 'black';
+            // console.log(index,next)
+
+            //停止动画
+            if (n <= -window.innerWidth || n > window.innerWidth) {
+
+                clearInterval(timer);
+                thisElement.className = '';
+                thisElement.style.left = 0;
+                nextElement.className = 'current';
+                imgBox.lastElementChild.removeAttribute('class');
+            }
+            //跳转差值变化
+            next == imgLi.length - 1 && (imgLi[0].className = 'current0', countLi[0].style.background = 'black');
+        }, 30);
+
+    }
+
+    function autoPlay() {
+        play = setInterval(function() {
+            if (next == imgLi.length - 1) { //最后一张索引到第一张---
+                imgLi[0].className = 'current';
+                index = -1;
+                next = 0;
+            }
+            index += 1;
+            next += 1;
+            var ele = null;
+            console.log(index, next, 222)
+            lunbo(index, next, ele);
+        }, 2000);
+    }
+    autoPlay();
+    document.addEventListener('click', function(e) {
+        var ele = e.target.className;
+        if (ele == 'left' || ele == 'right') {
+            if (next == imgLi.length - 1) { //最后一张索引到第一张---
+                imgLi[0].className = 'current';
+                index = -1;
+                next = 0;
+            }
+            index += 1;
+            next += 1;
+            lunbo(index, next, ele);
+        }
+    });
+    $('#box').addEventListener('mouseover', function() { clearInterval(play); });
+    $('#box').addEventListener('mouseout', function() { autoPlay(); });
+    </script>
+</body>
+
+</html>

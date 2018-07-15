@@ -1,0 +1,172 @@
+PHP 变量规则：
+    变量以 $ 符号开始，后面跟着变量的名称
+    变量名必须以字母或者下划线字符开始
+    变量名只能包含字母数字字符以及下划线（A-z、0-9 和 _ ）
+    变量名不能包含空格
+    变量名是区分大小写的（$y 和 $Y 是两个不同的变量）
+    -$
+    -static
+    -global
+
+php常量:
+    -常量是一个简单值的标识符。该值在脚本中不能改变。
+    -bu需要以$开头
+       --define(name, value, case_sensitive = true)
+
+echo 和 print 区别:
+echo - 可以输出一个或多个字符串
+print - 只允许输出一个字符串，返回值总为 1
+ps: ---var_dump() 函数返回变量的数据类型和值
+
+php数据类型:
+   1- String（字符串）,
+   2- Integer（整型）,
+   3- Float（浮点型）,
+   4- Boolean（布尔型）,
+   5- Array（数组）,
+   6- Object（对象）,
+        --用class关键字声明类对象。
+        --然后在实例化的类中使用数据类型
+   7- NULL（空值）
+
+php 运算符：
+    -加 +
+    -减 -
+    -乘 *
+    -除 /
+    -模 %
+    -并 .
+    -取反 -
+    -递增 ++
+    -递减 --
+    -赋值 =、+=、-=、*=、/=、%=、.=(字符串拼接)
+    -比较 ==、===、!=、<>、!==、>、<、>=、<=
+    -逻辑 and、or、xor、&&、||、!
+
+php 条件语句：
+    -if
+    -if...else
+    -if...else if...else
+    -switch
+
+php 字符串（String）：
+    -strlen()
+        --返回字符串的长度（字符数）
+    -strpos()
+        --返回查找字符在字符串中位置
+    -……
+
+php 数组：
+    -array()
+    -数值数组 ~ 带有数字 ID 键的数组
+    -关联数组 ~ 带有指定的键的数组，每个键关联一个值
+    -多维数组 ~ 包含一个或多个数组的数组
+    -count() ~ 获取数组长度
+    -遍历数组
+        --for 遍历数值数组
+        --foreach($age as $x=>$val) 遍历关联数组
+    -排序
+        --sort() 升序
+        --rsort() 降序
+        --ksort() 根据键来升序
+        --ksort() 根据键来降序
+        --asort() 根据数组的值来升序
+        --arsort() 根据数组的值来降序
+
+PHP 超ji全局变量：
+    -$GLOBALS
+    -$_SERVER ~ 包含了由服务器创建的诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组
+    -$_REQUEST
+        --$_REQUEST 变量包含了 $_GET、$_POST 和 $_COOKIE 的内容。
+        --用与收集html表单提交的数据
+    -$_POST
+        --被广泛应用于收集表单数据，在HTML form标签的指定该属性："method="post"
+    -$_GET
+        --$_GET 同样被广泛应用于收集表单数据，在HTML form标签的指定该属性："method="get"。
+    -$_FILES
+    -$_ENV
+    -$_COOKIE
+        --setcookie(name, value, expire, path, domain) ~ 创建cookie
+    -$_SESSION
+        -用与存储关于用户会话的信息，或者更改用户会话的设置。
+        -存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。
+        -session_start() 启用会话
+        -session_destroy() 销毁Session
+
+php 循环：
+    -while ~ 只要指定的条件成立，则循环执行代码块
+    -do...while ~ 首先执行一次代码块，然后在指定的条件成立时重复这个循环
+    -for ~ 循环执行代码块指定的次数
+    -foreach ~ 根据数组中每个元素来循环代码块
+
+php 函数：
+    -内建函数
+        --Date(format,timestamp)
+            ---mktime(hour,minute,second,month,day,year,is_dst)
+        --mail(to,subject,message,headers,paramenters)
+
+    -创造函数
+
+PHP魔术变量：
+    随着代码位置的改变而改变
+    -__LINE__ ~ 当前行号
+    -__FILE__ ~ 文件的完整路径和文件名
+    -__DIR__ ~ 文件所在目录
+    -__FUNCTION__ ~ 函数名称
+    -__CLASS__ ~ 类的名称
+    -__TRAIT__ ~
+    -__METHOD__ ~ 类的方法名
+    -__NAMESPACE__ ~ 命名空间的名称
+
+php 包含文件：
+    -include
+        --include 生成一个警告（E_WARNING），在错误发生后脚本会继续执行。
+    -require
+        --生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。
+
+php 文件处理：
+    -打开文件
+        --fopen()
+        --r 只读
+        --r+ 读/写
+        --w 只写
+        --w+ 读/写
+        --a 追加
+        --a+ 读/追加
+        --x 只写
+        --x+ 读/写
+    关闭文件
+        --fclose()
+    检测文件末尾
+        --feof()
+    逐行读取文件
+        --fgets()
+    逐字符读取文件
+        --fgetc()
+
+php 错误处理：
+    -
+php 异常处理：
+    -
+php 过滤器
+    -filter_var() - 通过一个指定的过滤器来过滤单一的变量
+    -filter_var_array() - 通过相同的或不同的过滤器来过滤多个变量
+    -filter_input - 获取一个输入变量，并对它进行过滤
+    -filter_input_array - 获取多个输入变量，并通过相同的或不同的过滤器对它们进行过滤
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

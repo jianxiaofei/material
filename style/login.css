@@ -1,0 +1,314 @@
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            margin-right: -20px;
+        }
+
+        #container {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            border: 1px solid #75736c;
+            border-radius: 5px;
+            background-color: rgba(12, 12, 12, .7);
+            color: #fff;
+        }
+
+        #boxModal {
+            width: inherit;
+            height: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #login>*,
+        #regist>* {
+            padding: 10px;
+        }
+
+        #login {
+            position: absolute;
+            width: inherit;
+        }
+
+
+        #login ul li {
+            list-style: none;
+            position: relative;
+            height: 70px;
+            line-height: 70px;
+        }
+        /*注册*/
+
+        #regist {
+            position: absolute;
+            right: -400px;
+            width: inherit;
+            display: none;
+        }
+
+        #regist ul li {
+            list-style: none;
+            position: relative;
+            height: 70px;
+            line-height: 70px;
+        }
+
+        #regist ul li.sex-radio {
+            height: 10px;
+            line-height: 10px;
+            padding-left: 70px
+        }
+
+        .topTitle {
+            border-image: linear-gradient( red, blue, yellow, black, white, green) 1 1;
+            position: relative;
+        }
+
+        .goRegist,
+        .goLogin {
+            position: absolute;
+            width: 150px;
+            bottom: -20px;
+            font-size: 13px;
+            font: italic 12px sans-serif;
+            cursor: pointer;
+        }
+
+        .goRegist {
+            right: -20px;
+        }
+
+        .goLogin {
+            left: -20px;
+        }
+
+        .goRegist:hover,
+        .goLogin:hover {
+            color: gold;
+        }
+
+        .close:before {
+            position: absolute;
+            content: '\2715';
+            right: 10px;
+            top: 6px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+            background: rgba(12, 12, 12, .8);
+            border-radius: 50%;
+        }
+
+
+        .close:hover {
+            background: rgba(0, 0, 0, .9);
+            color: red;
+        }
+        /*输入框样式*/
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            outline: none;
+            height: 30px;
+            width: 200px;
+            font: 15px sans-serif;
+            line-height: 25px;
+            padding: 0 30px 0 10px;
+            color: #fff;
+            border-radius: 6px;
+            background: rgba(45, 45, 45, .15);
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+        }
+        /*输入框获得焦点边框高亮*/
+        textarea:focus,
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="datetime"]:focus {
+            border-color: rgba(8, 222, 236, 0.8);
+            outline: 0;
+            outline: thin dotted \9;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+        }
+        /*图标*/
+
+        #boxModal li i {
+            position: absolute;
+            left: 290px;
+            top: 28px;
+            width: 20px;
+            height: 20px;
+            color: #000;
+        }
+
+        .user-png {
+            background: url(../icon/user_icon.png) no-repeat;
+        }
+
+        .email-png {
+            background: url(../icon/email.png) no-repeat;
+        }
+
+        .psd-png {
+            background: url(../icon/lock_icon.png) no-repeat;
+        }
+
+        .surepsd-png {
+            background: url(../icon/surepsd.png) no-repeat;
+        }
+        /*动态提示*/
+
+        .hide-tip {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            position: absolute;
+            top: -40px;
+            left: 0;
+            text-align: center;
+            color: #fff;
+            background: rgba(231, 9, 9, .5);
+            border-image: linear-gradient( red, blue, yellow, black, white, green) 1 1;
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+        }
+
+
+        .tip {
+
+            position: absolute;
+            left: 70px;
+            top: 60px;
+            padding-left: 12px;
+            font: italic 12px/12px sans-serif;
+            color: red;
+        }
+
+        #regist li:nth-child(4) .tip {
+            left: 75px;
+            top: -5px;
+            color: gold;
+        }
+
+        #regist li:nth-child(4) .tip:before {
+            content: '\261E';
+            color: white;
+            font-size: 25px;
+            left: -10px;
+        }
+
+        .tip:before {
+            font: normal 12px/12px arial;
+            position: absolute;
+            content: '\2731';
+            color: red;
+            left: -5px;
+            top: -2px;
+            padding: 2px;
+            width: 14px;
+            height: 14px;
+            text-align: center;
+        }
+        /*按钮特效*/
+
+        button {
+            cursor: pointer;
+            width: 245px;
+            height: 35px;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 6px;
+            background: none;
+            border: 0;
+            box-sizing: border-box;
+            outline: none;
+            /*border和padding全会在你设置的宽高内部*/
+            /*margin: 1em 55px 0 1em;*/
+            /*padding: 1em 2em;*/
+            box-shadow: inset 0 0 4px 3px plum;
+            /*inset内阴影。该参数可选，不设的话默认是外阴影。*/
+            font-weight: 600;
+            position: relative;
+        }
+
+        button::before,
+        button::after {
+            box-sizing: inherit;
+            /*继承父的*/
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .draw {
+            transition: color 2s;
+            /*字体颜色出现渐变一个用时2s*/
+        }
+
+        .draw::before,
+        .draw::after {
+            border: 2px solid transparent;
+            /*边框设置为透明的*/
+            width: 0;
+            height: 0;
+        }
+
+        .draw::before {
+            top: 0;
+            left: 0;
+        }
+
+        .draw::after {
+            bottom: 0;
+            right: 0;
+        }
+
+        .draw:hover {
+            color: yellow;
+        }
+
+        .draw:hover::before,
+        .draw:hover::after {
+            width: 100%;
+            height: 100%;
+        }
+
+        .draw:hover::before {
+            border-top-color: red;
+            border-radius: 6px;
+            border-right-color: red;
+            transition: width 0.25s ease-out, /*ease-out是结束是慢的*/
+            height 0.25s ease-out 0.25s;
+        }
+
+        .draw:hover::after {
+            border-radius: 6px;
+            border-bottom-color: red;
+            border-left-color: red;
+            transition: width 0.25s ease-out 0.5s,
+            height 0.25s ease-out 0.75s;
+        }
+
+
+        input:-webkit-autofill {
+            -webkit-appearance: none;
+            /* -webkit-box-shadow: 0 0 0px 1000px white inset;
+            -webkit-text-fill-color: rgba(12,12,12,.1) !important;
+            -webkit-background-color:rgba(12,12,12,.5) !important;
+            -webkit-background-image: none !important; 
+            -webkit-color: white !important;*/
+        }

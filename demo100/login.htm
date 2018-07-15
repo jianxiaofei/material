@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="../style/login.css">
+</head>
+
+<body>
+    <!-- <div id="overLay"></div> -->
+    <div id="container">
+        <div id="boxModal">
+            <div id="login">
+                <div class="topTitle">
+                    <b>VIP登录</b>
+                    <span class="close"></span>
+                </div>
+                <ul>
+                    <li>
+                        <label>用户名：</label>
+                        <input type="text" id="userName" value="Jxfstyle" autofocus>
+                        <i class="user-png"></i>
+                    </li>
+                    <li>
+                        <label>密&nbsp;&nbsp;&nbsp;码：</label>
+                        <input type="password" id="password" value="" autofocus>
+                        <i class="psd-png"></i>
+                    </li>
+                    <li style="text-align: center;">
+                        <button class="login draw" type="submit">登录</button>
+                        <span class="goRegist"> 还没账号请注册&gt;&gt;</span>
+                    </li>
+                </ul>
+            </div>
+            <div id="regist">
+                <div class="topTitle">
+                    <b>VIP注册</b>
+                    <span class="close"></span>
+                </div>
+                <ul style="list-style: none;">
+                    <li>
+                        <label>用户名：</label>
+                        <input type="text" id="registName" value="Jxfstyle" autofocus>
+                        <i class="user-png"></i>
+                    </li>
+                    <li>
+                        <label for="">&nbsp;Email：</label>
+                        <input type="email" id="email" placeholder="user@email.com">
+                        <i class="email-png"></i>
+                    </li>
+                    <li>
+                        <label>密&nbsp;&nbsp;&nbsp;码：</label>
+                        <input type="password" id="registPassword" value="12" autofocus>
+                        <i class="psd-png"></i>
+                    </li>
+                    <li>
+                        <label>确&nbsp;&nbsp;&nbsp;认：</label>
+                        <input type="password" id="sure-registPassword" value="12" autofocus>
+                        <i class="surepsd-png"></i>
+                    </li>
+                    <li class="sex-radio">
+                        <input type="radio" checked value="男" name="sex" id="male">
+                        <label for="male">男</label>
+                        <input type="radio" value="女" name="sex" id="female">
+                        <label for="female">女</label>
+                    </li>
+                    <li style="text-align: center;">
+                        <button class="regist draw" type="submit">注册</button>
+                        <span class="goLogin"> &lt;&lt;已有账号登陆</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hide-tip">不存在该用户!</div>
+    <canvas id="canvas" width="1349"></canvas>
+    <script src="../js/login.js"></script>
+    <script src="../js/canvas.js"></script>
+</body>
+
+</html>
