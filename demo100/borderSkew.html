@@ -88,3 +88,107 @@
     </div>
 </body>
 </html>
+
+
+<!--  伪类实现效果-------
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>形状</title>
+    <style>
+    .container {
+        width: 1000px;
+        height: 500px;
+        margin: 100px auto;
+    }
+
+    .box {
+        width: 50%;
+        height: 100%;
+        float: left;
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+
+    .box0 {
+        background: tan;
+    }
+    .box1 {
+        background: #f63;
+    }
+    .box1::before,.box0::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+        width: inherit;
+        height: inherit;
+        background: inherit;
+        transform: skewX(45deg);
+    }
+    .box0::after {
+        right: 0; 
+    }
+    .box1::before {
+        left: 0;       
+    }
+    .box-content{
+        position: absolute;
+        z-index: 2;
+    }
+    .title{}
+    .desc {
+        width: 50%;
+        height: 50%;
+        margin: 0 auto;
+        text-indent: 2em;
+        text-align: left;
+    }
+
+    .button {
+        border:1px solid rgba(255,255,255,.8);
+        background: #a86;
+        box-shadow: 0 .05em .25em rgba(0,0,0,.5);
+        text-shadow:  0 -.05em .05em rgba(0,0,0,.5);
+        color: gold;
+        border-radius: .34em;
+        cursor: pointer;
+        user-select: none;
+        width: 25%;
+        padding: .45em;
+        margin-left: 35%;
+        margin-top: 1em;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box0 box">
+            <div class="box-content">
+                <h3 class="title">医药管理</h3>
+                <div class="desc">
+                    十年医药行业开发经验,专业提供连锁医药管理软件,为用户互联网+转型。
+                </div>
+                <div class="button">查看详情</div>
+            </div>
+        </div>
+        <div class="box1 box">
+            <div class="box-content">
+                <h3 class="title">医药授权</h3>
+                <div class="desc">
+                    授权委托书是委托人在行使权力时需出具委托人的法律文书。
+                </div>
+                <div class="button">查看详情</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ -->

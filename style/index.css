@@ -92,7 +92,7 @@ header .user-img{
     border-radius: 5px;
     /* border: 8px solid #fff; */
     margin: 0 auto;
-    background: url('../image/banner05.jpg');
+    background: url('../static/image/banner05.jpg');
 }
 
 #box .list {

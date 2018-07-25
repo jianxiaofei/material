@@ -155,19 +155,19 @@
         }
 
         .user-png {
-            background: url(../icon/user_icon.png) no-repeat;
+            background: url(../static/icon/user_icon.png) no-repeat;
         }
 
         .email-png {
-            background: url(../icon/email.png) no-repeat;
+            background: url(../static/icon/email.png) no-repeat;
         }
 
         .psd-png {
-            background: url(../icon/lock_icon.png) no-repeat;
+            background: url(../static/icon/lock_icon.png) no-repeat;
         }
 
         .surepsd-png {
-            background: url(../icon/surepsd.png) no-repeat;
+            background: url(../static/icon/surepsd.png) no-repeat;
         }
         /*动态提示*/
 

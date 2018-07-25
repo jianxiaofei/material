@@ -6,20 +6,17 @@ function $j(el) {
 }
 
 //用户信息
-console.log(document.cookie.split(';'));
+console.log(document.cookie);
 if (document.cookie.split(';').length > 1) {
     var cookieName = document.cookie.split(';')[1];
     $j('#login').innerHTML =
     '<div><a class="user-name">' +
     cookieName.slice(cookieName.indexOf('=') + 1) +
-    '.</a><icon align="center" src = "../image/girl.jpg" class ="user-icon">';
+    '.</a><img align="center" src = "../static/image/girl.jpg" class ="user-img">';
     '</div>';
 } else {
     // location.href= 'demo100/login.htm';
 }
-
-
-
 var boxE = $j('#box');
 var imgUl = $j('.list');
 var countUl = $j('.count');
@@ -30,7 +27,7 @@ var timer = play = null;
 var now = -1;
 var next = now;
 var clickState = ['skew', 'rotate', 'translate', 'scale', 'filter'];
-var nowState = 'skew';
+var nowState = 'rotate';
 
 
 
