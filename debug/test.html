@@ -1,104 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>CSS 常见样式/规范--参考</title>
+    <title>Document</title>
     <style>
-    body{
-        background: #c0c0c0;
-        padding: 10px;
+    div.box{
+        height: 500px;
+        width: 500px;
+        /*position: relative;*/
+        display: table;
     }
-    /*按钮*/
-        button{
-            padding: .3em .8rem;
-            border:1px solid rgba(0,0,0,.1);
-            background: #58a line-gradient(hsla(0,0%,100%,.2),transparent);
-            border-radius: .2rem;
-            box-shadow: 0 .05em .25em rgba(0,0,0,.5);
-            color: white;
-            text-shadow:  0 -.05em .05em rgba(0,0,0,.5);
-            font-size: 125%;
-            line-height: 1.5;
-            cursor: pointer;
-            user-select: none;
-        }
-        button.ok{
-            background-color: #6b0;
-        }
-        button.cancel{
-            background-color: #c00;
-        }
-    /*小提示*/
-        div.tip-container{
-            position: relative;
-        }
-        div.tip-box{
-            position: absolute;
-            left: 10em;
-            top: -2em;
-        }
-        i.tip{
-            position: relative;
-            border:1px solid #ccc;
-            padding: .35em;
-            background: #FFB27F;
-            border-radius: .4rem
-        }
-        i.tip::before{
-            content:"";
-            position: absolute;
-            bottom: -.5em;
-            left: 1em;
-            padding: .35em;
-            background: inherit;
-            border:inherit;
-            border-right: 0;
-            border-bottom: 0;
-            transform: rotate(-135deg);
-        }
-    /*半透明边框*/
-        .half-alpha{
-            margin-top: 30px;
-            border:1px dotted hsla(0,0%,100%,.5);
-            outline: 5px solid deeppink;
-            background: white;
-            background-clip: padding-box;
-            /*多重边框*/
-            box-shadow: 0 0 0 10px #655,
-                        0 0 0 15px deeppink,
-                        0 2px 5px 15px rgba(0,0,0,.6);
-        }
-        .background{
-            margin-top: 30px;
-            width: 100px;
-            height: 100px;
-            /* background: url(../icon/email.png) no-repeat #58a;
-            background-origin: content-box;
-            background-position: bottom 50px right 10px */;
-            /*background-position: calc(100% - 20px) calc(100% - 10px);*/
-            background: linear-gradient(#fb3 30%, #58a 0);
-            background-size: 100% 30px;
-        }
+    div.inner-box {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #e67;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        /* position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto; */
+    }
     </style>
 </head>
+
 <body>
-    <h2>test</h2>
-    <div class="test">
-        let's test css special!
-    </div>
-    <button class="ok">yes</button>
-    <button class="cancel">Cancel</button>
-    <div class="tip-container">
-        put your name:  <input>
-        <div class="tip-box">
-            <i class="tip">let me guess Jane doesn't it?</i>
+    <div class="box">
+        <div class="inner-box">
+            test
         </div>
     </div>
-    <div class="half-alpha">
-        this is half border alpha.
-    </div>
-    <div class="background">
-        more background methods.
-    </div>
+    <script>
+    </script>
 </body>
+
 </html>

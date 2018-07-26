@@ -11,6 +11,12 @@ function $j(el) {
         document.querySelectorAll(el);
 }
 
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) +
+        ((expiredays == null) ? "" : "; expires=" + exdate.toGMTString());
+}
 //登录框初始化居中
 var modalSize = function() {
     var Modal = $j('#container'),
@@ -41,7 +47,7 @@ function remoteCheck(msg) {
         tip.style.top = i + 'px';
         if (i === 0) {
             clearInterval(timerDown);
-            msg == '登录成功！' && (location.href = "../index.html");
+            msg == '登录成功！' ? location.href = "../index.html" : null;
             setTimeout(function() {
                 //滑上
                 timerUp = setInterval(function() {
@@ -63,7 +69,7 @@ function ajax(ele, data) {
 
     var result, msg;
     var xhr = new XMLHttpRequest();
-    xhr.open('post', 'request.php', true);
+    xhr.open('post', '../requestFile/request.php', true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send('data=' + data); //传对象
     xhr.onreadystatechange = function(e) {
@@ -147,18 +153,18 @@ function modalToggleMove(thisClass) {
                 regist.style.right = (j - moveRange) + 'px';
                 login.style.left = i + 'px';
                 break;
-            case thisClass == 'goLogin' && i+40 != -moveRange:
+            case thisClass == 'goLogin' && i + 40 != -moveRange:
                 console.log(i);
                 login.style.display = 'block';
                 login.style.left = (j - moveRange) + 'px';
                 regist.style.right = i + 'px';
                 break;
-            case thisClass == 'goRegist' && j -40 == moveRange:
+            case thisClass == 'goRegist' && j - 40 == moveRange:
                 clearInterval(Move);
                 login.style.display = 'none';
                 modalSize();
                 break;
-            case thisClass == 'goLogin' && i +40 == -moveRange:
+            case thisClass == 'goLogin' && i + 40 == -moveRange:
                 clearInterval(Move);
                 regist.style.display = 'none';
                 $j('#container').style.height = 300 + 'px';
@@ -187,7 +193,7 @@ window.addEventListener('resize', function() {
 });
 //事件委托监听
 $j('#boxModal').addEventListener('click', function(e) {
-   var  thisClass = e.target.className;
+    var thisClass = e.target.className;
     switch (true) {
         case thisClass == 'close':
             ($j('#container').style.display = 'none');
@@ -232,7 +238,12 @@ $j('#boxModal').addEventListener('click', function(e) {
                 name: name,
                 password: password
             });
-            localCheckInput(ele, data);
+
+           
+            setCookie(data)
+            console.log(document.cookie);
+
+            localCheckInput(ele, data);  
             break;
     }
 
