@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小提示</title>
+    <style>
+        .container{}
+        .content{
+            position: relative;
+        }
+        .tip-box{
+            position: absolute;
+            top: 1em;
+            left: 8em;
+        }
+        .tip{
+            position: relative;
+            border:1px solid tan;
+            background: #FFB27F;
+            padding: .35em;
+            border-radius: .24em
+        }
+        .tip:before{
+            position: absolute;
+            top: -.45em;
+            left: .5em;
+            content: '';
+            padding: .35em;
+            border:inherit;
+            border-top: none;
+            border-right: none;
+            background: inherit;
+            transform: rotate(-225deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div>
+                <span>put your name：</span>
+                <input type="text">
+            </div>
+            <div class="tip-box">
+                <p class="tip">This is a tooltip !</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
