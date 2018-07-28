@@ -1,96 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-        .container{
-            position: relative;
-            height: 500px;
-            width: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin:7% auto;
-        }
-        .left,.right{
-           float: left;
-            height: 500px;
-            width:500px;  
-        }
-        .left{
-            background: orange;
-        }
-        .right{
-            background-color: green;
-        }
-        div.box{
-            position: absolute;
-            top: 0;
-            height: 500px;
-            width: 350px;
-            transform: skewX(30deg);
-        }
-        div.box0{
-            margin-left:150px; 
-            background-color: orange;
-        }
-        div.box1{
-            background-color: green;
-        }
-        div.content{
-            position: absolute;
-            transform: skewX(-30deg);
-            top: 35%;
-            text-align: center;
-        }
-        div.content0{
-            left: -20%;
-        }
-        div.content1{
-            right: -20%;
-        }
-        button{
-            border-radius: 3px;
-            border-color: white;
-            border-width: 0;
-            font-size: 15px;
-            background-color: #fff;
-            padding: 10px 30px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="left">
-            <div class="box box0"> 
-               <div class="content content0">
-                    <h3 class="title">药品详细</h3>
-                    <div class="desc">
-                        本次药品涉及到公司私密档案，请仔细阅读
-                    </div><br/>
-                    <button class="button">查看详细</button>   
-               </div>
-            </div>
-        </div>
-        <div class="right">
-            <div class="box box1"> 
-               <div class="content content1">
-                    <h3 class="title">授权详细</h3>
-                    <div class="desc">
-                        先授权给贵公司药品使用特权，望贵公司多多赚钱！
-                    </div><br/>
-                    <button class="button">查看详细</button>   
-               </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
 
 
-<!--  伪类实现效果-------
+  <!-- 伪类实现效果(推荐)------- -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -191,4 +101,95 @@
     </div>
 </body>
 </html>
- -->
+ 
+<!-- 标签实现效果 -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .container{
+            position: relative;
+            height: 500px;
+            width: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin:7% auto;
+        }
+        .left,.right{
+           float: left;
+            height: 500px;
+            width:500px;  
+        }
+        .left{
+            background: orange;
+        }
+        .right{
+            background-color: green;
+        }
+        div.box{
+            position: absolute;
+            top: 0;
+            height: 500px;
+            width: 350px;
+            transform: skewX(30deg);
+        }
+        div.box0{
+            margin-left:150px; 
+            background-color: orange;
+        }
+        div.box1{
+            background-color: green;
+        }
+        div.content{
+            position: absolute;
+            transform: skewX(-30deg);
+            top: 35%;
+            text-align: center;
+        }
+        div.content0{
+            left: -20%;
+        }
+        div.content1{
+            right: -20%;
+        }
+        button{
+            border-radius: 3px;
+            border-color: white;
+            border-width: 0;
+            font-size: 15px;
+            background-color: #fff;
+            padding: 10px 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <div class="box box0"> 
+               <div class="content content0">
+                    <h3 class="title">药品详细</h3>
+                    <div class="desc">
+                        本次药品涉及到公司私密档案，请仔细阅读
+                    </div><br/>
+                    <button class="button">查看详细</button>   
+               </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="box box1"> 
+               <div class="content content1">
+                    <h3 class="title">授权详细</h3>
+                    <div class="desc">
+                        先授权给贵公司药品使用特权，望贵公司多多赚钱！
+                    </div><br/>
+                    <button class="button">查看详细</button>   
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> -->
