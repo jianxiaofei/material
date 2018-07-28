@@ -7,6 +7,7 @@ body {
     text-align: center;
     font: 15px/20px Arial;
     user-select: none;
+    overflow-x: hidden;
 }
 
 header {
@@ -54,7 +55,8 @@ header ul.nav-header li a:hover {
 }
 
 header .login {
-    float: right;
+    position: relative;
+    right: -100px
 }
 
 header #login {}
@@ -87,10 +89,8 @@ header .user-img{
 #box {
     position: relative;
     width: 100%;
-    height: 600px;
     background: #fff;
     border-radius: 5px;
-    /* border: 8px solid #fff; */
     margin: 0 auto;
     background: url('../static/image/banner05.jpg');
 }
@@ -100,7 +100,6 @@ header .user-img{
     width: 100%;
     height: 595px;
     overflow: hidden;
-    /* border: 1px solid #ccc; */
 }
 
 #box .list li {
@@ -126,9 +125,9 @@ header .user-img{
 
 #box .count {
     position: absolute;
-    /* right: 50px; */
-    left: 43.5%;
     bottom: 50px;
+    width: 10%;
+    left: 45%;
     z-index: 2;
 }
 
@@ -140,7 +139,8 @@ header .user-img{
     line-height: 20px;
     cursor: pointer;
     margin-left: 5px;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    list-style: none;
     background: #f90;
     opacity: 0.7;
     filter: alpha(opacity=70);
@@ -203,49 +203,15 @@ header .user-img{
 /* 
     结束轮播---
     */
-
-#panelize {
-    /*min-height: 1600px;*/
-    width: 100%;
-}
-
-section {
-    height: 400px;
-    overflow: hidden;
-    box-shadow: 0 5px 5px rgba(54, 52, 52, 0.07);
-    border-bottom: 1px solid #ccc;
-    background-color: white;
-    opacity: 1;
-    margin-bottom: 0;
-    /*position:fixed;*/
-    top: 0;
-    left: 0;
-}
-
-article {
-    max-width: 75%;
-    margin: 80px auto;
-}
-
-article p {
-    text-indent: 2em;
-    line-height: 2em;
-    text-align: left;
-}
-
-article h3 {
-    color: rgb(81, 133, 211);
-}
-
 .footer-ul {
     position: absolute;
-    bottom: 5px;
-    z-index: 1001;
+    bottom: 0;
+    z-index: 99;
     background: rgba(116, 90, 90, .4);
     width: 100%;
     height: 40px;
     font: 12px/40px "微软雅黑";
-    color: rgb(255, 38, 0);
+    color: #c30;
     margin: 0 auto;
     text-align: left;
 }
@@ -286,9 +252,46 @@ article h3 {
     margin-left: 10px;
 }
 
+
+#panelize {
+    width: 80%;
+    margin: auto;
+}
+
+article {
+    max-width: 100%;
+    background: #fff;
+    min-height: 596px;
+    padding: 10px;
+    /*滚动特效*/
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 50px;
+}
+article:before{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(#ccc,#fff);
+    /*box-shadow: 0 5px 5px rgba(54, 52, 52, 0.07);*/
+}
+
+article p {
+    text-indent: 2em;
+    line-height: 2em;
+    text-align: left;
+}
+
+article h3 {
+    color: rgb(81, 133, 211);
+
+}
+
 footer {
     height: 200px;
     width: 100%;
     text-align: center;
-    border: 1px solid red;
+    border: 1px solid #ccc;
 }
+

@@ -167,7 +167,14 @@ boxE.onmouseout = function() {
     autoPlay();
 };
 
-
+document.onscroll = function(e){
+   var scrollMove = document.documentElement.scrollTop;
+    if (scrollMove > 650) {
+            $j('header').style.background = "rgba(36, 25, 25, 1)";
+        }else{
+            $j('header').style.background = "rgba(36, 25, 25, .1)";    
+        }
+};
 
 for (var n = 0; n < ArrowClick.length; n++) {
     ArrowClick[n].onclick = function(e) {
@@ -202,43 +209,6 @@ for (var m = 0; m < countLiE.length; m++) {
         show(now, 'filter', next);
     };
 }
-
-//动态滚动容器高度
-$j('#panelize').style.minHeight = parseInt(getComputedStyle($j('#box'), false).height.replace('px', '')) +
-getComputedStyle($j('section')[0], false).height.replace('px', '') *
-getComputedStyle($j('section')[0], false).height.replace('px', '').length +
-"px";
-console.log(getComputedStyle($j('#box'), false).height.replace('px', ''))
-document.onscroll = function() {
-    var scrollMove = document.documentElement.scrollTop;
-    var zIndex = 1000;
-    for (var i = 0; i < $j('section').length; i++) {
-        zIndex -= 50;
-        if (scrollMove > 650) {
-            $j('section')[i].style.cssText = "position:fixed;z-index:" + zIndex;
-            $j('header').style.background = "rgba(36, 25, 25, 1)";
-        }
-
-        switch (true) {
-            case scrollMove < 610:
-            $j('header').style.background = "rgba(36, 25, 25, .1)";
-            break;
-            case scrollMove >= 600 && scrollMove < 1000:
-            i < 1 ? $j('section')[i].style.position = 'relative' : null;
-            break;
-            case scrollMove >= 1000 && scrollMove < 1400:
-            i < 2 ? $j('section')[i].style.position = 'relative' : null;
-            break;
-            case scrollMove >= 1400 && scrollMove < 1800:
-            i < 3 ? $j('section')[i].style.position = 'relative' : null;
-            break;
-            case scrollMove >= 1800:
-            i < 4 ? $j('section')[i].style.position = 'relative' : null;
-            break;
-        }
-    }
-
-};
 
 
 $j('.changeShow').onmouseover = function(e) {
