@@ -2,3 +2,6 @@
 
 web开发文档: https://developer.mozilla.org/zh-CN/
 
+git 操作：
+推送新分支到仓库-> push --set-upstream origin pravitePC
+
