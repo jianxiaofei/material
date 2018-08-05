@@ -1,0 +1,120 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab-content</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <ul>
+        <li><i id="$1" class="icon">-></i> 第一个</li>
+        <li><i id="$2" class="icon">-></i> 第二个</li>
+        <li><i id="$3" class="icon">-></i> 第三个</li>
+    </ul>
+</div>
+<div class="container">
+    <div>
+        <img class="img" src="" alt="" width="300px" height="300px">
+        <p class="desc"></p>
+    </div>
+</div>
+<script>
+    var mockData = [
+        {
+
+            "imgUrl": '../static/image/banner01.jpg',
+            "desc": 'first-desc'
+        },
+        {
+            "imgUrl": '../static/image/banner02.jpg',
+            "desc": 'second-desc'
+        },
+        {
+            "imgUrl": '../static/image/banner03.jpg',
+            "desc": 'third-desc'
+        }
+    ];
+    var nav = document.getElementsByClassName('nav')[0];
+    var navList = nav.getElementsByTagName('li');
+    var content = document.getElementsByClassName('container')[0];
+    var img = content.getElementsByClassName('img')[0];
+    var desc = content.getElementsByClassName('desc')[0];
+    for (var i=0; i<navList.length; i++){
+        navList[i].index = i;
+        navList[i].onclick = function (e) {
+            img.src= mockData[this.index].imgUrl;
+           desc.innerHTML = mockData[this.index].desc;
+        }
+    }
+</script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>tab-content</title>
+    <style>
+    ul {
+        list-style: none;
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="nav">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <ul id="content">
+        <li>1-content</li>
+        <li>2-content</li>
+        <li>3-content</li>
+    </ul>
+    <script>
+    var nav_list = document.getElementById('nav').children;
+    var content_list = document.getElementById('content').children;
+    var toggleShow = function(el, val) {
+            return el.style.display = val;
+        };
+    //原始写法
+    for (var i=0, listLength = nav_list.length; i<listLength ;i++){
+        nav_list[i].index = i;
+        nav_list[0].style.backgroundColor = '#06a';
+           i>0 && toggleShow(content_list[i],'none');
+        nav_list[i].onclick = function(e){
+            for (var j=0; j<listLength; j++){
+                nav_list[j].style.backgroundColor = '';
+                toggleShow(content_list[j],'none');
+            }
+            this.style.backgroundColor = '#06a';
+            toggleShow(content_list[this.index],'block');
+        };
+    }
+    //闭包写法    
+    /*for (var m = 0, listLength = nav_list.length; m < nav_list.length; m++) {
+        nav_list[0].setAttribute('style','background-color:#06a');
+        toggleShow(content_list[m],'none');
+        toggleShow(content_list[0],'block');
+        nav_list[m].onclick = function(m) {
+            return function() {
+                for (var n = 0; n < listLength; n++) {
+                    nav_list[n].removeAttribute('style');
+                    toggleShow(content_list[n],'none');
+                }
+                    nav_list[m].setAttribute('style','background-color:#06a');
+                    toggleShow(content_list[m],'block');
+            };
+        }(m);
+    }*/
+    </script>
+</body>
+
+</html>
