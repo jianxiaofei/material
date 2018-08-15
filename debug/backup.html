@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>39-hospital</title>
+    <meta charset="utf-8" name="page-view-size" content={$size}">
+    <link rel="stylesheet" href="__ROOT__/Public/hd/css/new39hospital/index.css">
+    <!--第三方依赖库-->
+    <script type="text/javascript" src="__ROOT__/Public/ThirdParty/js/json2.js"></script>
+    <if condition="$Think.cookie.c_carrier_id eq '520094' ">
+        <!--贵州光电js文件-->
+        <script type="text/javascript" src="__ROOT__/Public/js/520094/gzgd.config.js"></script>
+        <!--<script type="text/javascript" src="__ROOT__/Public/js/520094/starcorCom.js"></script>-->
+        <else/>
+    </if>
+    <!--第三方依赖库-->
+    <script type="text/javascript" src="__ROOT__/Public/ThirdParty/js/json2.js"></script>
+    <!--公用库-->
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmcommon_v1.0.1.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmajax_v1.0.1.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmcore_v1.0.1.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmapkplugin.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmmarquee.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmstbutils.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmui_v1.0.1.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/common/js/lmintent_v1.0.1.js"></script>
+    <!--<script type="text/javascript" src="__ROOT__/Public/common/js/lmlog_v1.0.0.js"></script>-->
+    <script type="text/javascript" src="__ROOT__/Public/js/lmplayer_v1.0.1.js"></script>
+</head>
+
+<body style="background-image: url(__ROOT__/Public/hd/img/new39hospital/bg.png)">
+
+<div id="container-left">
+    <div id="logo"></div>
+    <ul id="nav">
+        <li id="tab-home">首页</li>
+        <li id="tab-experts">顶级专家</li>
+        <li id="tab-guide">就诊指南</li>
+        <li id="tab-case">患者案例</li>
+        <li id="tab-order">立即咨询</li>
+    </ul>
+    <div id="qr-code">
+        <img align="bottom" src="__ROOT__/Public/hd/img/new39hospital/qr_code.png" alt="">
+        <p id="qr-code-desc">扫描下载39互联网医院手机应用</p>
+    </div>
+</div>
+<img src="__ROOT__/Public/hd/img/new39hospital/up.png" id="pre-arrow" alt="">
+<div id="container-right">
+
+    <!--首页-->
+    <div id="content-home"></div>
+    <!--顶级专家-->
+    <div id="content-experts"></div>
+    <!--就诊指南-->
+    <div id="content-guide">
+        <div id="content-guide-video"></div>
+    </div>
+    <!--患者案例-->
+    <div id="content-case">
+        <div id="content-case-video"></div>
+    </div>
+    <!--立即咨询-->
+    <div id="content-order">
+        <div id="content-order-img"></div>
+    </div>
+</div>
+<img src="__ROOT__/Public/hd/img/new39hospital/down.png" id="next-arrow" alt="">
+<p id="service-tel">全国免费客服热线：400-860-3939</p>
+<script type="text/javascript">
+
+    var activeBtnId = 'tab-home';
+    var domTabBtn = G('nav').children;
+    var domContentBtn = G('container-right').children;
+    var fileIndex = "__ROOT__/Public/hd/img/new39hospital/";
+    var expertPage = 0;
+    var guidePage = 0;
+    var casePage = 0;
+    var hospitalData;
+    var platformType = 'hd';
+
+    //焦点移动、视频播放处理
+    var buttons = [
+        {
+            id: "tab-home",
+            name: "首页",
+            type: 'img',
+            nextFocusLeft: '',
+            nextFocusRight: '',
+            nextFocusUp: '',
+            nextFocusDown: 'tab-experts',
+            defaultImage: fileIndex + "home.png",
+            focusImage: fileIndex + "home_hover.png",
+            activeImage: fileIndex + "home_active.png",
+            bigImg: "",
+            focusChange: onFocus,
+            click: enterFocusKey,
+            beforeMoveChange: onBeforeMoveChange,
+            moveChange: ""
+        }, {
+            id: "tab-experts",
+            name: "顶级专家",
+            type: 'img',
+            nextFocusUp: 'tab-home',
+            nextFocusDown: 'tab-guide',
+            defaultImage: fileIndex + "experts.png",
+            focusImage: fileIndex + "experts_hover.png",
+            activeImage: fileIndex + 'experts_active.png',
+            active: false,
+            focusChange: onFocus,
+            click: enterFocusKey,
+            beforeMoveChange: onBeforeMoveChange,
+        }, {
+            id: "tab-guide",
+            name: "就诊指南",
+            type: 'img',
+            nextFocusUp: 'tab-experts',
+            nextFocusDown: 'tab-case',
+            defaultImage: fileIndex + "guide.png",
+            focusImage: fileIndex + "guide_hover.png",
+            activeImage: fileIndex + 'guide_active.png',
+            active: false,
+            focusChange: onFocus,
+            click: enterFocusKey,
+            beforeMoveChange: onBeforeMoveChange,
+        }, {
+            id: "tab-case",
+            name: "患者案例",
+            type: 'img',
+            nextFocusUp: 'tab-guide',
+            nextFocusDown: 'tab-order',
+            defaultImage: fileIndex + "case.png",
+            focusImage: fileIndex + "case_hover.png",
+            activeImage: fileIndex + "case_active.png",
+            active: false,
+            focusChange: onFocus,
+            click: enterFocusKey,
+            beforeMoveChange: onBeforeMoveChange,
+        }, {
+            id: "tab-order",
+            name: "立即咨询按钮",
+            type: 'img',
+            nextFocusUp: 'tab-case',
+            defaultImage: fileIndex + "order.png",
+            focusImage: fileIndex + "order_hover.png",
+            activeImage: fileIndex + "order_hover.png",
+            focusChange: onFocus,
+            click: enterFocusKey,
+            beforeMoveChange: onBeforeMoveChange,
+        }, {
+            id: "container-right",
+            name: "右边内容视图",
+            type: 'img',
+            focusChange: onFocus,
+            beforeMoveChange: onBeforeMoveChange,
+        }];
+
+
+    //页面加载时获取第一个块的焦点
+    window.onload = function () {
+        initStyle();
+        homeView()
+
+    };
+
+    function initStyle() {
+        for (var k = 0; k < domContentBtn.length; k++) {
+            var _thisBtn = domTabBtn[k];
+            var _thisBg = buttons[k].defaultImage;
+            var _thisColor = '#fff';
+            setStyle(_thisBtn, _thisBg, _thisColor);
+            setdDisplay(domContentBtn[k], 'none');
+        }
+        setdDisplay(domContentBtn[0], 'block');
+        LMEPG.ButtonManager.init(['tab-home'], buttons, '', true, true);
+    }
+
+
+    /** 结束页面 */
+    window.onunload = function () {
+        LMEPG.mp.destroy();  //释放播放器
+    };
+
+    // 本地数据请求
+    (function () {
+        var XHR = null;
+        XHR = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XHR");
+        if (XHR != null) {
+            var requrl = '__ROOT__/Application/Home/view/new39hospital/V1/localData.json';
+            XHR.open("GET", requrl, true);
+            XHR.onreadystatechange = function () {
+                if (XHR.readyState == 4 && XHR.status == 200) {
+                    hospitalData = JSON.parse(XHR.responseText);
+                }
+            };
+            XHR.send();
+        } else {
+        }
+    }());
+
+
+    /**
+     * 焦点移动后的操作
+     */
+    function onBeforeMoveChange(direction, current) {
+
+        switch (direction) {
+            case "up":
+                moveUp(current);
+                setActiveStyle();
+                break;
+            case "down":
+                moveDown(current);
+                setActiveStyle();
+                break;
+            case "left":
+                moveLeft(current);
+                break;
+            case "right":
+                moveRight(current);
+                break;
+        }
+    }
+
+    //焦点上移
+    function moveUp(current) {
+
+        var Condition = {
+            C1: activeBtnId === "tab-guide",
+            C2: expertPage >= 1,
+            C3: current.id === 'container-right',
+            C4: current.id !== "container-right",
+            C5: current.id !== "tab-home",
+            C6: activeBtnId === "tab-experts",
+            C7: activeBtnId === "tab-case",
+        };
+        if (Condition.C4 && Condition.C5) {
+            moveFocus()
+        } else if (Condition.C2 && Condition.C5 && Condition.C6) {
+            expertPage -= 1;
+            expertsTopView(expertPage);
+            setStyle(G("experts-img"), hospitalData.experts[expertPage].imgUrl)
+            arrow();
+        } else if (Condition.C1 && guidePage === 1) {
+            guidePage -= 1;
+            guideSickView(guidePage);
+            arrow();
+        } else if (Condition.C7 && casePage === 1) {
+            casePage -= 1;
+            caseSickView(casePage);
+            arrow();
+        }
+    }
+
+    //焦点下移
+    function moveDown(current) {
+
+        var Condition = {
+            C1: activeBtnId === "tab-experts",
+            C2: expertPage <= hospitalData.experts.length - 2,
+            C3: current.id === 'container-right',
+            C4: current.id !== "container-right",
+            C5: current.id !== "tab-order",
+            C6: expertPage === hospitalData.experts.length - 2,
+            C7: activeBtnId === "tab-case",
+            C8: activeBtnId === "tab-guide"
+        };
+
+        if (Condition.C4 && Condition.C5) {
+            moveFocus();
+        } else if (Condition.C1 && Condition.C2 && Condition.C3) {
+            expertPage += 1;
+            expertsTopView(expertPage);
+            arrow();
+        } else if (activeBtnId === "tab-guide" && guidePage === 0) {
+            guidePage += 1;
+            guideSickView(guidePage);
+            arrow();
+        } else if (activeBtnId === "tab-case" && casePage === 0) {
+            casePage += 1;
+            caseSickView(casePage);
+            arrow();
+        }
+    }
+
+    //焦点左移
+    function moveLeft(current) {
+        LMEPG.ButtonManager.getButtonById(current.id).nextFocusLeft = activeBtnId;
+        var _rightViewId = "content-" + activeBtnId.slice(4);
+        setStyle(G(_rightViewId), "");
+    }
+
+    //焦点右移
+    function moveRight(current) {}
+
+    //箭头指示
+    function arrow() {
+        setdDisplay(G("pre-arrow"), 'block');
+        setdDisplay(G("next-arrow"), 'block');
+        var config = {
+            A1: activeBtnId === 'tab-experts',
+            A2: expertPage === 0,
+            A3: expertPage === hospitalData.experts.length - 1,
+            A4: activeBtnId === 'tab-guide',
+            A5: guidePage === 0,
+            A6: guidePage === hospitalData.guide.length - 1,
+            A7: activeBtnId === 'tab-case',
+            A8: casePage === 0,
+            A9: casePage === hospitalData.case.images.length - 1
+        };
+
+        switch (true){
+            case config.A1 && config.A2:
+                setdDisplay(G("pre-arrow"), 'none');
+                break;
+            case config.A1 && config.A3:
+                setdDisplay(G("next-arrow"), 'none');
+                break;
+            case config.A4 && config.A5:
+                setdDisplay(G("pre-arrow"), 'none');
+                break;
+            case config.A4 && config.A6:
+                setdDisplay(G("next-arrow"), 'none');
+                break;
+            case config.A7 && config.A8:
+                setdDisplay(G("pre-arrow"), 'none');
+                break;
+            case config.A7 && config.A9:
+                setdDisplay(G("next-arrow"), 'none');
+                break;
+            default:
+                setdDisplay(G("pre-arrow"), 'block');
+                setdDisplay(G("next-arrow"), 'block');
+                break;
+
+        }
+    }
+
+    //焦点保持样式
+    function setActiveStyle() {
+        var activeName = activeBtnId.slice(4);
+        var activeImg = fileIndex + activeName + "_active.png";
+        setStyle(G(activeBtnId), activeImg, '#000')
+    }
+
+    /**
+     * 样式切换
+     * */
+    function setStyle(el, bgVal, colorVal) {
+
+        el.style.backgroundImage = "url(" + bgVal + ")";
+        el.style.color = colorVal;
+    }
+
+
+    /**
+     * 焦点移动操作
+     */
+    function moveFocus() {
+
+        for (var i = 0; i < domTabBtn.length; i++) {
+
+            var cutName = domTabBtn[i].id.slice(4);
+            var imgUrl = fileIndex + cutName + '.png';
+            setStyle(domTabBtn[i], imgUrl, '#fff');
+        }
+
+    }
+
+    /**
+     * 获取焦点后操作
+     * */
+    function onFocus(btn, hasFocus) {
+
+        var pdname = btn.id.slice(0, 3);
+        if (hasFocus == true && pdname === 'tab') {
+
+            setStyle(G(btn.id), btn.focusImage, '#000');
+
+        } else {
+
+        }
+    }
+
+    /**
+     * 键入焦点操作
+     * */
+    function enterFocusKey(btn) {
+
+        activeBtnId = btn.id; //初始化保持焦点
+        var _tabBtn = domTabBtn,
+            _contentBtn = domContentBtn,
+            _activeBg =  btn.activeImage,
+            _selectedExpertBg = fileIndex + "experts_selected.png",
+            _selectedGuideBg = fileIndex + "guide_selected.png",
+            _selectedCaseBg = fileIndex + "case_selected.png";
+        //tab样式初始化
+        var initContentShow = function () {
+            for (var i = 0; i < _tabBtn.length; i++) {
+                var siblingDom = _tabBtn[i].id.slice(4);
+                var bgDefaultVal = fileIndex + siblingDom + '.png';
+
+                setStyle(_tabBtn[i], bgDefaultVal, "#fff");
+
+                var _thisContent = _tabBtn[i].index = i;
+                //设置对应按钮的view显示
+                if (_tabBtn[i].id === btn.id) {
+                    for (var k = 0; k < _contentBtn.length; k++) {
+
+                        setdDisplay(_contentBtn[k], 'none');
+                    }
+                    setdDisplay(_contentBtn[_thisContent], 'block');
+                }
+            }
+            setStyle(G(btn.id), _activeBg, "#000");
+        }();
+
+
+        //焦点右移到view
+        switch (btn.id) {
+            case "tab-home":
+                setdDisplay(G("pre-arrow"), 'none');
+                setdDisplay(G("next-arrow"), 'none');
+                homeView();
+                break;
+            case "tab-experts":
+                LMEPG.ButtonManager.requestFocus("container-right");
+                expertsTopView(expertPage = 0);
+                setStyle(G("content-experts"), _selectedExpertBg, "#000");
+                arrow();
+
+                break;
+            case "tab-guide":
+                LMEPG.ButtonManager.requestFocus("container-right");
+                guideSickView(guidePage);
+                guidePage === 0 && setStyle(G("content-guide"), _selectedGuideBg, "#000");
+                arrow();
+                break;
+            case "tab-case":
+                LMEPG.ButtonManager.requestFocus("container-right");
+                caseSickView(casePage);
+                setStyle(G("content-case"), _selectedCaseBg, "#000");
+                arrow();
+                break;
+            case "tab-order":
+                setdDisplay(G("pre-arrow"), 'none');
+                setdDisplay(G("next-arrow"), 'none');
+                orderAskView();
+                break;
+        }
+    }
+
+    function setdDisplay(el, val) {
+
+        return el.style.display = val;
+    }
+
+    /* ====================视图层======================*/
+
+    /**
+     * 首页视图
+     * */
+    function homeView() {
+        var homeData = hospitalData.home;
+        var homeViewHtml =
+            '<div id="content-home-title">' + homeData.title.firstTitle
+            + '<span id="content-home-title-desc">' + homeData.title.secondTitle + '</span>' +
+            '</div>' +
+            '<div id="content-home-video">' +
+            // '<p style="position: absolute; top: 50%;left: 30%">' + homeData.video[0] + '</p>' +
+            '<video src="http://www.w3school.com.cn//i/movie.ogg" autoplay="autoplay" controls="controls" width="100%" height="100%">1</video>'+
+        /*'<if condition="hd">'+
+            '<div id="smallvod" style="left:1px; top:1px; width:1px; height:1px; position:absolute;">'+
+            '<iframe id="smallscreen" frameborder="0" scrolling="no" style="width: 1px;height: 1px"></iframe>'+
+            '</div>'+
+            '<img id="videoTv" useType="video" videoDataIndex="0" src="__ROOT__/Public/{$platformType}/img/album/album59/bg-title1.png"/>'+
+            '<else/>'+
+            '</if>'+*/
+            '</div>';
+        G('content-home').innerHTML = homeViewHtml;
+    }
+
+    /**
+     * 顶级专家视图
+     * */
+    function expertsTopView(expertPage) {
+        var data = hospitalData.experts;
+        var expertsTopViewHtml =
+            '        <div id="experts-img" style="background-image: url(' + data[expertPage].imgUrl + ')"></div>' +
+            '        <ul id="experts-introduce">' +
+            '        <li>' +
+            '        <span id="expert-name">' + data[expertPage].name + '</span>' +
+            '        <span id="expert-title">' + data[expertPage].title + '</span>' +
+            '        </li>' +
+            '        <li id="expert-hospital" class="expert-info">' + data[expertPage].hospital + '</li>' +
+            '        <li id="expert-job" class="expert-info">' + data[expertPage].job + '</li>' +
+            '        <li id="expert-Specialty" class="expert-info">' + data[expertPage].specialty + '</li>' +
+            '        <li id="expert-detail" class="expert-info">' + data[expertPage].detail + '</li>' +
+            '        </ul>' +
+            '        <div id="expert-num">' + (expertPage + 1) + '/' + data.length + '</div>';
+        G("content-experts").innerHTML = expertsTopViewHtml;
+
+    }
+
+    /**
+     * 就诊指南视图
+     * */
+    function guideSickView() {
+        var dataGuide = hospitalData.guide;
+        var guideText = hospitalData.guide[1].introduce;
+        var guideViewHtml;
+        guidePage === 0 ? setStyle(G("content-guide"), fileIndex + "guide_selected.png", "#000") : setStyle(G("content-guide"), '');
+        if (guidePage === 0) {
+            guideViewHtml = '<p style="position: absolute; top: 50%;left: 30%">' + dataGuide[0].video[0] + '</p>'
+        } else if (guidePage === 1) {
+
+            guideViewHtml = '<div class="guide-title">' + guideText.topTitle +
+                '    <span class="guide-title-right">' + guideText.introDesc + '</span></div>' +
+                '    <img id="guide-img" src= "' + guideText.imgUrl + '" alt="就诊指南介绍背景"/>' +
+                '    <div class="answer-guide-q">' +
+                '    <p style="font-size: 18px;padding-bottom: 10px">' + guideText.text.title + '</p>';
+            var afterText = [];
+            for (var i = 0; i < guideText.text.content.length; i++) {
+                if (i < 3) {
+                    guideViewHtml += '<p class="guide-desc">' + guideText.text.content[i] + '</p>'
+                } else {
+
+                    afterText.push(guideText.text.content[i])
+                }
+
+            }
+            guideViewHtml += '<div class="afterThreeText">';
+            for (var j = 0; j < afterText.length; j++) {
+                guideViewHtml += '<p class="guide-desc">' + afterText[j] + '</p>';
+            }
+        }
+        guideViewHtml += '</div>' +
+            '     </div>';
+        G("content-guide-video").innerHTML = guideViewHtml;
+    }
+
+    /**
+     * 患者案例视图
+     * */
+    function caseSickView(casePage = 0) {
+        var dataCase = hospitalData.case.images;
+        var caseViewHtml = '<p class="static-title">把健康还给你 - 身边人，身边事 <span class="static-title-child">患者案例介绍</span></p>' +
+            '                   <div id="case-img" style="background-image: url(' + dataCase[casePage].imgUrl + ')">' +
+            '                   <div class="case-picture-title">' + dataCase[casePage].title + '</div>    ' +
+            '                   </div>' +
+            '                   <div id="case-num">' + (casePage + 1) + '/' + dataCase.length + '</div>';
+        G("content-case-video").innerHTML = caseViewHtml;
+
+    }
+
+    /**
+     * 立即咨询视图
+     * */
+    function orderAskView() {
+        var dataOrder = hospitalData.order.images;
+        var orderViewHtml =
+            '    <img id="order-img" src= "' + dataOrder[0] + '" alt="就诊指南介绍背景"/>';
+        G("content-order-img").innerHTML = orderViewHtml;
+    }
+
+
+    /*
+    * 小窗播放---
+    * */
+
+    //获取当前播轮播视频地址
+
+    function getCurrentPollVideoUrl() {
+        // var videoInfoData = JSON.parse(videoData);
+        // var videoInfo = videoInfoData.data.video_list[0];
+        var videoInfo = null;
+        if (videoInfo != null) {
+            if (videoInfo.ftp_url instanceof Object) {
+                var ftp_url_json = videoInfo.ftp_url;
+            } else {
+                var ftp_url_json = JSON.parse(videoInfo.ftp_url);
+            }
+
+            if (platformType == 'hd') {
+                return ftp_url_json.gq_ftp_url;
+            } else {
+                return ftp_url_json.bq_ftp_url;
+            }
+        } else {
+            return "__ROOT__/Application/Home/view/new39hospital/V1/269711633.mpeg";
+        }
+
+    }
+
+    /** 2号位置开始轮播 */
+    function startPollPlay() {
+        LMEPG.mp.destroy();  //释放播放器
+        var videoUrl = getCurrentPollVideoUrl(); //播放地址
+        //debug.innerHTML += "poll play url :" + videoInfo + "<br/>";
+        var lmcid = null;
+        {
+            switch (lmcid) {
+                case '320092':   //江苏电信
+                    playWithIframe();
+                    break;
+                case "450092":  //广西电信
+                    playWithIframe();
+                    break;
+                case "640092":  //宁夏电信
+                    playWithIframe();
+                    break;
+                case '000051':
+                    setTimeout(function () {
+                        if (stbModel == 'IP506H_54U3') { //内蒙联通海信盒子
+                            LMEPG.mp.initPlayerByBind();
+                        } else {
+                            LMEPG.mp.initPlayer();
+                        }
+                        var playUrl = httpToRtsp(videoUrl); //将http头转换为rtsp
+                        if (platformType == 'hd') {
+                            LMEPG.mp.playOfSmallscreen(videoUrl, parseInt(880), parseInt(179), parseInt(354), parseInt(199)); //小窗播放
+                        } else {
+                            switch (stbModel) {
+                                case 'MP606H': //海信高请盒子会放大小窗
+                                    LMEPG.mp.playOfSmallscreen(videoUrl, parseInt(880), parseInt(179), parseInt(354), parseInt(199)); //小窗播放
+                                    break;
+                                default:
+                                    LMEPG.mp.playOfSmallscreen(videoUrl, parseInt(880), parseInt(179), parseInt(354), parseInt(199)); //小窗播放
+                                    break;
+                            }
+                        }
+                    }, 500);
+                    break;
+                default:
+                    setTimeout(function () {
+                        LMEPG.mp.initPlayer(); //初始化
+                        if (platformType == 'hd') {
+                            LMEPG.mp.playOfSmallscreen(videoUrl, parseInt(880), parseInt(179), parseInt(354), parseInt(199)); //小窗播放
+                        } else {
+                            LMEPG.mp.playOfSmallscreen(videoUrl, parseInt(880), parseInt(179), parseInt(354), parseInt(199)); //小窗播放
+                        }
+                    }, 500);
+                    break;
+            }
+        }
+
+        function playWithIframe() {
+            var model = LMEPG.STBUtil.getSTBModel();
+            var left = 0;
+            var top = 0;
+            var width = 0;
+            var height = 0;
+            setTimeout(function () {
+                if (domainUrl == undefined || domainUrl == "") {
+                    tip("domainUrl is empty!!!", 3);
+                    return;
+                }
+                var playArea = "";
+                if (platformType == 'hd') {
+                    switch (stbModel) {
+                        case 'RP0201':  //标清特殊型号判断
+                            left = 880;
+                            top = 179;
+                            width = 354;
+                            height = 199;
+                            break;
+                        default:
+                            left = 880;
+                            top = 179;
+                            width = 354;
+                            height = 199;
+                            break;
+                    }
+                } else {
+                    if (lmcid == "450092") { //广西电信
+                        switch (model) {
+                            case "EC2108v3B_pub":
+                                left = 880;
+                                top = 179;
+                                width = 354;
+                                height = 199;
+                                break;
+                            case "ITV628HD":
+                                left = 880;
+                                top = 179;
+                                width = 354;
+                                height = 199;
+                                break;
+                            default:
+                                left = 880;
+                                top = 179;
+                                width = 354;
+                                height = 199;
+                                break;
+                        }
+                    } else {
+                        left = 880;
+                        top = 179;
+                        width = 354;
+                        height = 199;
+                    }
+                }
+                //var videoUrl="progcpaj0030a82120925000111956642";//第三方测试的注入id--江苏电信测试
+                //var videoUrl="progcpaj0030a82120925000111956642";//第三方测试的注入id--江苏电信测试
+                //var videoUrl="99100000012017120414241401166998";//公司注入的id--广西电信标清测试
+                //var videoUrl="99100000012018113023644301259884";//第三方注入id--广西电信高清测试
+                var info = "";
+                if (lmcid == "640092") {
+                    info = LMEPG.mp.getUrlWith640092(left, top, width, height, videoUrl);
+                } else {
+                    info = LMEPG.mp.getUrlWith320092(left, top, width, height, videoUrl);
+                }
+
+                var factUrl = domainUrl + info;
+                console.log(factUrl)
+                var mSmallFrame = document.getElementById("smallscreen");
+                mSmallFrame.setAttribute("src", factUrl);
+                LMEPG.mp.initPlayerByBind();
+            }, 500);
+            document.getElementById('grabFocus').focus();//防止（部分盒子）页面失去焦点
+        }
+    }
+
+    /**  将http协议头转化为rtsp */
+    function httpToRtsp(videoUrl) {
+        var dest = videoUrl;
+        var protocol = videoUrl.substring(0, 4);
+        if (protocol == "http") {
+            dest = videoUrl.replace(/http/, 'rtsp');
+        }
+        return dest;
+    }
+    //虚拟按键触发，轮询播放
+    LMEPG.ButtonManager.init([''], buttons, '', true, true);
+    LMEPG.KeyEventManager.addKeyEvent(
+        {
+            EVENT_MEDIA_END: rePlay,	        //视频播放结束
+            EVENT_MEDIA_ERROR: rePlay,        //视频播放错误
+        });
+    //虚拟按键触发，轮询播放
+    function rePlay(keyCode) {
+        startPollPlay();
+    }
+    rePlay()
+</script>
+</body>
+</html>
