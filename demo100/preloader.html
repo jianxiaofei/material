@@ -38,12 +38,12 @@
     function renderImg(ID) {
         count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
         img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
-        loader.length < httpImg.length && createImg(count); //避免重复创建image对象
+        loader.length < httpImg.length && createImg(count);
     }
 
     function createImg(count) {
         var img = new Image();
-        img.src = httpImg[count];
+        count < httpImg.length && count >= 0 && (img.src = httpImg[count]);
         loader.push(img);
     }
     createImg(count);
