@@ -25,28 +25,67 @@
         <button id="btn-next">下一张</button>
     </div>
     <script>
-    var httpImg = ["http://s2.sinaimg.cn/middle/6562097dg814b9bc5f441&690&690",
-        "http://photocdn.sohu.com/20150907/mp30906533_1441629699374_2.jpeg",
-        "http://img.19196.com/uploads/151126/9-151126095P51b.jpg",
-        "http://img06.tooopen.com/images/20161121/tooopen_sy_187362418112.jpg"
-    ];
+    (function(window, undefined) {
+        function JxfSub(cfg) {
+            var config = cfg || {};
+            this.get = function(n) {
+                return config[n];
+            };
+            this.set = function(n, v) {
+                config[n] = v;
+            };
+            this.init();
+        }
+        JxfSub.prototype = {
+            init: function() {
+                this.createDom();
+                this.createImg();
+            },
+            createDom: function() {
+                var httpImg = ["http://s2.sinaimg.cn/middle/6562097dg814b9bc5f441&690&690",
+                    "http://photocdn.sohu.com/20150907/mp30906533_1441629699374_2.jpeg",
+                    "http://img.19196.com/uploads/151126/9-151126095P51b.jpg",
+                    "http://img06.tooopen.com/images/20161121/tooopen_sy_187362418112.jpg"
+                ];
+                var count = 0;
+                var loader = [];
+                var img_wrap = document.getElementById('img-wrap');
+                this.set("img_wrap", img_wrap);
+                this.set("httpImg", httpImg);
+                this.set("count", count);
+                this.set("loader", loader);
+            },
+            bindEvent: function() {},
+            renderImg: function(ID) {
+                var count = this.get('count');
+                var loader = this.get('loader');
+                var httpImg = this.get('httpImg');
+                var img_wrap = this.get('img_wrap');
+                count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
+                console.log(loader, ID)
+                img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
+                loader.length < httpImg.length && this.createImg(count); //避免重复创建image对象
+            },
+            createImg: function(count) {
+                var count = this.get('count');
+                var loader = this.get('loader');
+                var httpImg = this.get('httpImg');
+                var img = new Image();
+                img.src = httpImg[count];
+                loader.push(img);
+            }
+        };
+
+        var obj = new JxfSub();
+
+        window.renderImg = function(ID) {
+            obj.renderImg.call(obj);
+        };
+        window.createImg = function() {
+            obj.createImg.call(obj);
+        };
+    }(window));
     var btn_wrap = document.getElementById('btn-wrap');
-    var img_wrap = document.getElementById('img-wrap');
-    var count = 0;
-    var loader = [];
-
-    function renderImg(ID) {
-        count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
-        img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
-        loader.length < httpImg.length && createImg(count); //避免重复创建image对象
-    }
-
-    function createImg(count) {
-        var img = new Image();
-        img.src = httpImg[count];
-        loader.push(img);
-    }
-    createImg(count);
     btn_wrap.addEventListener('click', function(e) {
         renderImg(e.target.id);
     }, true);
