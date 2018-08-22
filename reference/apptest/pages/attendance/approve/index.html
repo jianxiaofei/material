@@ -1,0 +1,750 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：我的申请列表
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的审批</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<link rel="stylesheet" href="../../../css/iconfont.css" />
+		<style>
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.datatom-out {
+				font-size: 34px;
+				color: #555555;
+			}
+			
+			.datatom-wait {
+				font-size: 34px;
+				color: #f9c909;
+			}
+			
+			.datatom-pass {
+				font-size: 34px;
+				color: #39af6f;
+			}
+			
+			.datatom-nopass {
+				font-size: 34px;
+				color: #ef5350;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">审批列表</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1mobile">
+						考勤
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						请假
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						加班
+					</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="attendanceList">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="leaveList">
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="overworkList">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../js/common.js" charset="UTF-8"></script>
+		<script src="../../../js/mui.pullToRefresh.js"></script>
+		<script src="../../../js/mui.pullToRefresh.material.js"></script>
+		<script>
+			var policenum;
+			var token;
+			var realname;
+			var size = 10;
+			var kqpage = 0;
+			var qjpage = 0;
+			var jbpage = 0;
+			mui.init({
+				swipeBack: false
+			});
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem('policenum');
+				token = plus.storage.getItem('token');
+				realname = plus.storage.getItem('realname');
+			});
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						switch(index) {
+							case 0:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												kqpage = 1;
+												mui.ajax(basePath + '/osapi/attendance.php', {
+													data: {
+														action: 'getAuditErrorList_new',
+														policenum: policenum,
+														offset: (kqpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('attendanceList');
+															var fragment = document.createDocumentFragment();
+															ul.innerHTML = "";
+															mui.each(list, function(index, item) {
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '">';
+																if(item.status == "1") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "0") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+
+																html += '<div class="mui-media-body">' + item.title + '<p class="mui-pull-right mui-pull-right-time">日期：' + item.date.substring(0, 4) + '年' + item.date.substring(5, 7) + '月' + item.date.substring(8, 10) + '(' + item.week + ')</p>';
+																if(item.status == "0") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（未通过）</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																}
+																//							if(item.status=="1"){
+																//								html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																//							}else if(item.status=="2"){
+																//								html += '<p class="mui-ellipsis">审批完成（未通过）</p>';
+																//							}else{
+																//								html += '<p class="mui-ellipsis">等待审批</p>';
+																//							}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullDownToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+
+												kqpage++;
+												mui.ajax(basePath + '/osapi/attendance.php', {
+													data: {
+														action: 'getAuditErrorList_new',
+														policenum: policenum,
+														offset: (kqpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('attendanceList');
+															var fragment = document.createDocumentFragment();
+															mui.each(list, function(index, item) {
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																var title = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '">';
+																if(item.status == "1") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "0") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+
+																html += '<div class="mui-media-body">' + item.title + '<p class="mui-pull-right mui-pull-right-time">日期：' + item.date.substring(0, 4) + '年' + item.date.substring(5, 7) + '月' + item.date.substring(8, 10) + '(' + item.week + ')</p>';
+																if(item.status == "0") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（未通过）</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																}
+																//							if(item.status=="1"){
+																//								html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																//							}else if(item.status=="2"){
+																//								html += '<p class="mui-ellipsis">审批完成（未通过）</p>';
+																//							}else{
+																//								html += '<p class="mui-ellipsis">等待审批</p>';
+																//							}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullUpToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									}
+								});
+								break;
+							case 1:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+
+												qjpage = 1;
+												mui.ajax(basePath + '/osapi/leave.php', {
+													data: {
+														action: 'listmyaudit_new',
+														policenum: policenum,
+														offset: (qjpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('leaveList');
+															var fragment = document.createDocumentFragment();
+															ul.innerHTML = "";
+															mui.each(list, function(index, item) {
+																if(index == 0) {
+																	//								showWebviewToast(item.status);
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '" data-data="' + item.policenum + '">';
+
+																if(item.status == "1") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "3") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "4") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-revocation mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+																//							if(item.status=="3"||item.status=="5"){
+																//								html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else if(item.status=="2"){
+																//								html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else if(item.status=="1"){
+																//								html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else{
+																//								html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}
+																var time = item.starttime.substring(11, 19) == "00:00:00" ? "上午" : "下午";
+																html += '<div class="mui-media-body">日期：' + item.starttime.substring(0, 4) + '年' + item.starttime.substring(5, 7) + '月' + item.starttime.substring(8, 10) + '日' + time + '(' + item.leavetypestr + item.day + '天)';
+																if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "3") {
+																	html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																} else if(item.status == "4") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已销假</p>';
+																}
+																//							if(item.status=="3"||item.status=="5"){
+																//								html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																//							}else if(item.status=="2"){
+																//								html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																//							}else if(item.status=="4"){
+																//								html += '<p class="mui-ellipsis">已撤销</p>';
+																//							}else{
+																//								html += '<p class="mui-ellipsis">等待审批</p>';
+																//							}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullDownToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+
+												qjpage++;
+												mui.ajax(basePath + '/osapi/leave.php', {
+													data: {
+														action: 'listmyaudit_new',
+														policenum: policenum,
+														offset: (qjpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('leaveList');
+															var fragment = document.createDocumentFragment();
+															mui.each(list, function(index, item) {
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '" data-data="' + item.policenum + '">';
+																//							if(item.status=="3"||item.status=="5"){
+																//								html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else if(item.status=="2"){
+																//								html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else if(item.status=="4"){
+																//								html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}else{
+																//								html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																//							}
+																if(item.status == "1") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "3") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "4") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-revocation mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+																var time = item.starttime.substring(11, 19) == "00:00:00" ? "上午" : "下午";
+																html += '<div class="mui-media-body">日期：' + item.starttime.substring(0, 4) + '年' + item.starttime.substring(5, 7) + '月' + item.starttime.substring(8, 10) + '日' + time + '(' + item.leavetypestr + item.day + '天)';
+																if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "3") {
+																	html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																} else if(item.status == "4") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已销假</p>';
+																}
+																//							if(item.status=="3"||item.status=="5"){
+																//								html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																//							}else if(item.status=="2"){
+																//								html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																//							}else if(item.status=="4"){
+																//								html += '<p class="mui-ellipsis">已撤销</p>';
+																//							}else{
+																//								html += '<p class="mui-ellipsis">等待审批</p>';
+																//							}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullUpToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+
+										}
+									}
+								});
+								break;
+							case 2:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+
+												jbpage = 1;
+												mui.ajax(basePath + '/osapi/attendance.php', {
+													data: {
+														action: 'getAuditOvertimeList_new',
+														policenum: policenum,
+														offset: (jbpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('overworkList');
+															var fragment = document.createDocumentFragment();
+															ul.innerHTML = "";
+															mui.each(list, function(index, item) {
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '">';
+																if(item.status == "1") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "0") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+																var overtime_interval_start = item.overtime_interval_start == null ? "" : item.overtime_interval_start.substring(0, 16);
+																var overtime_interval_end = item.overtime_interval_end == null ? "" : item.overtime_interval_end.substring(0, 16);
+																html += '<div class="mui-media-body">区间：' + overtime_interval_start + "至" + overtime_interval_end;
+																if(item.status == "0") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullDownToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												jbpage++;
+												mui.ajax(basePath + '/osapi/attendance.php', {
+													data: {
+														action: 'getAuditOvertimeList_new',
+														policenum: policenum,
+														offset: (jbpage - 1) * size,
+														limit: size
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var list = data.result;
+															var length = list.length;
+															var ul = document.getElementById('overworkList');
+															var fragment = document.createDocumentFragment();
+															mui.each(list, function(index, item) {
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var html = "";
+																html += '<a class="mui-navigate-right" data-key="' + item.id + '">';
+																if(item.status == "1") {
+																	html += '<span class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "2") {
+																	html += '<span class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "5") {
+																	html += '<span class="datatom-cancel mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.status == "0") {
+																	html += '<span class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																}
+																var overtime_interval_start = item.overtime_interval_start == null ? "" : item.overtime_interval_start.substring(0, 16);
+																var overtime_interval_end = item.overtime_interval_end == null ? "" : item.overtime_interval_end.substring(0, 16);
+																html += '<div class="mui-media-body">区间：' + overtime_interval_start + "至" + overtime_interval_end;
+																if(item.status == "0") {
+																	html += '<p class="mui-ellipsis">等待审批</p>';
+																} else if(item.status == "1") {
+																	html += '<p class="mui-ellipsis">审批完成（通过）</p>';
+																} else if(item.status == "2") {
+																	html += '<p class="mui-ellipsis">审批完成（不通过）</p>';
+																} else if(item.status == "5") {
+																	html += '<p class="mui-ellipsis">已撤销</p>';
+																}
+																html += '</div></a>';
+																li.innerHTML = html;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														self.endPullUpToRefresh();
+														//					showWebviewToast("网络异常!");
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									}
+								});
+								break;
+						}
+
+					});
+
+					var createFragment = function(ul, index, count, reverse) {
+						var length = ul.querySelectorAll('li').length;
+						var fragment = document.createDocumentFragment();
+						var li;
+						for(var i = 0; i < count; i++) {
+							li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
+							fragment.appendChild(li);
+						}
+						return fragment;
+					};
+				});
+
+				mui("#item1mobile").on("tap", "a", function() {
+					var id = this.getAttribute('data-key');
+					//document.location.href = "attendanceDetail.php?id="+id;
+					//					window.javaInterface.startDefaultHtmlActivity2(basePath + '/extapp/app/html5/attendance/apply/attendanceDetail.php?id=' + id);
+					mui.openWindow({
+						url: "attendanceDetail.html",
+						extras: {
+							data_id: id
+						}
+					})
+
+				});
+
+				mui("#item2mobile").on("tap", "a", function() {
+					var id = this.getAttribute('data-key');
+					var policenum = this.getAttribute('data-data');
+					//document.location.href = "leaveDetail.php?id="+id+'&policenum='+policenum;
+					window.javaInterface.startDefaultHtmlActivity2(basePath + '/extapp/app/html5/attendance/apply/leaveDetail.php?id=' + id + '&policenum=' + policenum);
+				});
+
+				mui("#item3mobile").on("tap", "a", function() {
+					var id = this.getAttribute('data-key');
+					//document.location.href = "overtimeDetail.php?id="+id;
+					window.javaInterface.startDefaultHtmlActivity2(basePath + '/extapp/app/html5/attendance/apply/overtimeDetail.php?id=' + id);
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>

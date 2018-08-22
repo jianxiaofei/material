@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>主页功能页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #929292;
+			}
+			
+			.mui-bar-tab .mui-tab-item.tom-active {
+				color: #007aff;
+			}
+			
+			.datatom-tips {
+				position: absolute;
+				z-index: 99999999999;
+				left: 10px;
+				bottom: 5px;
+				line-height: 35px;
+				color: #fff;
+			}
+			
+			.notify {
+				position: absolute;
+				right: 6px;
+				bottom: 15px;
+			}
+			
+			.notify .heartbit {
+				position: absolute;
+				top: -15px;
+				right: -10px;
+				height: 25px;
+				width: 25px;
+				z-index: 10;
+				border: 5px solid #fb9678;
+				border-radius: 70px;
+				-moz-animation: heartbit 1s ease-out;
+				-moz-animation-iteration-count: infinite;
+				-o-animation: heartbit 1s ease-out;
+				-o-animation-iteration-count: infinite;
+				-webkit-animation: heartbit 1s ease-out;
+				-webkit-animation-iteration-count: infinite;
+				animation-iteration-count: infinite;
+			}
+			
+			.notify .point {
+				width: 6px;
+				height: 6px;
+				-webkit-border-radius: 30px;
+				-moz-border-radius: 30px;
+				border-radius: 30px;
+				background-color: #fb9678;
+				position: absolute;
+				right: 0px;
+				top: -6px;
+			}
+			
+			@-moz-keyframes heartbit {
+				0% {
+					-moz-transform: scale(0);
+					opacity: 0.0;
+				}
+				25% {
+					-moz-transform: scale(0.1);
+					opacity: 0.1;
+				}
+				50% {
+					-moz-transform: scale(0.5);
+					opacity: 0.3;
+				}
+				75% {
+					-moz-transform: scale(0.8);
+					opacity: 0.5;
+				}
+				100% {
+					-moz-transform: scale(1);
+					opacity: 0.0;
+				}
+			}
+			
+			@-webkit-keyframes heartbit {
+				0% {
+					-webkit-transform: scale(0);
+					opacity: 0.0;
+				}
+				25% {
+					-webkit-transform: scale(0.1);
+					opacity: 0.1;
+				}
+				50% {
+					-webkit-transform: scale(0.5);
+					opacity: 0.3;
+				}
+				75% {
+					-webkit-transform: scale(0.8);
+					opacity: 0.5;
+				}
+				100% {
+					-webkit-transform: scale(1);
+					opacity: 0.0;
+				}
+			}
+			
+			.datatom-gradient-header-01 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#3ab5f8, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#3ab5f8, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#3ab5f8, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#3ab5f8, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-02 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#8ce35e, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#8ce35e, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#8ce35e, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#8ce35e, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-03 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#fec917, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#fec917, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#fec917, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#fec917, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-04 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#3bcda3, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#3bcda3, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#3bcda3, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#3bcda3, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-05 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#fc5a5d, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#fc5a5d, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#fc5a5d, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#fc5a5d, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-06 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#FAA732, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#FAA732, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#FAA732, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#FAA732, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-07 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#00E8D7, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#00E8D7, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#00E8D7, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#00E8D7, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-08 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#d94600, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#d94600, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#d94600, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#d94600, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.datatom-gradient-header-09 {
+				width: 5px;
+				height: 80px;
+				background: -webkit-linear-gradient(#5b00ae, #fff);
+				/* Safari 5.1 - 6.0 */
+				background: -o-linear-gradient(#5b00ae, #fff);
+				/* Opera 11.1 - 12.0 */
+				background: -moz-linear-gradient(#5b00ae, #fff);
+				/* Firefox 3.6 - 15 */
+				background: linear-gradient(#5b00ae, #fff);
+				/* 标准的语法（必须放在最后） */
+				margin-left: -15px;
+				margin-top: -11px;
+				margin-bottom: -11px;
+				display: block;
+				float: left;
+			}
+			
+			.mui-table-view .mui-media-object {
+				height: 80px;
+				margin-bottom: -10px;
+				max-width: none !important;
+			}
+			
+			.mui-media-body {
+				padding-top: 15px;
+				padding-left: 5px;
+			}
+			
+			.mui-table-view-cell:after {
+				left: 0px;
+			}
+			
+			.mui-h4 {
+				text-align: left;
+				color: #fff;
+				font-size: .8rem;
+				margin-bottom: 0;
+			}
+		</style>
+	</head>
+
+	<body class="mui-fullscreen">
+		<div class="mui-content mui-fullscreen">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="javascript:void(0)" id="mjydone">
+							<span class="mui-icon iconfont datatom-icon-minjingyuandi datatom-tips"> </span>
+							<img src="../images/policehome.jpg">
+						</a>
+					</div>
+					<!-- 第一张 通知-->
+					<div class="mui-slider-item">
+						<a href="javascript:void(0)" class="tzgg">
+							<span class="mui-icon iconfont datatom-icon-tongzhigonggao datatom-tips"> </span>
+							<img src="../images/notice.jpg">
+						</a>
+					</div>
+					<!-- 第二张 个人帐号-->
+					<div class="mui-slider-item">
+						<img style="position:absolute;" src="../images/center-bg1.jpg">
+						<div style="width: 100%;position: absolute;" class="mui-media" id="personMain"></div>
+					</div>
+					<!-- 第三张 交警家园-->
+					<div class="mui-slider-item">
+						<a href="javascript:void(0)" id="mjydtwo">
+							<span class="mui-icon iconfont datatom-icon-minjingyuandi datatom-tips"> </span>
+							<img src="../images/policehome.jpg">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="javascript:void(0)" class="tzgg">
+							<span class="mui-icon iconfont datatom-icon-tongzhigonggao datatom-tips"> </span>
+							<img src="../images/notice.jpg">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" id="jcj">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-07"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/08.png" style="padding-left: 10px;" />
+						<div class="mui-media-body" style="padding-left: 16px;">
+							接处警
+							<p class="mui-ellipsis">
+								接处警平台
+							</p>
+						</div>
+						<span id="wdgzTips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">待处理</span>
+					</a>
+				</li>
+
+				<li class="mui-table-view-cell mui-media" id="wypj">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-02"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/02.png" />
+						<div class="mui-media-body">
+							我要评价
+							<p class="mui-ellipsis">
+								日常、每月评价在这里
+							</p>
+						</div>
+						<span id="wypjTips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">去评价</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="wdkq">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-03"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/03.png" />
+						<div class="mui-media-body">
+							考勤处理
+							<p class="mui-ellipsis">
+								记录每个人的考勤
+							</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="gzrz">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-04"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/04.png" />
+						<div class="mui-media-body">
+							工作日志
+							<p class="mui-ellipsis">
+								记录每个人日常工作
+							</p>
+						</div>
+						<span id="gzrzTips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">去记录</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="ycjk">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-05"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/05.png" />
+						<div class="mui-media-body">
+							异常处理
+							<p class="mui-ellipsis">
+								异常数据预警及处理
+							</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="wdgz">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-01"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/01.png" />
+						<div class="mui-media-body">
+							我的关注
+							<p class="mui-ellipsis">
+								日常关注的事情
+							</p>
+						</div>
+						<span id="wdgzTips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">待处理</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-hidden" id="yhgn">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-06"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/05.png" />
+						<div class="mui-media-body">
+							核发原号
+							<p class="mui-ellipsis">
+								车辆原号查看及审批
+							</p>
+						</div>
+
+					</a>
+
+				</li>
+				<li class="mui-table-view-cell mui-media mui-hidden" id="facility_register">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-08"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/facility_register.png" style="width: 106.4px;" />
+						<div class="mui-media-body">
+							设施上报
+							<p class="mui-ellipsis">
+								添加设施上报信息
+							</p>
+						</div>
+						<span id="lj1Tips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">待处理</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-hidden" id="memorandum">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-08"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/memorandum.png"  style="width: 106.4px;"/>
+						<div class="mui-media-body">
+							备忘录
+							<p class="mui-ellipsis">
+								备忘录信息
+							</p>
+						</div>
+						<span id="lj1Tips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">待处理</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-hidden" id="ljb">
+					<a class="mui-navigate-right">
+						<div class="datatom-gradient-header-09"></div>
+						<img class="mui-pull-left mui-media-object" src="../images/01.png" />
+						<div class="mui-media-body">
+							连接2
+							<p class="mui-ellipsis">
+								添加连接
+							</p>
+						</div>
+						<span id="lj2Tips" class="mui-badge mui-badge-danger mui-pull-right mui-hidden">待处理</span>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js" charset="UTF-8"></script>
+		<script src="../js/utils.js" charset="UTF-8"></script>
+		<script>
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					drag: true, //默认为true
+					hold: true, //默认为false，不监听
+					release: true //默认为false，不监听
+				},
+				swipeBack: false
+			});
+			mui("#slider").slider({
+				interval: 5000
+			});
+			var policenum;
+			var token;
+			var type = '';
+			//定义状态数组
+			var stateArr = [{
+				id: 1,
+				name: '在岗'
+			}, {
+				id: 2,
+				name: '辞职'
+			}, {
+				id: 3,
+				name: '退休'
+			}, {
+				id: 4,
+				name: '开除'
+			}, {
+				id: 5,
+				name: '辞退'
+			}, {
+				id: 6,
+				name: '借调'
+			}, {
+				id: 7,
+				name: '工伤久病'
+			}, {
+				id: 8,
+				name: '局外借调'
+			}, {
+				id: 9,
+				name: '社区民警'
+			}, {
+				id: 10,
+				name: '其他人员'
+			}, {
+				id: 11,
+				name: '在岗'
+			}]
+
+			//接处警
+			document.getElementById("jcj").addEventListener("tap", function() {
+				mui.openWindow('../pages/commandcenter/list.html');
+			});
+			//我的关注
+			document.getElementById('wdgz').addEventListener("tap", function() {
+				mui.openWindow('../pages/my_attention/index.php');
+			});
+			//设施上报
+			document.getElementById('facility_register').addEventListener('tap', function() {
+				mui.openWindow('../pages/facility_register/facility_list.php');
+			})
+			//连接b
+			document.getElementById('ljb').addEventListener('tap', function() {
+				window.location.href = 'www.baidu.com'
+			})
+			//我要评价
+			document.getElementById('wypj').addEventListener('tap', function() {
+				mui.openWindow('../pages/action/index.html');
+			});
+
+			//考勤处理
+			document.getElementById("wdkq").addEventListener("tap", function() {
+				mui.openWindow('../pages/attendance/main.html');
+			});
+
+			//工作日志
+			document.getElementById('gzrz').addEventListener("tap", function() {
+				mui.openWindow('../pages/abnormal/main.php');
+			});
+			//异常监控
+			document.getElementById("ycjk").addEventListener("tap", function() {
+				mui.openWindow('../pages/abnormal/main.php');
+			});
+			//通知公告
+			document.body.querySelector("a.tzgg").addEventListener("tap", function() {
+				mui.openWindow('../pages/notice/list_main.html');
+			});
+			//民警园地
+			document.getElementById('mjydone').addEventListener("tap", function() {
+				mui.openWindow('../pages/notice/topic_main.html');
+			});
+			//民警家园
+			document.getElementById('mjydtwo').addEventListener("tap", function() {
+				mui.openWindow('../pages/notice/topic_main.html');
+			});
+			//以下接口暂时都是打开页面时请求
+			//暂不考虑隔段时间刷新的需求
+			//暂时不提示错误信息，仅仅成功时有操作
+
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem("policenum");
+				token = plus.storage.getItem("token");
+//				mui.toast("ready token:" + token + '-----policenum:' + policenum);
+				if('888888' == policenum) {
+				document.getElementById('facility_register').classList.remove("mui-hidden");
+				}
+				if('888888'==policenum || '005985'==policenum)
+				{
+					document.getElementById('memorandum').classList.remove("mui-hidden");
+				}
+				//是否有考勤异常接口
+				mui.ajax(basePath + '/osapi/appabnormal.php', {
+					data: {
+						action: 'checkExistAbnormal',
+						policenum: policenum
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var info = data.result;
+							if(info != "0") {
+								var wdgzTips = document.getElementById('wdgzTips');
+								wdgzTips.classList.remove("mui-hidden");
+							}
+						}
+					}
+				});
+				//个人名片接口
+//				LL("个人名片接口");
+				mui.ajax(basePath + '/osapi/user.php', {
+					data: {
+						action: 'personalCard',
+						policenum: policenum,
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var info = data.result;
+							var personMain = document.getElementById('personMain');
+							var htm = "";
+							type = info.type;
+							var stateStr = "其它";
+							mui.each(stateArr, function(index, item) {
+								if(info.status == item.id) {
+									stateStr = item.name;
+								}
+							});
+							htm += '<div style="float: left;padding-top: 10%;padding-left: 10%;" class="mui-col-xs-4 mui-col-sm-4">';
+							htm += '<img style="width: 80%;" src="' + basePath + '/osapi/avantar.php?policenum=' + info.policenum + '" class=""/>';
+							htm += '<div class="mui-media-body" style="padding-top: 0;padding-left: 0;">';
+							htm += '<p class="mui-h4 mui-ellipsis">' + info.realname + '(' + info.jobposition + ')</p></div></div>';
+							htm += '<div style="float: left;padding-left: 10%;padding-top: 5%;" class="mui-col-xs-8 mui-col-sm-8">';
+							htm += '<p class="mui-h4 mui-ellipsis">警员编号：' + info.policenum + '</p>';
+							htm += '<p class="mui-h4 mui-ellipsis">当前状态：' + stateStr + '</p>';
+							htm += '<p class="mui-h4 mui-ellipsis">时间银行：' + info.overtime_sum + '小时</p>';
+							htm += '<p class="mui-h4 mui-ellipsis">本月工作时长(' + info.starttime.substring(8, 10) + '至' + info.endtime.substring(8, 10) + ')：' + info.worktime + '小时</p>';
+							htm += '<p class="mui-h4 mui-ellipsis">上月加班时间：' + info.times + '小时</p>';
+							htm += '<p class="mui-h4 mui-ellipsis">廉政风险指数：<span class="mui-icon mui-icon-star-filled" style="color: yellow;"></span>' + info.independent_risk + '星</p></div>';
+							personMain.innerHTML = htm;
+							if(type == 2 || type == 3 || type == 4) {
+								document.getElementById('yhgn').classList.remove("mui-hidden");
+								//原号功能
+								document.getElementById('yhgn').addEventListener("tap", function() {
+									window.javaInterface.startDefaultHtmlActivity(basePath + "/extapp/app/html5/originalNum/index.php?type=" + type);
+								});
+							}
+						}
+					}
+				});
+				//是否需要评价直属下属接口
+//				LL("评价直属下属接口: 'checkMonthEvaluation'");
+				mui.ajax(basePath + '/osapi/evaluation.php', {
+					data: {
+						action: 'checkMonthEvaluation',
+						policenum: policenum
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var info = data.result;
+							if(!info) {
+								var wypjTips = document.getElementById('wypjTips');
+								wypjTips.classList.remove("mui-hidden");
+							}
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+//						mui.toast('');
+					}
+				});
+
+				//今日是否有工作记录接口
+//				LL("是否有工作记录接口: 'checkSubWorklogByDay'");
+				mui.ajax(basePath + '/osapi/worklog.php', {
+					data: {
+						action: 'checkSubWorklogByDay',
+						policenum: policenum,
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+//							LL(obj2str(data));
+							var info = data.result;
+							if(!info) {
+								var gzrzTips = document.getElementById('gzrzTips');
+								gzrzTips.classList.remove("mui-hidden");
+							}
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

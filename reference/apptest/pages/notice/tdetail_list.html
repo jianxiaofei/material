@@ -1,0 +1,241 @@
+<!--
+作者：836110252@qq.com
+时间：2016-05-29
+业务描述：
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>园地详情内部列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.mui-card {
+				margin-bottom: 1rem;
+			}
+			
+			.mui-table-view {
+				width: 100%;
+			}
+			
+			.mui-pull-right {
+				font-size: .65rem;
+			}
+			
+			.add_tzgg {
+				width: 55px!important;
+				height: 55px!important;
+				border-radius: 50%;
+				position: fixed;
+				right: 2%;
+				bottom: 1%;
+				z-index: 100;
+			}
+			
+			.mui-card-header {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content mui-fullscreen">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="padding-top: 1rem;padding-bottom: 1rem;">
+				<div class="mui-scroll">
+					<div class="mui-card" id="content">
+
+					</div>
+				</div>
+			</div>
+			<div class="mui-block" style="position: absolute;width: 100%;bottom: 0px;text-align: center;">
+				<button id="reply" type="button" class="mui-btn add_tzgg" style="width: 90%;height: 46px;color: #fff;background-color: #003b79;">
+				回复
+				</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" charset="UTF-8"></script>
+		<script>
+			var pagesize = 10;
+			var createtime = "2099-01-01 00:00:00";
+			var loadmore = 0;
+			var needtop = 0;
+			var ids; //详情id
+			var token;
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			mui.plusReady(function() {
+				ids = plus.storage.getItem('notice_item_id');
+				token = plus.storage.getItem('token');
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().pulldownLoading();
+				}, 1);
+			})
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				createtime = "2099-01-01 00:00:00";
+				pagesize = 10;
+				loadmore = 0;
+				mui.ajax(basePath + '/osapi/police_topic.php', {
+					data: {
+						action: 'getTopicDetails',
+						topicid: ids
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var detail = data.result[0];
+							document.body.querySelector("#content").innerHTML = '<div class="mui-card-header"><p style="font-size: 1rem;">主题：' + detail.topictitle + '</p><p class="mui-ellipsis" style="font-size: .8rem;">发表于' + detail.createtime + '</p></div>' +
+								'<div class="mui-card-content"><div class="mui-card-content-inner">内容：' + detail.topiccontent + '</div>' +
+								'</div><div class="mui-card-footer" id="list"><ul class="mui-table-view"></ul></div>';
+							mui.ajax(basePath + '/osapi/police_topic.php', {
+								data: {
+									action: 'getTopicComments',
+									id: ids,
+									pagesize: pagesize,
+									loadmore: loadmore,
+									createtime: createtime,
+									needtop: needtop
+								},
+								beforeSend: function(request) {
+									request.setRequestHeader("U-Auth-Token", token);
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'POST', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if(data.code == "200") {
+										var top = data.result.topComments;
+										var list = data.result.comments;
+										var ul = document.body.querySelector('#pullrefresh .mui-table-view');
+										var fragment = document.createDocumentFragment();
+										mui.each(top, function(index, item) {
+											var li = document.createElement('li');
+											var name = item.replyway == 1 ? item.realname : "匿名";
+											li.className = 'mui-table-view-cell';
+											li.innerHTML = name + " " + '回复：' + item.replycontent;
+											fragment.appendChild(li);
+										});
+										ul.appendChild(fragment);
+										var length = list.length;
+										mui.each(list, function(index, item) {
+											var li = document.createElement('li');
+											li.className = 'mui-table-view-cell';
+											var name = item.replyway == 1 ? item.realname : "匿名";
+											li.innerHTML = name + " " + '回复：' + item.replycontent;
+											fragment.appendChild(li);
+											if(index = length - 1) {
+												createtime = item.createtime;
+											}
+										});
+										ul.appendChild(fragment);
+									} else {
+										mui.toast(data.msg);
+									}
+									mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.toast("网络异常!");
+								}
+							});
+						} else {
+							mui.toast(data.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("网络异常!");
+					}
+				});
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				mui.ajax(basePath + '/osapi/police_topic.php', {
+					data: {
+						action: 'getTopicComments',
+						id: ids,
+						pagesize: pagesize,
+						loadmore: loadmore,
+						createtime: createtime,
+						needtop: needtop
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var top = data.result.topComments;
+							var list = data.result.comments;
+							var ul = document.body.querySelector('#pullrefresh .mui-table-view');
+							var fragment = document.createDocumentFragment();
+							mui.each(top, function(index, item) {
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var name = item.replyway == 1 ? item.realname : "匿名";
+								li.innerHTML = name + " " + '回复：' + item.replycontent;
+								fragment.appendChild(li);
+							});
+							ul.appendChild(fragment)
+							var length = list.length;
+							mui.each(list, function(index, item) {
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								var name = item.replyway == 1 ? item.realname : "匿名";
+								li.innerHTML = name + " " + '回复：' + item.replycontent;
+								fragment.appendChild(li);
+								if(index = length - 1) {
+									createtime = item.createtime;
+								}
+							});
+							ul.appendChild(fragment);
+						} else {
+							mui.toast(data.msg);
+						}
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("网络异常!");
+					}
+				});
+			}
+
+			document.getElementById('reply').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'reply.html',
+					id: 'reply.html',
+					extras: {
+						ids: ids
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

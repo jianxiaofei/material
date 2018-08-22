@@ -1,0 +1,487 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-07-21
+	业务描述：时间轴
+	// 类型 有
+    // 1:指纹  2:门禁  3:食堂  4:GPS考勤  5:GPS位置信息
+    // 10:执法类 11:违停告知 12:违法通知 13:现场处罚 14: 强制措施 15:大型车查处登记 16:事故信息采集 17:通用信息采集
+    // 20:投诉类 21:车管驾业务 22:交通管理类 23:交通事故类 24:执法投诉类 25:审批业务类 26:其它
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>时间轴</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="../../css/mui.min.css">
+	<link rel="stylesheet" href="../../css/iconfont.css" />
+	<style type="text/css">
+		html,body,.mui-content{
+			font-size: 10px;
+			background-color: #fff;
+		}
+		.mui-content {
+			background-color: #fff;
+		}
+		#datatom-timeline{
+			width: 98%;
+		    margin: 30px auto;
+		    position: relative;
+		    -webkit-transition: all 0.4s ease;
+		    -moz-transition: all 0.4s ease;
+		    -ms-transition: all 0.4s ease;
+		    transition: all 0.4s ease;
+		}
+		#datatom-timeline:before {
+		    content: "";
+		    width: 3px;
+		    height: 100%;
+		    background: #003b79;
+		    left: 50%;
+		    top: 0;
+		    position: absolute;
+		}
+		#datatom-timeline:after {
+		    content: "";
+		    clear: both;
+		    display: table;
+		    width: 100%;
+		}
+		#datatom-timeline .datatom-timeline-item {
+		    margin-bottom: 50px;
+		    position: relative;
+		}
+		#datatom-timeline .datatom-timeline-item:after, 
+		#datatom-timeline .datatom-timeline-item:before {
+		    content: '';
+		    display: block;
+		    width: 100%;
+		    clear: both;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-icon {
+		    background: #003b79;
+		    font-size: 26px;
+		    width: 40px;
+		    height: 40px;
+		    position: absolute;
+		    top: 0;
+		    left: 50%;
+		    overflow: hidden;
+		    margin-left: -19px;
+		    -webkit-border-radius: 50%;
+		    -moz-border-radius: 50%;
+		    -ms-border-radius: 50%;
+		    border-radius: 50%;
+		    text-align: center;
+		    padding-top: 8px;
+		    color: #fff;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-content {
+		    width: 43%;
+		    background: #fff;
+		    padding: 1px;
+		    -webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+		    -moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+		    -ms-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+		    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+		    -webkit-border-radius: 5px;
+		    -moz-border-radius: 5px;
+		    -ms-border-radius: 5px;
+		    border-radius: 5px;
+		    -webkit-transition: all 0.3s ease;
+		    -moz-transition: all 0.3s ease;
+		    -ms-transition: all 0.3s ease;
+		    transition: all 0.3s ease;
+		    padding-bottom: 5px;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-content:before {
+		    content: '';
+		    position: absolute;
+		    left: 42.5%;
+		    top: 8px;
+		    width: 0;
+		    height: 0;
+		    border-top: 7px solid transparent;
+		    border-bottom: 7px solid transparent;
+		    border-left: 7px solid #003b79;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-content h2 {
+		    padding: 10px;
+		    padding-left: 20px;
+		    padding-right: 0;
+		    font-size: 10px;
+		    background: #003b79;
+		    color: #fff;
+		    margin: -5px 0 0 0;
+		    font-weight: 500;
+		    -webkit-border-radius: 3px 3px 0 0;
+		    -moz-border-radius: 3px 3px 0 0;
+		    -ms-border-radius: 3px 3px 0 0;
+		    border-radius: 3px 3px 0 0;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-icon span {
+		    position: relative;
+		    top: 10px;
+		    left: 10px;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-content.right {
+		    float: right;
+		}
+		#datatom-timeline .datatom-timeline-item .datatom-timeline-content.right:before {
+		    content: '';
+		    right: 42.5%;
+		    left: inherit;
+		    border-left: 0;
+		    border-right: 7px solid #003b79;
+		}
+		.datatom-nodata img{
+			width: 50%;
+		}
+		.datatom-color-red{
+			color: red;
+		}
+	</style>
+</head>
+<body class="mui-fullscreen">
+<div class="mui-content mui-fullscreen" style="padding-top: 10px;" id="content">
+	
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js" charset="UTF-8"></script>
+<script>
+	mui.init({
+		swipeBack: false
+	});
+	
+	var policenum = getPolicenum();
+	var token = getToken();
+	var realname = getRealname();
+	var date = getNowFormatDate();
+	
+	function callByAndroid(json){
+		var arr = eval("(" + json + ")");
+		alert(arr);
+		date = arr.date;
+		getData();
+	}
+	
+	function getData(){
+		var box = document.getElementById('content');
+		box.innerHTML = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
+		mui.ajax(basePath+'/osapi/user.php',{
+			data:{
+				action:'gettimeline',
+				policenum:policenum,
+				policename:realname,
+				date:date
+			},
+			beforeSend: function(request) {
+				request.setRequestHeader("U-Auth-Token", token);
+			},
+			dataType:'json',//服务器返回json格式数据
+			type:'GET',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			success:function(data){
+				if("200"==data.code){
+					var list = data.result;
+					var length = list.length;
+					var html = "";
+					html += '<div class="mui-content-padded mui-text-center"><p>'+realname+'：'+date+'</p></div>';
+					if(length<=0){
+						html += '<div class="mui-content-padded mui-text-center datatom-nodata"><img src="../../img/nodata.png"/></div>';
+					}
+					html += '<div id="datatom-timeline">';
+					mui.each(list,function(index,item){
+						var type = item.sjtype;
+						var num = parseInt(index+1);
+						if("1"==type){//指纹打卡
+							html += '<div class="datatom-timeline-item">';
+							html += '<div class="datatom-timeline-icon mui-icon iconfont datatom-icon-zhiwenjilu">';
+							if(0==num%2){
+								html += '</div><div class="datatom-timeline-content right"><h2>指纹打卡</h2>';
+							}else{
+								html += '</div><div class="datatom-timeline-content"><h2>指纹打卡</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>打卡时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>打卡地点:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.area+'</div></div>';
+							html += '</div></div>';
+						}
+						if("2"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-menjinjilu">';
+							if(0==num%2){
+								html += '</div><div class="datatom-timeline-content right"><h2>门禁打卡</h2>';
+							}else{
+								html += '</div><div class="datatom-timeline-content"><h2>门禁打卡</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>打卡时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>打卡地点:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.area_name+'</div></div>';
+							html += '</div></div>';
+						}
+						if("3"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-shitangjilu">';
+							if(0==num%2){
+								html += '</div><div class="datatom-timeline-content right"><h2>食堂打卡</h2>';
+							}else{
+								html += '</div><div class="datatom-timeline-content"><h2>食堂打卡</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>打卡时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>描述信息:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.check_desc+'</div></div>';
+							html += '</div></div>';
+						}
+						if("4"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-waiqin"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right">';
+							}else{
+								html += '<div class="datatom-timeline-content">';
+							}
+							html += '<h2>外勤GPS打卡</h2>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>打卡时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>开始时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.starttime+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>结束时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.endtime+'</div></div>';
+							html += '</div></div>';
+						}
+						if("5"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon mui-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤打卡</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤打卡</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>描述信息:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">外勤执勤打卡记录</div></div>';
+							html += '</div></div>';
+						}
+						if("11"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(违停告知)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(违停告知)</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>告知单编号:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.gzdbh+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法地址:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.wfdz+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.jdcsyr+'<br>'+item.clpp+'<br>'+item.clph;
+							html += '</span></div></div></div>';
+						}
+						
+						if("12"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(违法通知)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(违法通知)</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>通知书编号:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.tzsbh+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法地址:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.wfdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.dsr+'<br>'+item.clph+'</span></div></div></div>';
+						}
+						if("13"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(现场处罚)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(现场处罚)</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>决定书编号:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.jdsbh+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法地址:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.wfdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.dsr+'<br>'+item.clph+'</span></div></div></div>';
+						}
+						
+						if("14"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(强制措施)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(强制措施)</h2>';
+							}
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4"><label>强制措施凭证号:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.qzcspzh+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法地址:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.wfdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.dsr+'<br>'+item.clph+'</span></div></div></div>';
+						}
+						if("15"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(大型车查处登记)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(大型车查处登记)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">查处地点:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.ccdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">违法车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.cphm+'</span></div></div></div>';
+						}
+						if("16"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(事故信息采集)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(事故信息采集)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">事故地点:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.sgdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">事故车辆:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.cphm+'</span></div></div></div>';
+						}
+						if("17"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录执法类(通用信息采集)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录执法类(通用信息采集)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">查处地点:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.ccdd+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">驾驶人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.jsrxm+'</span></div></div></div>';
+						}
+						if("21"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录投诉类(车管驾业务)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录投诉类(车管驾业务)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">受理人:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.username+'</span></div></div></div>';
+						}
+						if("22"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录(交通管理类)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录(交通管理类)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">受理人:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.username+'</span></div></div></div>';
+						}
+						if("23"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录(交通事故类)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录(交通事故类)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">受理人:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.username+'</span></div></div></div>';
+						}
+						if("24"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录(执法投诉类)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录(执法投诉类)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">受理人:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.username+'</span></div></div></div>';
+						}
+						if("25"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录(审批业务类)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录(审批业务类)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-5 mui-col-xs-6"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-7 mui-col-xs-6">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-5 mui-col-xs-6">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-7 mui-col-xs-6">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-5 mui-col-xs-6">受理人:</label>';
+							html += '<span class="mui-col-sm-7 mui-col-xs-6">'+item.username+'</span></div></div></div>';
+						}
+						if("26"==type){
+							html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon iconfont datatom-icon-gps"></div>';
+							if(0==num%2){
+								html += '<div class="datatom-timeline-content right"><h2>外勤执勤记录(其它)</h2>';
+							}else{
+								html += '<div class="datatom-timeline-content"><h2>外勤执勤记录(其它)</h2>';
+							}							
+							html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4 datatom-color-red"><label>记录时间:</label></div>';
+							html += '<div class="mui-col-sm-9 mui-col-xs-8">'+item.hour+'</div></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">来访人姓名:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.visitpeoplename+'</span></div>';
+							html += '<div class="mui-row"><label class="mui-col-sm-3 mui-col-xs-4">受理人:</label>';
+							html += '<span class="mui-col-sm-9 mui-col-xs-8">'+item.username+'</span></div></div></div>';
+						}
+					});
+					
+					if(length>0){
+						html += '<div class="datatom-timeline-item"><div class="datatom-timeline-icon mui-icon mui-icon-locked"></div></div>';
+					}
+					html += '</div>';
+					box.innerHTML = html;
+				}else{
+					showWebviewToast(data.msg);
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				showWebviewToast('网络异常!');
+			}
+		});
+	}
+	
+	(function ($) {
+		
+		getData();
+		
+		setTitle(realname+'的时间轴');
+	})(mui);
+</script>
+</body>
+</html>

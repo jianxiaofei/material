@@ -1,0 +1,359 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>本月评价</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<style>
+			html,
+			body,
+			.mui-content {
+				background-color: #FFF;
+			}
+			
+			.mui-control-content {
+				background-color: white;
+				min-height: 115px;
+			}
+			
+			.mui-badge {
+				margin: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">本月评价</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">考勤记录</a>
+					<a class="mui-control-item" href="#item2mobile">工作日志</a>
+					<a class="mui-control-item" href="#item3mobile">异常处理</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<h5 class="mui-content-padded" style="padding: 15px 10px 15px 10px;">
+									本月考勤统计
+								</h5>
+								<div class="mui-col mui-col-xs-12" id="kqdetail" style="background-color: #FFF;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<h5 class="mui-content-padded" style="padding: 15px 10px 15px 10px;">
+									本月工作日志统计
+								</h5>
+								<div class="mui-col mui-col-xs-12" id="gzrzdetail" style="background-color: #FFF;">
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<h5 class="mui-content-padded" style="padding: 15px 10px 15px 10px;">
+									本月异常处理统计
+								</h5>
+								<div class="mui-col mui-col-xs-12" id="yccldetail" style="background-color: #FFF;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mui-content-padded">
+				<h5 id="jiabantime"></h5>
+			</div>
+			<div class="mui-content-padded">
+				<h5 id="timebank"></h5>
+			</div>
+			<div class="mui-content-padded">
+				<h5 style="clear: left;">工作纪律：<span id="gzjl-val">15</span></h5>
+				<div class="mui-input-row mui-input-range">
+					<input id="gzjl" type="range" value="15" min="0" max="20">
+				</div>
+				<h5 style="clear: left;">工作效率：<span id="gzxl-val">10</span></h5>
+				<div class="mui-input-row mui-input-range">
+					<input id="gzxl" type="range" value="10" min="0" max="15">
+				</div>
+				<h5 style="clear: left;">工作辛苦度：<span id="gzxkd-val">20</span></h5>
+				<div class="mui-input-row mui-input-range">
+					<input id="gzxkd" type="range" value="20" min="0" max="25">
+				</div>
+				<h5 style="clear: left;">工作业绩：<span id="gzyj-val">25</span></h5>
+				<div class="mui-input-row mui-input-range">
+					<input id="gzyj" type="range" value="25" min="0" max="30">
+				</div>
+				<h5 style="clear: left;">工作负荷：<span id="gzfh-val">7</span></h5>
+				<div class="mui-input-row mui-input-range">
+					<input id="gzfh" type="range" value="7" min="0" max="10">
+				</div>
+				<div class="mui-content-padded">
+					<h5 style="clear: left;text-align: center;">综合总分：<span id="total-val">77</span></h5>
+				</div>
+				<h5 style="clear: left;">评价内容：</h5>
+				<div class="mui-content-padded">
+					<textarea id="evaluateContent" rows="5" placeholder="请输入评价内容"></textarea>
+				</div>
+				<div class="mui-button-row">
+					<button id="submitEvaluate" type="button" class="mui-btn mui-btn-primary" style="width: 90%;height: 46px;">提交</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../../js/mui.min.js "></script>
+	<script src="../../../js/common.js" charset="UTF-8"></script>
+	<script>
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var policenum;
+		var usernum;
+		var token;
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			usernum = self.value;
+			policenum = plus.storage.getItem('policenum');
+			token = plus.storage.getItem('token');
+			
+				//监听input事件，获取range的value值，也可以直接element.value获取该range的值
+			var rangeList = document.querySelectorAll('input[type="range"]');
+			for(var i = 0, len = rangeList.length; i < len; i++) {
+				rangeList[i].addEventListener('input', function() {
+					document.getElementById(this.id + '-val').innerHTML = this.value;
+					var gzjl = document.getElementById('gzjl').value;
+					var gzxl = document.getElementById('gzxl').value;
+					var gzxkd = document.getElementById('gzxkd').value;
+					var gzyj = document.getElementById('gzyj').value;
+					var gzfh = document.getElementById('gzfh').value;
+					document.getElementById('total-val').innerHTML = parseInt(gzjl) + parseInt(gzxl) + parseInt(gzxkd) + parseInt(gzyj) + parseInt(gzfh);
+				});
+			}
+
+			//查询本月时间银行
+			mui.ajax(basePath + '/osapi/attendance.php', {
+				data: {
+					action: 'getOvertimSum',
+					policenum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						document.getElementById('timebank').innerHTML = "时间银行：" + Math.round(data.result.overtime_sum / 3600) + "小时";
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+
+			mui.ajax(basePath + '/osapi/attendance.php', {
+				data: {
+					action: 'getOvertimeByMonth',
+					policenum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						document.getElementById('jiabantime').innerHTML = "上月加班时长：" + data.times + "小时";
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+
+			//查询本月考勤统计
+			mui.ajax(basePath + '/osapi/evaluation.php', {
+				data: {
+					action: 'weekAttendanceCount',
+					policenum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						var list = data.result;
+						var length = list.length;
+						if(length <= 0) {
+							document.getElementById('kqdetail').innerHTML = '本月暂无考勤记录';
+						} else {
+							var html = "";
+							for(var i = 0; i < length; i++) {
+								var color = getRandomColor();
+								var detail = list[i];
+								html += '<span class="mui-badge" style="color:#fff;background-color:' + color + '">' + detail.name + '' + detail.count + '次</span>';
+							}
+							document.getElementById('kqdetail').innerHTML = html;
+						}
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+
+			//查询本月工作日志统计
+			mui.ajax(basePath + '/osapi/evaluation.php', {
+				data: {
+					action: 'monthWorkAttendanceCount',
+					policenum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						var list = data.result;
+						var length = list.length;
+						if(length <= 0) {
+							document.getElementById('gzrzdetail').innerHTML = '本月暂无工作日志';
+						} else {
+							var html = "";
+							for(var i = 0; i < length; i++) {
+								var color = getRandomColor();
+								var detail = list[i];
+								html += '<span class="mui-badge" style="color:#fff;background-color:' + color + '">' + detail.type + '' + detail.count + '次</span>';
+							}
+							document.getElementById('gzrzdetail').innerHTML = html;
+						}
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+
+			//查询本月异常统计
+			mui.ajax(basePath + '/osapi/evaluation.php', {
+				data: {
+					action: 'weekAuditAttendanceCount',
+					policenum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						var list = data.result;
+						var length = list.length;
+						if(length <= 0) {
+							document.getElementById('yccldetail').innerHTML = '本月暂无工作日志';
+						} else {
+							var html = "";
+							for(var i = 0; i < length; i++) {
+								var color = getRandomColor();
+								var detail = list[i];
+								html += '<span class="mui-badge" style="color:#fff;background-color:' + color + '">' + detail.name + '' + detail.count + '次</span>';
+							}
+							document.getElementById('yccldetail').innerHTML = html;
+						}
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+
+			//保存通知公告
+			document.getElementById("submitEvaluate").addEventListener("tap", function() {
+				var gzjl = document.getElementById('gzjl').value;
+				var gzxl = document.getElementById('gzxl').value;
+				var gzxkd = document.getElementById('gzxkd').value;
+				var gzyj = document.getElementById('gzyj').value;
+				var gzfh = document.getElementById('gzfh').value;
+				var evaluateContent = document.getElementById("evaluateContent").value;
+				if("" == evaluateContent || null == evaluateContent) {
+					mui.toast("评价内容不能为空!");
+					return;
+				}
+				mui.ajax(basePath + '/osapi/evaluation.php', {
+					data: {
+						action: 'addEvaluation',
+						content: evaluateContent,
+						policenum: policenum,
+						usernum: usernum,
+						discipline_score: gzjl,
+						efficiency_score: gzxl,
+						hard_score: gzxkd,
+						performance_score: gzyj,
+						load_score: gzfh
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							window.location.reload();
+							mui.toast("评价成功!");
+						} else {
+							mui.toast(data.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("网络异常");
+					}
+				});
+			});
+		})
+
+	</script>
+
+</html>

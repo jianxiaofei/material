@@ -1,0 +1,103 @@
+
+html {
+	font-size: 20px;
+}
+/**
+ * 设置输入框 placeholder字体样式
+ */
+input::-webkit-input-placeholder {
+		color: #D6D0CA !important; 
+		font-size: .8rem;
+	}
+
+input:-moz-placeholder {
+		color: #D6D0CA !important; 
+		font-size: .8rem;
+	}
+
+input::-moz-placeholder {
+		color: #D6D0CA !important; 
+		font-size: .8rem;
+	}
+
+input:-ms-input-placeholder {
+		color: #D6D0CA !important; 
+		font-size: .8rem;
+	}
+
+/*
+ * 设置顶部标题栏背景颜色 全局统一
+ */
+.mui-bar-nav{
+	background-color: #1ac2ff;
+}
+
+.mui-bar-nav .mui-title{
+	color: #FFF;
+	text-align: left;
+}
+
+.own-btn-green{
+	background-color: #1ac2ff;
+	color: #FFF;
+}
+
+.help-button-row{
+	bottom: 0;
+    position: absolute;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.help-font-size{
+	color: #1ac2ff;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	padding-bottom: 5px;
+}
+
+/*详情*/
+body,.mui-content {
+	background-color: #ffffff;
+}
+
+.box {
+	
+}
+
+.mui-media-body {
+	color:#888888;
+}
+
+.box_content {
+	padding-top: 1%;
+	width: 91%;
+	min-height: 6rem;
+	margin: 1% auto;
+	color: #888888;
+	font-size: .7rem;
+	font-weight: 400;
+}
+
+.mui-table-view:after,.mui-table-view:before{
+	background-color: #ffffff;
+}
+
+.box_content span{
+	display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}
+
+.box_content div {
+	font-size: .6rem;
+	font-weight: 100;
+}
+
+.mui-table-view-cell:after {
+	right:.9rem;
+}
+

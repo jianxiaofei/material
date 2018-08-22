@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>新增通知公告</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		<style>
+			.mui-content p {
+				padding: 10px 15px 0;
+			}
+			
+			.mui-content textarea {
+				height: 100px;
+				margin-bottom: 0 !important;
+				padding-bottom: 0 !important;
+				border: none !important;
+			}
+			
+			.mui-content input {
+				border: none !important;
+			}
+			
+			.attachment-list img {
+				width: 20px !important;
+				height: 20px !important;
+				line-height: 20px !important;
+			}
+			
+			.datatom-icon-delete {
+				color: red;
+			}
+			
+			.mui-content-padded {
+				position: relative;
+				padding-left: 0;
+				list-style: none;
+				background-color: #fff;
+				margin: 0;
+			}
+			
+			.datatom-row {
+				position: relative;
+				overflow: hidden;
+				padding: 11px 15px;
+				-webkit-touch-callout: none;
+			}
+			
+			.datatom-row:after {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 15px;
+				height: 1px;
+				content: '';
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
+				display: inline-block;
+			}
+			
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body class="mui-fullscreen">
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title" style="color: #FFFFFF; font-weight:bold;">新增通知公告</h1>
+		</header>
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" id="gallery">
+					<a href="#">相册</a>
+				</li>
+				<li class="mui-table-view-cell" id="take_photo">
+					<a href="#">拍照</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#picture"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+		<div class="mui-content mui-fullscreen" id="mui-content">
+			<p>标题</p>
+			<div class="row mui-input-row">
+				<input id="title" type="text" class="mui-input-clear title" placeholder="请输入标题" data-input-clear="20">
+			</div>
+			<p>部门</p>
+			<div class="row mui-input-row">
+				<select id="department" class="mui-input-clear contact">
+
+				</select>
+			</div>
+			<p>内容</p>
+			<div class="row mui-input-row">
+				<textarea id="content" class="mui-input-clear content" placeholder="请输入内容"></textarea>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#picture" class="mui-navigate-right">
+						选择附件
+					</a>
+				</li>
+			</ul>
+			<div class="mui-content-padded" id="attachment-list">
+
+			</div>
+			<div class="mui-button-row" style="margin-top: 20px;margin-bottom: 20px;">
+				<button id="submitAddNotice" type="button" class="mui-btn" style="background-color: #003b79;width: 90%;height: 46px;color: #FFF;">提交</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/utils.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/common.js" charset="UTF-8"></script>
+		<script>
+			var token;
+			var policenum;
+			var realname;
+			var department;
+			var userid;
+			var special_notice_creator = ["005985"];
+			var attachments = [];
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					drag: true, //默认为true
+					hold: true, //默认为false，不监听
+					release: true //默认为false，不监听
+				},
+				swipeBack: false
+			});
+			mui.plusReady(function() {
+				token = plus.storage.getItem('token');
+				policenum = plus.storage.getItem('policenum');
+				realname = plus.storage.getItem('realname');
+				department = plus.storage.getItem('departmentid');
+				userid = plus.storage.getItem('userid');
+				
+				//图片选择
+				document.getElementById('gallery').addEventListener('tap', function() {
+					mui('.mui-popover-bottom').popover('toggle');
+					// 从相册中选择图片
+					console.log("从相册中选择多张图片:");
+					plus.gallery.pick(function(e) {
+						for(var i in e.files) {
+							var curName = getFileName(e.files[i]);
+							createUpload(e.files[i], curName);
+//							console.log(e.files[i]);
+							var li = document.createElement('li');
+							li.className = "mui-table-view-cell mui-media";
+							li.innerHTML += '<a class="attachment-list">' +
+								'<img class="mui-media-object mui-pull-left" src="' + e.files[i] + '" data-preview-src="" data-preview-group="1"/>' +
+								'<div class="mui-media-body"><p class="mui-pull-right" style="padding:0px;"><span class="deleteAttachment mui-icon iconfont datatom-icon-delete" data-key="' + 12 + '"></span></p>' +
+								'</div></a>';
+							document.getElementById('attachment-list').appendChild(li);
+						}
+					}, function(e) {
+						console.log("取消选择图片");
+					}, {
+						filter: "image",
+						multiple: true
+					});
+
+				});
+				//拍照
+				document.getElementById('take_photo').addEventListener('tap', function() {
+					mui('.mui-popover-bottom').popover('toggle');
+					var cmr = plus.camera.getCamera();
+					var res = cmr.supportedImageResolutions[0];
+					var fmt = cmr.supportedImageFormats[0];
+					LL("Resolution: " + res + ", Format: " + fmt);
+					cmr.captureImage(function(path) {
+							LL(path);
+							//var fname = item.name;
+							var localPath = "file://" + plus.io.convertLocalFileSystemURL(path);
+							var curName = getFileName(localPath);
+							createUpload(localPath, curName);
+							var li = document.createElement('li');
+							li.className = "mui-table-view-cell mui-media";
+							li.innerHTML += '<a class="attachment-list">' +
+								'<img class="mui-media-object mui-pull-left" src="' + localPath + '" data-preview-src="" data-preview-group="1"/>' +
+								'<div class="mui-media-body"><p class="mui-pull-right" style="padding:0px;"><span class="deleteAttachment mui-icon iconfont datatom-icon-delete" data-key="' + 12 + '"></span></p>' +
+								'</div></a>';
+							document.getElementById('attachment-list').appendChild(li);
+						},
+						function(error) {
+							alert("Capture image failed: " + error.message);
+						}, {
+							resolution: res,
+							format: fmt
+						}
+					);
+
+				});
+
+
+			//获取部门信息
+			mui.ajax(basePath + '/osapi/police_notice.php', {
+				data: {
+					action: 'getDepartmentsInfo',
+					departmentid: department
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(data.code == "200") {
+						var select = document.getElementById('department');
+						var html = "";
+						mui.each(special_notice_creator, function(index, item) {
+							if(item == policenum) {
+								html += '<option value="1">贵阳市交通管理局</option>';
+							}
+						});
+						mui.each(data.result, function(index, item) {
+							html += '<option value="' + item.departmentid + '">' + item.departmentname + '</option>';
+						});
+						select.innerHTML = html;
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+			});
+			//上传附件
+			function createUpload(path, filename) {
+				var task = plus.uploader.createUpload("http://58.42.244.74:8088/apps/task/saveattachment", {
+						method: "POST",
+						blocksize: 204800,
+						priority: 100
+					},
+					function(t, status) {
+						// 上传完成
+						if(status == 200) {
+							mui.toast('上传成功'+t.responseText);
+							plus.nativeUI.closeWaiting();
+						} else {
+							mui.toast('上传失败');
+							plus.nativeUI.closeWaiting();
+						}
+					}
+				);
+				task.addFile(path, {
+					key: "myfile"
+				});
+				task.addData("id", filename);
+				//task.addEventListener( "statechanged", onStateChanged, false );
+				task.start();
+				plus.nativeUI.showWaiting('正在上传……');
+			}
+			function callByAndroid(json) {
+				var arr = eval("(" + json + ")");
+				var files = arr.files;
+				var length = files.length;
+				for(var i = 0; i < length; i++) {
+					attachments.push(files[i]);
+				}
+				for(var i = 0; i < length; i++) {
+					var item = files[i];
+					var fname = item.name;
+					var sonDiv = document.createElement("div");
+					sonDiv.className = "mui-row datatom-row";
+					sonDiv.innerHTML = '<div class="mui-col-sm-1 mui-col-xs-1 mui-text-center">' +
+						'<img width="20px" height="20px" data-preview-src="" data-preview-group="1" src="http://58.42.244.76:8088/api/cluster/storage/file/download?fileid=' + item.id + '&ACCESS-TOKEN=X7yABwjE20sUJLefATUFqU0iUs8mJPqEJo6iRnV63mI="/>' +
+						'</div><div class="mui-col-sm-10 mui-col-xs-10">' +
+						'<p style="margin: 0;padding: 0;">' + fname.substring(fname.length - 20, fname.length) + '</p>' +
+						'</div><div class="mui-col-sm-1 mui-col-xs-1 mui-text-center">' +
+						'<span class="deleteAttachment mui-icon iconfont datatom-icon-delete" data-key="' + item.id + '"></span>' +
+						'</div>';
+					document.getElementById('attachment-list').appendChild(sonDiv);
+				}
+			}
+
+			//删除附件:暂时服务器的未删除  只删除了页面显示的
+			mui("#attachment-list").on("tap", "span.deleteAttachment", function() {
+				//
+				this.parentNode.parentNode.remove();
+				var key = this.getAttribute("data-key");
+				var arr = [];
+				mui.each(attachments, function(index, item) {
+					if(item.id != key) {
+						arr.push(item);
+					}
+				});
+				attachments = arr;
+			});
+			
+			
+			//添加附件
+//			document.getElementById('selectFile').addEventListener("tap", function() {
+//				window.javaInterface.doFileSelect();
+//			});
+			//保存通知公告
+			document.getElementById("submitAddNotice").addEventListener("tap", function() {
+				var title = document.getElementById("title").value;
+				var selectdepartment = document.getElementById("department").value;
+				var content = document.getElementById("content").value;
+				var imageurls = JSON.stringify(attachments);
+				imageurls = imageurls.replace(/{\"id/g, "{\"fid");
+
+				var range = 0;
+				if(selectdepartment == 1) {
+					range = 5;
+				}
+				if("" == title || null == title) {
+					showWebviewToast("标题不能为空!");
+					return;
+				}
+				if("" == content || null == content) {
+					showWebviewToast("内容不能为空!");
+					return;
+				}
+				if("" == selectdepartment || null == selectdepartment) {
+					showWebviewToast("部门不能为空!");
+					return;
+				}
+				mui.toast(imageurls);
+				mui.ajax(basePath + '/osapi/police_notice.php', {
+					data: {
+						action: 'createNotice',
+						content: content,
+						title: title,
+						creator: policenum,
+						realname: realname,
+						imageurls: imageurls,
+						userico: userid,
+						departmentid: selectdepartment,
+						range: range
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							mui.back();
+							showWebviewToast("发布成功!");
+						} else {
+							showWebviewToast(data.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						showWebviewToast("网络异常");
+					}
+				});
+			});
+			mui.previewImage();
+		</script>
+	</body>
+
+</html>

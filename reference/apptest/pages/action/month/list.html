@@ -1,0 +1,140 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：每月一评
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>每月一评</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-content .mui-table-view:first-child {
+			    margin-top: 15px;
+			}
+			p {
+				text-indent: 22px;
+			}
+			.mui-table-view .mui-media-object{
+				width: 42px;
+			}
+		</style>
+	</head>
+
+	<body >
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">每月一评</h1>
+		</header>
+		<div class="mui-content">
+				<div class="mui-scroll">
+					<div class="mui-content-padded">
+						<h5>直属下属列表</h5>
+					</div>
+					<ul class="mui-table-view">
+						
+					</ul>
+					<div class="content-block" style="margin-bottom: 10px;">
+						<i class="mui-icon mui-icon-info-filled" style="color: #888;font-size: 1rem;">
+							<p style="color: #888;font-size: .8rem;">友情提示：</p>
+							<p style="color: #888;font-size: .8rem;">直属下属信息左滑可每月评价、拨打电话等。</p>
+						</i>
+					</div>
+				</div>
+		</div>
+	</body>
+	<script src="../../../js/mui.min.js "></script>
+	<script src="../../../js/common.js" charset="UTF-8"></script>
+	<script>
+		mui.init();
+		//初始化单页的区域滚动
+		var policenum ;
+		var token ;
+		mui.plusReady(function() {
+				policenum = plus.storage.getItem('policenum');
+				token = plus.storage.getItem('token');
+				mui.ajax(basePath+'/osapi/evaluation.php',{
+				data:{
+					action:'myImmediateSubordinates',
+					policenum:policenum
+				},
+				beforeSend: function(request) {
+                    request.setRequestHeader("U-Auth-Token", token);
+                },
+				dataType:'json',//服务器返回json格式数据
+				type:'POST',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					if(data.code=="200"){
+						var list = data.result;
+						var length = list.length;
+						var ul = document.body.querySelector(".mui-table-view");
+						var fragment = document.createDocumentFragment();
+						if(length<=0){
+							var li = document.createElement('li');
+							li.className = "mui-table-view-cell mui-media";
+							li.innerHTML = '<p>暂无直属下属</p>';
+							fragment.appendChild(li);
+						}else{
+							for(var i=0;i<length;i++){
+								var item = list[i];
+								var html = "";
+								var li = document.createElement('li');
+								li.className = "mui-table-view-cell";
+								html += '<div class="mui-slider-right mui-disabled">';
+								html += '<a class="mui-btn mui-btn-purple mui-icon mui-icon-star-filled addMonthEvaluate" data-key="'+item.policenum+'"></a>';//紫色
+								html += '<a class="mui-btn mui-btn-success mui-icon mui-icon-eye listEvaluate" data-key="'+item.policenum+'"></a>';//成功
+								html += '<a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone" href="tel:'+item.mobile+'"></a></div>';//打电话
+								html += '<div class="mui-slider-handle"><a class="mui-navigate-right" href="javascript:void(0);">';
+								html += '<img class="mui-media-object mui-pull-left" src="'+basePath+'/osapi/avantar.php?policenum='+item.policenum+'">';
+								html += '<div class="mui-media-body">'+item.realname+'('+item.jobposition+')';
+								html += '<p class="mui-ellipsis">'+item.departmentname+'</p></div></a></div>';
+								li.innerHTML = html;
+								fragment.appendChild(li);
+							}
+						}
+						ul.appendChild(fragment);
+					}else{
+						showWebviewToast(data.msg);
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					mui.toast("网络异常");
+				}
+			});
+			
+			mui('.mui-table-view').on('tap', 'a.listEvaluate',function() {
+				var key = this.getAttribute("data-key");
+				mui.openWindow({url:"judgements.html",
+					id:"judgements.html",
+					 extras: {  
+	        			value:key
+	    			}  }
+				);
+			
+			});
+			
+			mui('.mui-table-view').on('tap', 'a.addMonthEvaluate',function() {
+				var key = this.getAttribute("data-key");
+//				window.location.href= "evaluate.html?usernum="+key;
+				mui.openWindow({url:"evaluate.html",
+					id:"evaluate.html",
+					 extras: {  
+	        			value:key
+	    			}  }
+				);
+			});
+			});
+//		mui('.mui-scroll-wrapper').scroll();
+	</script>
+
+</html>
