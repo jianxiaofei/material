@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+    }
+
+    img {
+        max-width: 500px;
+        height: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="img-wrap">
+        <img src="" alt="">
+    </div>
+    <div id="btn-wrap">
+        <button id="btn-prev">上一张</button>
+        <button id="btn-next">下一张</button>
+    </div>
+    <script>
+    (function(window, undefined) {
+        function JxfSub(cfg) {
+            var config = cfg || {};
+            this.count = 0;
+            this.loader = [];
+            this.get = function(n) {
+                return config[n];
+            };
+            this.set = function(n, v) {
+                config[n] = v;
+            };
+            this.init();
+        }
+        JxfSub.prototype = {
+            init: function() {
+                this.createDom();
+                this.bindEvent();
+                this.createImg();
+            },
+            $: function(el) {
+                var dom;
+                switch (true) {
+                    case el.slice(0, 1) === '#':
+                         dom = document.getElementById(el.slice(1));
+                        break;
+                    case el.slice(0,1) === '.':
+                         dom = document.getElementsByClassName(el.slice(1));
+                    default:
+                        dom = document.getElementsByTagName(el);
+                        break;
+                }
+                return dom;
+            },
+            createDom: function() {
+                var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+                    "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
+                    "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+                    "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
+                ];
+                this.set("btn_wrap", this.$('#btn-wrap'));
+                this.set("img_wrap", this.$('#img-wrap'));
+                this.set("httpImg", httpImg);
+            },
+            bindEvent: function() {
+                var that = this;
+                var btn_wrap = this.get('btn_wrap');
+                btn_wrap.addEventListener('click', function(e) {
+                    that.renderImg(e.target.id);
+                }, true);
+            },
+            renderImg: function(ID) {
+                var httpImg = this.get('httpImg');
+                var img_wrap = this.get('img_wrap');
+                this.count = ID == 'btn-prev' ? Math.max(1, this.count -= 1) : Math.min(httpImg.length, this.count += 1);
+                img_wrap.replaceChild(this.loader[this.count - 1], img_wrap.firstElementChild);
+                this.loader.length < httpImg.length && this.createImg(); //避免重复创建image对象
+            },
+            createImg: function() {
+                var httpImg = this.get('httpImg');
+                var img = new Image();
+                img.src = httpImg[this.count];
+                this.loader.push(img);
+            }
+        };
+        var obj = new JxfSub();
+        window.$ = obj.$;
+    }(window));
+    console.log($("#btn-prev"))
+    </script>
+</body>
+
+</html>

@@ -18,17 +18,17 @@
 
 <body>
     <div id="img-wrap">
-        <img src="" alt="">
+        <img id="img" src="" alt="">
     </div>
     <div id="btn-wrap">
         <button id="btn-prev">上一张</button>
         <button id="btn-next">下一张</button>
     </div>
     <script>
-    var httpImg = ["http://s2.sinaimg.cn/middle/6562097dg814b9bc5f441&690&690",
-        "http://photocdn.sohu.com/20150907/mp30906533_1441629699374_2.jpeg",
-        "http://img.19196.com/uploads/151126/9-151126095P51b.jpg",
-        "http://img06.tooopen.com/images/20161121/tooopen_sy_187362418112.jpg"
+    var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
     ];
     var btn_wrap = document.getElementById('btn-wrap');
     var img_wrap = document.getElementById('img-wrap');
@@ -36,9 +36,20 @@
     var loader = [];
 
     function renderImg(ID) {
-        count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
-        img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
-        loader.length < httpImg.length && createImg(count);
+        function currentCount() {
+            return count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
+        }
+
+        function replaceDom() {
+            currentCount()
+            img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
+        }
+
+        function preloaderImg() {
+            loader.length < httpImg.length && createImg(count);
+        }
+        replaceDom();
+        preloaderImg();
     }
 
     function createImg(count) {

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+    }
+
+    img {
+        max-width: 500px;
+        height: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="img-wrap">
+        <img id="img" src="" alt="">
+    </div>
+    <div id="btn-wrap">
+        <button id="btn-prev">上一张</button>
+        <button id="btn-next">下一张</button>
+    </div>
+    <script>
+    function Preloader(cfg) {
+        this.count = 0;
+        this.loader = [];
+        this.httpImg = cfg.httpImg;
+        this.imgObj = cfg.imgObj;
+        var config = cfg || {};
+        this.createImg(this.count);
+    }
+    Preloader.prototype = {
+
+        changeCount: function(btn) {
+            if (btn == 'btn-prev') {
+                this.count = Math.max(1, this.count -= 1);
+            } else {
+                this.count = Math.min(httpImg.length, this.count += 1);
+            }
+            return this.count;
+        },
+        replaceImg: function(btn) {
+            this.changeCount(btn);
+            this.imgObj.replaceChild(this.loader[this.count - 1], this.imgObj.firstElementChild);
+            this.createImg(); //预创建image对象
+        },
+        createImg: function() {
+            if (this.count == this.httpImg.length) return; //避免重复创建对象
+            var img = new Image();
+            img.src = this.httpImg[this.count];
+            this.loader.push(img);
+        }
+    }
+
+    var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
+    ];
+
+    var obj = new Preloader({
+        httpImg: httpImg,
+        imgObj: document.getElementById('img-wrap'),
+    });
+    var btn_wrap = document.getElementById('btn-wrap');
+    btn_wrap.addEventListener('click', function(e) {
+        e.stopPropagation();
+        obj.replaceImg(e.target.id);
+    }, true);
+    </script>
+</body>
+
+</html>
