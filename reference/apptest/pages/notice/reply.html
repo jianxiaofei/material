@@ -1,0 +1,108 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>回复</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.mui-switch.mui-active {
+			    border-color: #003b79;
+			    background-color: #003b79;
+			}
+		</style>
+	</head> 
+	<body class="mui-fullscreen">
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title" style="color: #FFFFFF; font-weight:bold;">回复</h1>
+		</header>
+		<div class="mui-content mui-fullscreen">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" style="padding:0;">
+					<div class="mui-input-row">
+						<label id="isTrueName">实名</label>
+						<div class="mui-switch mui-switch-mini mui-active" id="reply-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell" style="padding:0;">
+					<div class="mui-input-row">
+						<label>回复内容</label>
+						<textarea id="content" cols="*" rows="5" placeholder="请输入回复内容(必填)"></textarea>
+					</div>
+				</li>
+			</ul>
+			<div class="mui-button-row" style="margin-top: 20px;">
+				<button id="submitReply" type="button" class="mui-btn" style="width: 90%;height: 46px;color: #fff;background-color: #003b79;" onclick="return false;">提交</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js" charset="UTF-8"></script>
+		<script src="../../js/common.js" charset="UTF-8"></script>
+		<script>
+			//replyway  1 匿名 0 实名
+			mui.init();
+			var token;
+			var policenum;
+			var realname;
+			var ids;
+			mui.plusReady(function () {
+				token=plus.storage.getItem('token');
+				policenum=plus.storage.getItem('policenum');
+				realname=plus.storage.getItem('realname');
+			    var self = plus.webview.currentWebview();
+				ids = self.ids;
+				mui.toast(ids);
+			})
+			document.getElementById('submitReply').addEventListener("tap",function(){
+				var content = document.getElementById('content').value;
+				if(null==content||""==content||undefined==content){
+					window.javaInterface.showWebviewToast("回复内容不能为空!");
+					return;
+				}
+				var replyway = 0;
+				
+				if(!document.getElementById('reply-switch').classList.contains('mui-active')){
+					replyway = 1;		
+				}
+				mui.ajax(basePath+'/osapi/police_topic.php',{
+					data:{
+						action:'createTopicComment',
+						replycontent:content,
+						topicid:ids,
+						replytype:"0",
+						creator:policenum,
+						realname:realname,
+						replyway:replyway,
+						topolice:""
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'POST',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(data.code=="200"){
+							showWebviewToast("回复成功!");
+							window.history.go(-1);
+						}else{
+							showWebviewToast(data.msg);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						mui.toast('网络异常!');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

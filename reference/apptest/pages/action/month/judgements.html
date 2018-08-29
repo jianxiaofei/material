@@ -1,0 +1,108 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：历史评价列表
+-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>历史评价列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<style>
+			html,
+			body,
+			.mui-content {
+				background-color: #FFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">历史评价列表</h1>
+		</header>
+		<div class="mui-content">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="list">
+
+					</ul>
+				</div>
+		</div>
+	</body>
+	<script src="../../../js/mui.min.js "></script>
+	<script src="../../../js/common.js" charset="UTF-8"></script>
+	<script>
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var usernum;
+		var token;
+		var policenum;
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			usernum = self.value;
+			policenum = plus.storage.getItem('policenum');
+			token = plus.storage.getItem('token');
+			mui.ajax(basePath + '/osapi/evaluation.php', {
+				data: {
+					action: 'listEvaluation',
+					usernum: usernum
+				},
+				beforeSend: function(request) {
+					request.setRequestHeader("U-Auth-Token", token);
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'POST', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if("200" == data.code) {
+						var list = data.result;
+						var length = list.length;
+						var ul = document.getElementById('list');
+						ul.innerHTML = null;
+						var fragment = document.createDocumentFragment();
+						if(length <= 0) {
+							var li = document.createElement('li');
+							li.className = "mui-table-view-cell mui-media";
+							li.innerHTML = '<p>本月暂无评价</p>';
+							fragment.appendChild(li);
+						} else {
+							for(var i = 0; i < length; i++) {
+								var item = list[i];
+								var html = "";
+								var li = document.createElement('li');
+								li.className = "mui-table-view-cell mui-collapse";
+								html += '<a class="mui-navigate-right">';
+								html += '<img class="mui-media-object mui-pull-left" src="' + basePath + '/osapi/avantar.php?policenum=' + usernum + '">';
+								html += '<div class="mui-media-body">' + item.realname + '(' + item.jobposition + ')<p class="mui-pull-right" style="margin-right: 20px;">' + item.date + '</p>';
+								html += '<p class="mui-ellipsis" style="text-indent:2rem;">' + item.content + '</p>';
+								html += '<p class="mui-ellipsis"">' + item.starttime.substring(0, 10) + '至' + item.endtime.substring(0, 10) + '</p>';
+								html += '</div></a><div class="mui-collapse-content"><p>工作纪律：' + item.discipline_score + '分</p>';
+								html += '<p>工作效率：' + item.efficiency_score + '分</p>';
+								html += '<p>工作辛苦度：' + item.hard_score + '分</p>';
+								html += '<p>工作业绩：' + item.performance_score + '分</p>';
+								html += '<p>工作负荷：' + item.load_score + '分</p>';
+								html += '</div>';
+								li.innerHTML = html;
+								fragment.appendChild(li);
+							}
+						}
+						ul.appendChild(fragment);
+					} else {
+						mui.toast(data.msg);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast("网络异常");
+				}
+			});
+		});
+	</script>
+
+</html>

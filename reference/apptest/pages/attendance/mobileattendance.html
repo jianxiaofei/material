@@ -1,0 +1,113 @@
+<!--
+ 	模块： 移动考勤申请
+	作者：836110252@qq.com
+	时间：2016-05-29
+	描述：
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>移动考勤申请</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.mui-input-group .mui-input-row:after{
+				left: 0;
+			}
+			.mui-radio label{
+				color: #888;
+			}
+		</style>
+	</head>
+
+	<body class="mui-fullscreen">
+		<div class="mui-content mui-fullscreen">
+			<div class="mui-row mui-card">
+				<i class="mui-icon mui-icon-info-filled" style="color: #888;font-size: .8rem;">友情提示:</i>
+				<p style="color: #888;font-size: .8rem;text-indent: 20px;">
+					1、时间为09:00至17:00的排班,需要提交移动考勤申请,上级审批通过之后才能进行移动考勤打卡,其它排班时间不限。
+				</p>
+				<p style="color: #888;font-size: .8rem;text-indent: 20px;">
+					2.申请完成后去我的申请-考勤下面查询申请审批结果。
+				</p>
+			</div>
+			<div class="mui-card">
+				<form class="mui-input-group" id="form">
+					<div class="mui-input-row mui-text-center" style="line-height: 40px;">
+						<p style="color: #888;font-size: 1rem;margin-bottom: 0;" id="nowDate"></p>
+					</div>
+					<div class="mui-input-row mui-radio">
+						<label>09:00-17:00</label>
+						<input name="radio" value="1" type="radio" checked="checked">
+					</div>
+				</form>
+			</div>
+			<div class="mui-card">
+				<textarea id="content" rows="7" placeholder="请输入申请事由" style="margin: 0;"></textarea>
+			</div>
+			<div class="mui-button-row" style="margin-top: 20px;margin-bottom: 20px;">
+				<button id="submitAdd" type="button" class="mui-btn" style="background-color: #003b79;width: 90%;height: 46px;color: #FFF;">提交</button>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/mui.min.js "></script>
+	<script src="../../js/common.js" charset="UTF-8"></script>
+	<script>
+		mui.init();
+		//初始化单页的区域滚动
+		var policenum = getPolicenum();
+		var token =getToken();
+		
+		(function($) {
+			
+			document.getElementById("nowDate").innerHTML = getNowFormatDate();
+			
+			document.getElementById('submitAdd').addEventListener("tap",function(){
+				var applyContent = document.getElementById('content').value;
+				if(null==applyContent||""==applyContent||undefined==applyContent){
+					showWebviewToast("请输入申请事由");
+					return;
+				}
+				var type = document.querySelector('[name="radio"]:checked').value;
+				var startTime = getNowFormatDate()+" 09:00:00";
+				var endTime = getNowFormatDate()+" 09:00:00";
+				if(1==type){
+					startTime = getNowFormatDate()+" 09:00:00";
+					endTime = getNowFormatDate()+" 17:00:00";
+				}
+				mui.ajax(basePath+'/osapi/attendance.php',{
+					data:{
+						action:'applyMoveAudit',
+						policenum:policenum,
+						startTime:startTime,
+						endTime:endTime,
+						applyContent:applyContent
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'GET',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if("200"==data.code){
+							window.location.reload();
+							showWebviewToast("移动考勤申请成功,请等待上级审批!");
+						}else{
+							showWebviewToast(data.msg);
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						showWebviewToast("网络异常!");
+					}
+				});
+			});
+			
+			setTitle('移动考勤申请');  //设置title
+		})(mui);
+	</script>
+
+</html>

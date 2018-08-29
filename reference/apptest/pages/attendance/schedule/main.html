@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/calendar.css" rel="stylesheet" />
+		<style>
+			#calendar {
+				padding-top: 34px;
+			}
+			
+			#workdaymessage{
+				background-color: #4CD964;
+				padding-top: 20px;
+				padding-bottom: 10px;
+				padding-left: 10px;
+				color: #000000;
+				font-size: 15px;
+			}
+			#ondutydaymessage{
+				background-color: #0099FF;
+				padding-top: 20px;
+				padding-bottom: 10px;
+				padding-left: 10px;
+				color: #000000;
+				font-size: 15px;
+				margin-top: 2px;
+			}
+			.mui-ellipsis{
+				color: #666666;
+				padding-top: 5px;
+			}
+			
+		</style>
+	</head>
+
+	<body id="body">
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">考勤管理</h1>
+		</header>
+		<div id="calendar" class="mui-content">
+
+		</div>
+		<div id="time" style="background:#F1F1F1;padding: 10px;">
+		</div>
+		<div id="message" style="background:#FFFFFF;padding: 10px">
+			没有排班信息
+		</div>
+		<div id="messagebox"></div>
+		<!--<div id="workdaymessage">
+			行政工作日
+			<p class='mui-ellipsis'>行政排班：9:00至17:00</p>
+		</div>
+		<div id="ondutydaymessage">
+			行政工作日
+			<p class='mui-ellipsis'>指挥中心夜班：9:00至17:00</p>
+		</div>-->
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../js/common.js" charset="UTF-8"></script>
+		<script src="../../../js/calendar.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/utils.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var firstDay = '2017-08-01';
+			var lastDay = '2017-09-01';
+			var mondays;
+			var workDataArr; //行政工作日数组
+			var ondutyDataArr //值班数组
+			var ondutyDataArrTemp; //临时数组
+			var date;
+			mui.init();
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem('policenum');
+				token = plus.storage.getItem('token');
+				realname = plus.storage.getItem('realname');
+
+				date = getNowFormatDate();
+				document.getElementById("time").innerHTML = date;
+				var preMonthClickListener;
+				var cld = new Calendar({
+					el: 'calendar',
+					value: '', // 默认为new Date();
+					callback: function(obj) {
+						//obj = Object {year: 2017, month: "8", day: "10", week: "星期四"}
+						date = '';
+						date += obj.year;
+						date += '-';
+						date += obj.month.length==1?'0'+obj.month:obj.month;
+						date += '-';
+						date += obj.day.length==1?'0'+obj.day:obj.day;;
+						document.getElementById("time").innerHTML = date;
+						var dayEl=document.getElementById(obj.day);
+						var body=document.getElementById('messagebox');
+						body.innerHTML="";
+						var workdiv = document.createElement("div");
+						var ondutydiv= document.createElement("div");
+						var html=''
+//						dayEl.setAttribute("work", "0");
+//						dayEl.setAttribute("onduty", "0");
+						var isWork=dayEl.getAttribute('work');
+						var isOnduty=dayEl.getAttribute('onduty');
+						if(isWork!='1' && isOnduty!='1'){
+							document.getElementById('message').classList.remove('mui-hidden');
+						}
+						
+						if(isWork=='1')
+						{
+							document.getElementById('message').classList.add('mui-hidden');
+							html+='<div id="workdaymessage">行政工作日';
+							html+='<p class="mui-ellipsis">行政排班：9:00至17:00</p>';
+							html+='</div>';
+							body.innerHTML+=html;
+						}
+						html="";
+						if(isOnduty=='1'){
+							document.getElementById('message').classList.add('mui-hidden');
+							html+='<div id="ondutydaymessage">非外勤值班';
+							html+='<p class="mui-ellipsis">行政排班：'+dayEl.getAttribute('begintime')+'至'+dayEl.getAttribute('endtime')+'</p>';
+							html+='</div>';
+							body.innerHTML+=html;
+						}
+						
+						
+						
+					},
+					callbackPre: function(year, month) {
+						setFirstAndLastDate(year, month.length == 1 ? '0' + month : month);
+						mui.toast(firstDay + '----' + lastDay);
+						getData(policenum, firstDay, lastDay);
+					},
+					callbackFor: function(year, month) {
+						setFirstAndLastDate(year, month.length == 1 ? '0' + month : month);
+						mui.toast(firstDay + '----' + lastDay);
+						getData(policenum, firstDay, lastDay);
+					}
+				});
+
+				var getData = function(policenum, firstDay, lastDay) {
+					var url = basePath + '/osapi/arrange.php?action=getallscheduleinfo&policenum=' + policenum + '&firstDay=' + firstDay + '&lastDay=' + lastDay;
+					mui.ajax(url, {
+						data: {
+
+						},
+						beforeSend: function(request) {
+							request.setRequestHeader("U-Auth-Token", token);
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(data.code != 200) {
+								mui.toast('请求失败');
+								return;
+							}
+							workDataArr = data.schedule.administration;
+							ondutyDataArr = data.schedule.onduty;
+							ondutyDataArr = sortOndutyData(ondutyDataArr);
+							//"time": "2017-08-01 00:00:00", 
+							//"type": "1", 
+							//"policenum": "007042", 
+							//"id": "426563", 
+							//"name": "罗文武"
+
+							//begintime:"09:00:00"
+							//coordinate:"null"
+							//endtime:"24:00:00"
+							//id:"156988"
+							//name:"罗文武"
+							//policenum:"007042"
+							//positioname:"非外勤值班"
+							//positionid:"0"
+							//time:"2017-08-02"
+							//type:"2"
+
+							var j = 0; //行政工作日循环
+							var k = 0; //外勤值班循环
+							for(i = 1; i <= mondays; i++) { //以当月日期作为循环条件
+								var dayEl = document.getElementById(i);
+								dayEl.setAttribute("work", "0");
+								dayEl.setAttribute("onduty", "0");
+								if(j < workDataArr.length && i == parseInt(workDataArr[j].time.substring(8, 10))) {
+									dayEl.style.backgroundImage = "url(../../../images/bottom_green_point.png)";
+									dayEl.setAttribute("work", "1");
+									j++;
+								}
+								if(k < ondutyDataArr.length && i == parseInt(ondutyDataArr[k].time.substring(8, 10))) {
+									dayEl.style.backgroundImage = "url(../../../images/bottom_blue_point.png)";
+									dayEl.setAttribute("onduty", "1");
+									dayEl.setAttribute("begintime",ondutyDataArr[k].begintime);
+									dayEl.setAttribute("endtime",ondutyDataArr[k].endtime);
+									k++;
+								}
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast('请求失败');
+						}
+					});
+				};
+
+				function setFirstAndLastDate(year, month) {
+					var LeapYear = false;
+					LeapYear = isLeapYear(year);
+					switch(month) {
+						case '01':
+							firstDay = year + '-01-01';
+							lastDay = year + '-02-01';
+							mondays = 31;
+							break;
+						case '02':
+							firstDay = year + '-02-01';
+							lastDay = year + '-03-01';
+							mondays = LeapYear ? 29 : 28;
+							break;
+						case '03':
+							firstDay = year + '-03-01';
+							lastDay = year + '-04-01';
+							mondays = 31;
+							break;
+						case '04':
+							firstDay = year + '-04-01';
+							lastDay = year + '-05-01';
+							mondays = 30;
+							break;
+						case '05':
+							firstDay = year + '-05-01';
+							lastDay = year + '-06-01';
+							mondays = 31;
+							break;
+						case '06':
+							firstDay = year + '-06-01';
+							lastDay = year + '-07-01';
+							mondays = 30;
+							break;
+						case '07':
+							firstDay = year + '-07-01';
+							lastDay = year + '-08-01';
+							mondays = 31;
+							break;
+						case '08':
+							firstDay = year + '-08-01';
+							lastDay = year + '-09-01';
+							mondays = 31;
+							break;
+						case '09':
+							firstDay = year + '-09-01';
+							lastDay = year + '-10-01';
+							mondays = 30;
+							break;
+						case '10':
+							firstDay = year + '-10-01';
+							lastDay = year + '-11-01';
+							mondays = 31;
+							break;
+						case '11':
+							firstDay = year + '-11-01';
+							lastDay = year + '-12-01';
+							mondays = 30;
+							break;
+						case '12':
+							firstDay = year + '-12-01';
+							lastDay = (year + 1) + '-01-01';
+							mondays = 31;
+							break;
+					}
+				}
+
+				function sortOndutyData(arr) {
+					var i = arr.length,
+						j;
+					var tempExchangVal;
+					while(i > 0) {
+						for(j = 0; j < i - 1; j++) {
+							if(parseInt(arr[j].time.substring(8, 10)) > parseInt(arr[j + 1].time.substring(8, 10))) {
+								tempExchangVal = arr[j];
+								arr[j] = arr[j + 1];
+								arr[j + 1] = tempExchangVal;
+							}
+						}
+						i--;
+					}
+					return arr;
+				}
+				setFirstAndLastDate(date.substr(0, 4), date.substr(5, 2));
+				getData(policenum, firstDay, lastDay);
+			});
+		</script>
+	</body>
+
+</html>

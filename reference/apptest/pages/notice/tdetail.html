@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>园地详情外框</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title" style="color: #FFFFFF; font-weight:bold;">园地详情</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content">
+			<!--数据列表-->
+			<ul class="mui-table-view mui-table-view-chevron">
+
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" charset="UTF-8"></script>
+		<script>
+			mui.init({
+				gestureConfig: {
+					doubletap: true
+				},
+				subpages: [{
+					url: 'tdetail_list.html',
+					id: 'tdetail_list.html',
+					styles: {
+						top: '45px',
+						bottom: '0px',
+					}
+				}]
+			});
+
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var ids = self.ids;
+				plus.storage.setItem("notice_item_id",ids);
+			});
+		</script>
+	</body>
+
+</html>

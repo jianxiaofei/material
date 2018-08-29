@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>接处警列表222</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.datatom-out {
+				font-size: 34px;
+				color: #555555;
+			}
+			
+			.datatom-wait {
+				font-size: 34px;
+				color: #f9c909;
+			}
+			
+			.datatom-pass {
+				font-size: 34px;
+				color: #39af6f;
+			}
+			
+			.datatom-nopass {
+				font-size: 34px;
+				color: #ef5350;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">指挥中心任务列表</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1mobile">
+						我收到的
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						我发出的
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						任务监控
+					</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="getList">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="sendList">
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="seeList">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script>
+			var policenum;
+			var token;
+			var size = 10;
+			var sendPage = 0;
+			var getPage = 0;
+			var seePage = 0;
+			mui.init();
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem('policenum');
+				token = plus.storage.getItem('token');
+			});
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						switch(index) {
+							case 0:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: getPage,
+														size: size,
+														type: "2"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var length = sendList.length;
+															var ul = document.body.querySelector("#getList");
+															ul.innerHTML = '';
+															var fragment = document.createDocumentFragment();
+															if(1 == getPage && length <= 0) {
+																var li = document.createElement('li');
+																li.className = "datatom-nodata";
+																li.innerHTML = '<img style="margin-top: 20px;" src="../../images/nodata.png"/>';
+																fragment.appendChild(li);
+															}
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../images/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															mui.toast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												getPage++;
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: getPage,
+														size: size,
+														type: "2"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var ul = document.body.querySelector("#getList");
+															var fragment = document.createDocumentFragment();
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../images/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															mui.toast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									}
+								});
+								break;
+							case 1:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												sendPage = 1;
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: sendPage,
+														size: size,
+														type: "1"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var ul = document.body.querySelector("#sendList");
+															ul.innerHTML = '';
+															var fragment = document.createDocumentFragment();
+															var length = sendList.length;
+															if(1 == sendPage && length <= 0) {
+																var li = document.createElement('li');
+																li.className = "datatom-nodata";
+																li.innerHTML = '<img style="margin-top: 20px;" src="../../img/nodata.png"/>';
+																fragment.appendChild(li);
+															}
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../img/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												sendPage++;
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: sendPage,
+														size: size,
+														type: "1"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var ul = document.body.querySelector("#sendList");
+															var fragment = document.createDocumentFragment();
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../img/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+
+										}
+									}
+								});
+								break;
+							case 2:
+								$(pullRefreshEl).pullToRefresh({
+									down: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												seePage = 1;
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: seePage,
+														size: size,
+														type: "3"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var length = sendList.length;
+															var ul = document.body.querySelector("#seeList");
+															ul.innerHTML = '';
+															var fragment = document.createDocumentFragment();
+															if(1 == getPage && length <= 0) {
+																var li = document.createElement('li');
+																li.className = "datatom-nodata";
+																li.innerHTML = '<img style="margin-top: 20px;" src="../../img/nodata.png"/>';
+																fragment.appendChild(li);
+															}
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../img/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullDownToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									},
+									up: {
+										auto: true,
+										callback: function() {
+											var self = this;
+											setTimeout(function() {
+												seePage++;
+												mui.ajax(basePath + '/osapi/task_distribution_new_app.php', {
+													data: {
+														action: 'listTask',
+														policenum: policenum,
+														page: seePage,
+														size: size,
+														type: "3"
+													},
+													beforeSend: function(request) {
+														request.setRequestHeader("U-Auth-Token", token);
+													},
+													dataType: 'json', //服务器返回json格式数据
+													type: 'POST', //HTTP请求类型
+													timeout: 10000, //超时时间设置为10秒；
+													success: function(data) {
+														if(data.code == "200") {
+															var sendList = data.result;
+															var ul = document.body.querySelector("#seeList");
+															var fragment = document.createDocumentFragment();
+															mui.each(sendList, function(index, item) {
+																var levelStr = "普通";
+																var levelColor = "blue";
+																if(item.level == 1) {
+																	levelStr = "普通";
+																	levelColor = "blue";
+																} else if(item.level == 2) {
+																	levelStr = "紧急";
+																	levelColor = "yellow";
+																} else if(item.level == 3) {
+																	levelStr = "加急";
+																	levelColor = "red";
+																}
+																var li = document.createElement('li');
+																li.className = "mui-table-view-cell mui-media";
+																var htm = "";
+																htm += '<a class="mui-navigate-right" data-id="' + item.taskid + '">';
+																if(item.state == "未接受") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-wait mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "完成") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-pass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else if(item.state == "未处理") {
+																	htm += '<span style="margin-top: 13px;" class="datatom-nopass mui-media-object mui-pull-left mui-icon iconfont datatom-icon-shenqing"></span>';
+																} else {
+																	htm += '<img style="margin-top: 13px;" class="mui-media-object mui-pull-left" src="../../img/zhzxlist.png"/>';
+																}
+																htm += '<div class="mui-media-body "><h5 class="mui-ellipsis">' + item.faultcontent + '</h5>' +
+																	'<h5><span class="mui-badge mui-badge-blue">' + item.value + '</span>' +
+																	'<span class="mui-badge"  style="background-color:' + levelColor + ';color:#fff;">' + levelStr + '</span>' +
+																	'</h5><p class="mui-h6 mui-ellipsis">' + item.state + '<span class="mui-h6 mui-ellipsis mui-pull-right">' + item.acceptancetime + '</span></p>';
+																htm += '</div></a>';
+																li.innerHTML = htm;
+																fragment.appendChild(li);
+															});
+															ul.appendChild(fragment);
+														} else {
+															showWebviewToast(data.msg);
+														}
+														self.endPullUpToRefresh();
+													},
+													error: function(xhr, type, errorThrown) {
+														mui.toast("网络异常!");
+													}
+												});
+											}, 1000);
+										}
+									}
+								});
+								break;
+						}
+
+					});
+
+					var createFragment = function(ul, index, count, reverse) {
+						var length = ul.querySelectorAll('li').length;
+						var fragment = document.createDocumentFragment();
+						var li;
+						for(var i = 0; i < count; i++) {
+							li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
+							fragment.appendChild(li);
+						}
+						return fragment;
+					};
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>

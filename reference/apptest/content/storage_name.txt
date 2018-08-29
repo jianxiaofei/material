@@ -1,0 +1,6 @@
+notice_item_id 民警园地详情id字段
+token token字段
+
+departmentid 部门id
+
+userid userid

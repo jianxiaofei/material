@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>民警园地列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.mui-table-view:before,
+			.mui-table-view:after {
+				background-color: #fff;
+			}
+			
+			.mui-content {
+				background-color: #fff;
+			}
+			
+			.submit-btn {
+				position: absolute;
+				color: #FFF;
+				background-color: #CCCC00;
+				width: 80px;
+				right: 10px;
+				height: 80px;
+				padding: 20px;
+				-webkit-border-radius: 60px;
+				-moz-border-radius: 60px;
+				border-radius: 60px;
+				box-shadow: 3px 3px 3px #666;
+				bottom: 10px;
+			}
+			
+			.add_tzgg {
+				width: 55px!important;
+				height: 55px!important;
+				border-radius: 50%;
+				position: fixed;
+				right: 2%;
+				bottom: 1%;
+				z-index: 100;
+			}
+			
+			.mui-card-header {
+				display: block;
+				padding-bottom: 0;
+			}
+			
+			.mui-card-content-inner {
+				color: #888;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+			<div class="mui-block" style="position: absolute;width: 100%;bottom: 0px;text-align: center;">
+				<button id="addTopic" type="button" class="mui-btn add_tzgg" style="color: #fff;background-color: #003b79;width: 90%;height: 46px;">+</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.js"></script>
+		<script>
+			var token;
+			var topictime = "2099-01-01 00:00:00";
+			var pagesize = 10;
+			var loadmore = 0;
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					pagesize = 10;
+					loadmore = 0;
+					topictime = "2099-01-01 00:00:00";
+					mui.ajax(basePath + '/osapi/police_topic.php', {
+						data: {
+							action: 'getTopics',
+							pagesize: pagesize,
+							loadmore: loadmore,
+							createtime: topictime
+						},
+						beforeSend: function(request) {
+							request.setRequestHeader("U-Auth-Token", token);
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'POST', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(data.code == "200") {
+								var list = data.result;
+								var length = list.length;
+								var table = document.body.querySelector('#pullrefresh .mui-table-view');
+								table.innerHTML = null;
+								var fragment = document.createDocumentFragment();
+								var card;
+								mui.each(list, function(index, item) {
+									card = document.createElement('div');
+									card.className = "mui-card";
+									var content = item.topiccontent.length > 30 ? item.topiccontent.substr(0, 30) + '...' : item.topiccontent;
+									card.innerHTML = '<div class="mui-card-header"><p style="font-size: 1rem;">' + item.topictitle + '</p><p class="mui-ellipsis" style="font-size: .8rem;">发表于' + item.createtime + '</p></div>' +
+										'<div class="mui-card-content"><div class="mui-card-content-inner">' + content + '</div></div>' +
+										'<div class="mui-card-footer"><i class="mui-icon mui-icon-chat mui-pull-left" style="font-size: .8rem;margin-right: .2rem;">' + item.replycount + '</i><a class="mui-pull-right" data="' + item.id + '">详情</a></div>';
+									fragment.appendChild(card);
+									if(index == length - 1) {
+										topictime = item.createtime;
+									}
+								});
+								table.appendChild(fragment);
+							} else {
+								showWebviewToast(data.msg);
+							}
+							mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("网络异常!");
+						}
+					});
+				}, 10);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui.ajax(basePath + '/osapi/police_topic.php', {
+						data: {
+							action: 'getTopics',
+							pagesize: pagesize,
+							loadmore: loadmore,
+							createtime: topictime
+						},
+						beforeSend: function(request) {
+							request.setRequestHeader("U-Auth-Token", token);
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'POST', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(data.code == "200") {
+								var list = data.result;
+								var length = list.length;
+								var table = document.body.querySelector('#pullrefresh .mui-table-view');
+								var fragment = document.createDocumentFragment();
+								var card;
+								mui.each(list, function(index, item) {
+									card = document.createElement('div');
+									card.className = "mui-card";
+									var content = item.topiccontent.length > 30 ? item.topiccontent.substr(0, 30) + '...' : item.topiccontent;
+									card.innerHTML = '<div class="mui-card-header"><p style="font-size: 1rem;">' + item.topictitle + '</p><p class="mui-ellipsis" style="font-size: .8rem;">发表于' + item.createtime + '</p></div>' +
+										'<div class="mui-card-content"><div class="mui-card-content-inner">' + content + '</div></div>' +
+										'<div class="mui-card-footer"><i class="mui-icon mui-icon-chat mui-pull-left" style="font-size: .8rem;margin-right: .2rem;">' + item.replycount + '</i><a class="mui-pull-right" data="' + item.id + '">详情</a></div>';
+									fragment.appendChild(card);
+									if(index == length - 1) {
+										topictime = item.createtime;
+									}
+								});
+								table.appendChild(fragment);
+							} else {
+								showWebviewToast(data.msg);
+							}
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast('网络异常');
+						}
+					});
+				}, 10);
+			}
+			mui.plusReady(function() {
+				token = plus.storage.getItem('token');
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().pulldownLoading();
+				}, 1);
+
+			});
+			mui("#pullrefresh .mui-table-view").on("tap", "a.mui-pull-right", function() {
+				//获取id
+				var ids = this.getAttribute("data");
+//				mui.toast(ids);
+				mui.openWindow({
+					url: 'tdetail.html',
+					id: 'tdetail.html',
+					extras: {
+						ids: ids
+					}
+				});
+				//				document.location.href = "tdetail.html?id="+id+"&token="+token;
+			});
+			document.getElementById('addTopic').addEventListener("tap", function() {
+				mui.openWindow('addTopic.html');
+			});
+		</script>
+	</body>
+
+</html>

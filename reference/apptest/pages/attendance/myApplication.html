@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的申请</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: none;
+        }
+
+        .mui-content, .mui-slider-indicator {
+            background-color: #ffffff;
+        }
+
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+            border:none;
+        }
+
+        .mui-scroll .mui-table-view {
+            margin-top: 5%;
+        }
+
+        .mui-scroll .mui-table-view div {
+            display: inline-block;
+            width: 29%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .mui-scroll .mui-table-view div:first-child {
+            float: left;
+        }
+
+        .mui-scroll .mui-table-view div:first-child div {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: springgreen;
+            margin-left: 24%;
+        }
+
+        .mui-scroll .mui-table-view div:first-child div p {
+            color: #ffffff;
+            line-height: 50px;
+            text-align: center
+        }
+
+        .mui-scroll .mui-table-view div:last-child {
+            width: 68%;
+            text-align: left;
+            border-bottom: 1px solid #eeeeee!important;
+        }
+
+        .mui-scroll .mui-table-view div:last-child span:nth-of-type(1) {
+            font-size: 14px;
+            color: #007aff;
+            font-weight: bold;
+        }
+
+        .mui-scroll .mui-table-view div:last-child span:nth-of-type(2) {
+            float: right;
+            font-size: 12px;
+            color: #888888;
+        }
+
+        /*请假页面*/
+        .qj_list {
+            width: 80%!important;
+            padding: 0 3%;
+        }
+
+        .mui-table-view-cell:after {
+            background-color: #ffffff;
+        }
+
+        .mui-table-view-cell p {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+    <div id="slider" class="mui-slider mui-fullscreen">
+        <div id="sliderSegmentedControl"
+             class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <a class="mui-control-item item1mobile mui-active" href="#item1mobile">
+                考勤
+            </a>
+            <a class="mui-control-item item2mobile" href="#item2mobile">
+                请假
+            </a>
+            <a class="mui-control-item item2mobile" href="#item3mobile">
+                加班
+            </a>
+        </div>
+        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+        <div class="mui-slider-group">
+            <div id="item1mobile" class="mui-content mui-scroll-wrapper mui-slider-item mui-control-content mui-active">
+                <div class="mui-scroll">
+                    <div class="mui-table-view">
+                        <div>
+                            <div>
+                                <p>通过</p>
+                            </div>
+                        </div>
+                        <div class="kq_right">
+                            <span>【正常】</span><span>日期:07月08日(周五)</span>
+                            <p>任务：生态会议安保和A6105重要接待任务</p>
+                        </div>
+                    </div>
+                    <div class="mui-table-view">
+                        <div>
+                            <div>
+                                <p>通过</p>
+                            </div>
+                        </div>
+                        <div>
+                            <span>【正常】</span><span>日期:07月08日(周五)</span>
+                            <p>任务：生态会议安保和A6105重要接待任务</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="item2mobile" class="mui-content mui-scroll-wrapper mui-slider-item mui-control-content">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell mui-media">
+                            <a href="javascript:void(0);">
+                                <img class="mui-media-object mui-pull-left" src="../../img/8.png">
+                                <div class="mui-media-body qj_list">
+                                    <span>幸福</span><span style="color: springgreen;font-size: 14px">已批准</span>
+                                    <p class='mui-ellipsis'>因公出差，深圳参加安防展</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell mui-media">
+                            <a href="javascript:void(0);">
+                                <img class="mui-media-object mui-pull-left" src="../../img/8.png">
+                                <div class="mui-media-body qj_list">
+                                    <span>幸福</span><span style="color: red;font-size: 14px">未通过</span>
+                                    <p class='mui-ellipsis'>因公出差，深圳参加安防展</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="item3mobile" class="mui-content mui-scroll-wrapper mui-slider-item mui-control-content">
+                <div class="mui-scroll">
+                    <ul class="mui-table-view">
+                         3
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="../../js/mui.min.js"></script>
+    <script>
+        mui.init();
+        (function($) {
+            $('.mui-scroll-wrapper').scroll({
+                indicators: true //是否显示滚动条
+            });
+            var html2 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第二个选项卡子项-1</li><li class="mui-table-view-cell">第二个选项卡子项-2</li><li class="mui-table-view-cell">第二个选项卡子项-3</li><li class="mui-table-view-cell">第二个选项卡子项-4</li><li class="mui-table-view-cell">第二个选项卡子项-5</li></ul>';
+            var html3 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第三个选项卡子项-1</li><li class="mui-table-view-cell">第三个选项卡子项-2</li><li class="mui-table-view-cell">第三个选项卡子项-3</li><li class="mui-table-view-cell">第三个选项卡子项-4</li><li class="mui-table-view-cell">第三个选项卡子项-5</li></ul>';
+            var item2 = document.getElementById('item2mobile');
+            var item3 = document.getElementById('item3mobile');
+            document.getElementById('slider').addEventListener('slide', function(e) {
+                if (e.detail.slideNumber === 1) {
+                    if (item2.querySelector('.mui-loading')) {
+                        setTimeout(function() {
+                            item2.querySelector('.mui-scroll').innerHTML = html2;
+                        }, 500);
+                    }
+                } else if (e.detail.slideNumber === 2) {
+                    if (item3.querySelector('.mui-loading')) {
+                        setTimeout(function() {
+                            item3.querySelector('.mui-scroll').innerHTML = html3;
+                        }, 500);
+                    }
+                }
+            });
+
+        })(mui);
+    </script>
+</body>
+</html>

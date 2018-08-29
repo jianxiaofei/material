@@ -1,0 +1,100 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Tip</title>
+<style type="text/css">
+#div1{
+    background-color: #2189c0;
+    width: 200px;
+    height: 200px;
+}
+#div2{
+    background-color: #aad7ff;
+    color: white;
+    width: 200px;
+    height: 200px;
+    visibility: hidden;
+}
+</style>
+</head>
+<body>
+
+<div id="div1">div1</div>
+<div id="div2">div2</div>
+
+<button id="show">显示</button>
+<button id="hide">隐藏</button>
+
+<button id="test1">显示测试</button>
+<button id="test2">隐藏测试</button>
+ <script type="text/javascript">
+
+(function(window, undefined) {
+    function JsClassName(cfg) {
+        var config = cfg || {};
+        this.get = function(n) {
+            return config[n];
+        }
+        this.set = function(n, v) {
+            config[n] = v;
+        }
+        this.init();
+    }
+    JsClassName.prototype = {
+        init: function(){
+            this.createDom();
+            this.bindEvent();
+        },
+        createDom: function(){
+            var div1=document.getElementById('div1');
+            var div2=document.getElementById('div2');
+
+            var showButton=document.getElementById('show');
+            var hideButton=document.getElementById('hide');
+
+            this.set("div1",div1);
+            this.set("div2",div2);
+            this.set("showButton",showButton);
+            this.set("hideButton",hideButton);
+        },
+        bindEvent:function(){
+            var that=this;
+            var div1=that.get("div1");
+            var showButton=that.get("showButton");
+            var hideButton=that.get("hideButton");
+
+            showButton.onclick=function(){
+                that.show();
+            };
+            hideButton.onclick=function(){
+                that.hide();
+            };
+        },
+        show:function(){
+            var that=this;
+            var div2=that.get("div2");
+            div2.style.visibility='visible';
+        },
+        hide:function(){
+            var that=this;
+            var div2=that.get("div2");
+            div2.style.visibility='hidden';
+        }
+    };
+    var obj=new JsClassName();
+
+    window.show=function(){
+        obj.show.call(obj)
+    }
+    window.hide=function(){
+        obj.hide.call(obj)
+    }
+})(window);
+
+var button1=document.getElementById("test1");
+button1.onclick=show;
+var button2=document.getElementById("test2");
+button2.onclick=hide;
+ </script>
+</body>
+</html>

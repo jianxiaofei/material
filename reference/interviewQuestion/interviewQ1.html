@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>面试题</title>
+</head>
+<a href="https://www.jianshu.com/p/8b68f4df749e"></a>
+<body>
+    <div id="div"></div>
+    <script>
+    // 1.作用域    
+    var z = 10;
+
+    function foo() {
+        console.log(z);
+    }
+    (function(funArg) {
+        var z = 20;
+        funArg();
+    })(foo); //执行输出的结果是？ 
+    // 2.for循环机制
+    var data = [];
+    for (var k = 0; k < 3; k++) {
+        data[k] = function() {
+            console.log(k);
+        };
+    }
+    data[0]();
+    data[1]();
+    data[2](); //上面代码执行后的输出什么？
+    //3.
+    /*假设现有一篇文章 var content="...大量文字",文章触及到一些敏感词["习近平","周永康","中共","6.4"]等，
+    如何在文章中发现敏感词并讲背景设置为红色或改变字体颜色标识出来？*/
+    var content = "在习近平新时代中国特色社会主义思想指引下——新时代 新作为 新篇章 大力发展“三个经济”上半年我省外贸进出口增长迅猛,出口增速位居全国第一,走永康通过妻子攀附周永康,曾被“色情设局”的他有新消息7月12日,江苏省常州市中级人民法院公开宣判中共河北省委原常委、政法委原书记张越受贿案,对张越以受贿罪. 佛山新闻 中共三水区委十三届六次全会召开2018-07-19 09:57 来源:南方日报 字号减小 字号增大 7月18日,中共佛山市三水区委十三届六次全会召开。靠谱好车降价推荐 奥迪RS 6限时优惠6.4万 小易刚刚收到消息,奥迪RS 6这么火爆的车型全国多个城市限时优惠,其中南京地区优惠力度高达6.4万,于是小易在第一时间将消息";
+    var keywords = ["习近平", "周永康", "中共", "6.4"];
+    for (var i = 0; i < keywords.length; i++) {
+        content = content.replace(new RegExp(keywords[i], 'gm'), "<b>" + keywords[i] + "</b>");
+    }
+    console.log(content);
+    //4.Jquery $.fn.extend()函数的实现 （实现核心代码即可）
+    //5.设计基于观察者模式的事件绑定机制
+    //6.列出display 的值，说明他们的作用。position的值，relative和absolute定位的原点是？
+    //7.css选择符有那些？那些属性可以继承？优先级算法如何计算？css3新增伪类有那些？
+    //8.css3有那些新特性？
+    //9.new操作符具体干了些什么？
+    //10.
+    function fun(n, o) {
+        console.log(o);
+        return {
+            fun: function(m) {
+                return fun(m, n);
+            }
+        };
+    }
+    var a = fun(0);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    var b = fun(0).fun(1).fun(2).fun(3);
+    var c = fun(0).fun(1);
+    c.fun(2);
+    c.fun(3);
+    //问：三行a,b,c的输出分别是什么？
+    //11.
+    var tt = 'aa';
+
+    function test() {
+        console.log(tt);
+        var tt = 'dd';
+        console.log(tt);
+    }
+    test(); //输出的结果？ 为什么?
+    //12.
+    var a = 100;
+
+    function testResult() {
+        var b = 2 * a;
+        var a = 200;
+        var c = a / 2;
+        console.log(b);
+        console.log(c);
+    }
+    testResult(); //分别输出结果？ 为什么？
+    //13.
+    //找出数组arr中重复出现过的元素
+    var nums = [1, 2, 4, 4, 3, 3, 1, 5, 3,6,6];
+    var dup = [];
+    for (var i =nums.length; i >0; i--) {
+        var d = nums[i];
+        for (var j = i-1; j>=0; j--) {
+            d == nums[j] && dup.indexOf(d) == -1 && dup.push(d);
+        }
+    }
+    console.log(dup);
+    </script>
+</body>
+
+</html>

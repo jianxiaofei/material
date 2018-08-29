@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>通知公告列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.mui-media-body {
+				font-size: .9rem;
+				color: #3b3d3d;
+			}
+			
+			.mui-media-body .mui-ellipsis {
+				font-size: .7rem;
+			}
+			
+			.mui-media-object {
+				border-radius: 50%;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after {
+				background-color: #fff;
+			}
+			
+			.mui-content {
+				background-color: #fff;
+			}
+			
+			.submit-btn {
+				position: absolute;
+				color: #FFF;
+				background-color: #CCCC00;
+				width: 80px;
+				right: 10px;
+				height: 80px;
+				padding: 20px;
+				-webkit-border-radius: 60px;
+				-moz-border-radius: 60px;
+				border-radius: 60px;
+				box-shadow: 3px 3px 3px #666;
+				bottom: 10px;
+			}
+			
+			.add_tzgg {
+				width: 55px!important;
+				height: 55px!important;
+				border-radius: 50%;
+				position: fixed;
+				right: 2%;
+				bottom: 1%;
+				z-index: 100;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+			<div class="mui-block" style="position: absolute;width: 100%;bottom: 0px;text-align: center;">
+				<button id="addNotice" type="button" class="mui-btn mui-btn-primary add_tzgg" style="width: 90%;height: 46px;">+</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" charset="UTF-8"></script>
+		<script>
+			var token;
+			var policenum;
+			var departmentid;
+			var createtime = "2099-01-01 00:00:00";
+			var pagesize = 10;
+			var loadmore = 0;
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					longtap: true, //默认为false
+				},
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			mui.plusReady(function() {
+				token = plus.storage.getItem('token');
+				policenum = plus.storage.getItem('policenum');
+				departmentid = plus.storage.getItem('departmentid');
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				createtime = "2099-01-01 00:00:00";
+				pagesize = 10;
+				loadmore = 0;
+				mui.ajax(basePath + '/osapi/police_notice.php', {
+					data: {
+						action: 'getNotices',
+						departmentid: departmentid,
+						pagesize: pagesize,
+						loadmore: loadmore,
+						createtime: createtime
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var list = data.result;
+							var length = list.length;
+							var table = document.body.querySelector('#pullrefresh .mui-table-view');
+							table.innerHTML = "";
+							var fragment = document.createDocumentFragment();
+							for(var i = 0; i < length; i++) {
+								var notice = list[i];
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell mui-media';
+								var html = '<a class="mui-navigate-right" data="' + notice.id + '">';
+								html += '<img class="mui-media-object mui-pull-left" alt="" src="' + basePath + '/osapi/avantar.php?policenum=' + notice.creator + '"/>';
+								html += '<div class="mui-media-body">' + notice.title;
+								html += '<p class="mui-ellipsis">' + notice.realname;
+								html += '<span class="mui-pull-right">' + notice.createtime + '</span></p></div></a>';
+								li.innerHTML = html;
+								fragment.appendChild(li);
+								if(i == length - 1) {
+									createtime = notice.createtime;
+								}
+							}
+							table.appendChild(fragment);
+						} else {
+							showWebviewToast(data.msg);
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					},
+					error: function(xhr, type, errorThrown) {
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+						showWebviewToast("网络异常!");
+					}
+				});
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				mui.ajax(basePath + '/osapi/police_notice.php', {
+					data: {
+						action: 'getNotices',
+						departmentid: departmentid,
+						loadmore: loadmore,
+						createtime: createtime
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'POST', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(data.code == "200") {
+							var list = data.result;
+							var length = list.length;
+							var table = document.body.querySelector('#pullrefresh .mui-table-view');
+							var fragment = document.createDocumentFragment();
+							for(var i = 0; i < length; i++) {
+								var notice = list[i];
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell mui-media';
+								var html = '<a class="mui-navigate-right" data="' + notice.id + '">';
+								html += '<img class="mui-media-object mui-pull-left" alt="" src="' + basePath + '/osapi/avantar.php?policenum=' + notice.creator + '"/>';
+								html += '<div class="mui-media-body">' + notice.title;
+								html += '<p class="mui-ellipsis">' + notice.realname;
+								html += '<span class="mui-pull-right">' + notice.createtime + '</span></p></div></a>';
+								li.innerHTML = html;
+								fragment.appendChild(li);
+								if(i == length - 1) {
+									createtime = notice.createtime;
+								}
+							}
+							table.appendChild(fragment);
+						} else {
+							showWebviewToast(data.msg);
+						}
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+					},
+					error: function(xhr, type, errorThrown) {
+						showWebviewToast("网络异常!");
+					}
+				});
+			}
+			//初始化下拉
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pulldownLoading();
+					}, 10);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pulldownLoading();
+				});
+			}
+			//详情
+			mui("#pullrefresh .mui-table-view").on("tap", "a.mui-navigate-right", function() {
+				//获取id
+				var id1 = this.getAttribute("data");
+				mui.openWindow({
+					url: 'detail.html',
+					id: 'detail.html',
+					extras: {
+						id1: id1
+					}
+				});
+				
+//				document.location.href = "detail.php?id=" + id;
+			});
+			//长按删除
+			mui("#pullrefresh .mui-table-view").on("longtap", "a.mui-navigate-right", function() {
+				//获取id
+				var id = this.getAttribute("data");
+				var btnArray = ['否', '是'];
+				mui.confirm('删除此条通知公告，确认？', '通知公告', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.ajax(basePath + '/osapi/police_notice.php', {
+							data: {
+								action: 'deleteNotice',
+								id: id,
+								operator: policenum
+							},
+							beforeSend: function(request) {
+								request.setRequestHeader("U-Auth-Token", token);
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'POST', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(data.code == "200") {
+									window.location.reload();
+									mui.toast("删除成功!");
+								} else {
+									mui.toast(data.result);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.toast("网络异常");
+							}
+						});
+					} else {
+						return;
+					}
+				});
+
+			});
+			//新增通知公告
+			document.getElementById('addNotice').addEventListener("tap", function() {
+//				window.location.href = "addNotice.php";
+				mui.openWindow({
+					url: 'addNotice.html',
+					id: 'addNotice.html',
+					extras: {
+						
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,9 @@
+toast mdt
+
+document.getelementbyid().addEventListener(){}  dga
+
+mui.openWindow('url','id',{})   mop
+
+mui.plusReady(function () {     mpl
+			    
+			})

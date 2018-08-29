@@ -1,0 +1,170 @@
+<!--
+	作者：836110252@qq.com
+	时间：2016-05-29
+	模块名称：我的异常(目前只包含了考勤异常)
+	业务逻辑描述：1、根据警员编号和年月信息查询异常列表
+			 2、因为是按月查询，所以异常考勤数据不会很多，所以此处没有真分页  只是有下拉刷新
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的异常</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+		<link rel="stylesheet" href="../../../css/mui.picker.min.css">
+		<style>
+			#menu {
+				background-image: url('../../../images/calendar_33.png');
+				width: 33px;
+				height: 33px;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #003B79;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF; font-weight:bold;">考勤异常</h1>
+			<a id="menu" class="mui-action-menu mui-pull-right" data-options='{"type":"month"}'></a>
+		</header>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll" id="listAtt">
+
+			</div>
+		</div>
+		<script src="../../../js/mui.min.js" charset="UTF-8"></script>
+		<script src="../../../js/common.js" charset="UTF-8"></script>
+		<script src="../../../js/mui.picker.min.js" charset="UTF-8"></script>
+		<script>
+			var policenum;
+			var token;
+			var condition;
+			mui.init();
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem('policenum');
+				token = plus.storage.getItem('token');
+				condition = getNowFormatDate();
+				getList();
+
+				//提交上级
+				mui("#listAtt").on("tap", "a.submitPost", function() {
+					var title = this.getAttribute("data-key");
+					var alias = this.getAttribute("data-data");
+					var realname = this.getAttribute("data-name");
+					var date = this.getAttribute("data-date");
+					//window.location.href = "submitPost.php?title="+title+"&alias="+alias+"&realname="+realname+"&date="+date;
+					window.javaInterface.startDefaultHtmlActivity(basePath + "/extapp/app/html5/attendance/mineexception/submitPost.php?title=" + title + "&alias=" + alias + "&realname=" + realname + "&date=" + date);
+				});
+
+				//信用修改
+				mui("#listAtt").on("tap", "a.changeCredit", function() {
+					var late = this.getAttribute("data-late");
+					var leaveearly = this.getAttribute("data-leaveearly");
+					var absenteeism = this.getAttribute("data-absenteeism");
+					var alias = this.getAttribute("data-alias");
+					var date = this.getAttribute("data-date");
+					//window.location.href="doChangeCredit.php?late="+late+"&leaveearly="+leaveearly+"&absenteeism="+absenteeism+"&alias="+alias+"&date="+date;
+					window.javaInterface.startDefaultHtmlActivity(basePath + "/extapp/app/html5/attendance/mineexception/doChangeCredit.php?late=" + late + "&leaveearly=" + leaveearly + "&absenteeism=" + absenteeism + "&alias=" + alias + "&date=" + date);
+				});
+			});
+
+			document.getElementById('menu').addEventListener("tap", function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);
+				var id = this.getAttribute('id');
+				/*
+				 * 首次显示时实例化组件
+				 * 示例为了简洁，将 options 放在了按钮的 dom 上
+				 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+				 */
+				var picker = new mui.DtPicker(options);
+				picker.show(function(rs) {
+					condition = rs.text;
+					picker.dispose();
+					getList();
+				});
+			});
+
+			function getList() {
+				mui.ajax(basePath + '/osapi/attendance.php', {
+					data: {
+						action: 'getExceptionForh5List',
+						policenum: policenum,
+						datemonth: condition.substring(0, 7)
+					},
+					beforeSend: function(request) {
+						request.setRequestHeader("U-Auth-Token", token);
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'GET', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if("200" == data.code) {
+							var attendance = data.result;
+							var html = "";
+							var box = document.getElementById('listAtt');
+							mui.each(attendance, function(index, item) {
+								console.info(JSON.stringify(item));
+								html += '<div class="mui-card">';
+								html += '<div class="mui-card-header">' + item.title;
+								if(item.timeout == "1") {
+									html += '<span style="color:red;font-weight:bold;" class="mui-pull-right">已超时</span>';
+								}
+								html += '</div><div class="mui-card-content">';
+								html += '<div class="mui-card-content-inner">';
+								html += '<div class="mui-row"><p>异常日期：' + item.alias + '</p></div>';
+								var abnormal = eval("(" + item.abnormal_interval + ")");
+								mui.each(abnormal, function(index1, item1) {
+									html += '<div class="mui-row"><p>异常详情(' + parseInt(index1 + 1) + ')</p></div>';
+									html += '<div class="mui-row"><div class="mui-col-sm-3 mui-col-xs-4">';
+									html += '<label>开始时间：</label></div>';
+									html += '<div class="mui-col-sm-9 mui-col-xs-8">';
+									html += '<p>' + item1.starttime + '</p></div>';
+									html += '<div class="mui-col-sm-3 mui-col-xs-4">';
+									html += '<label>结束时间：</label></div>';
+									html += '<div class="mui-col-sm-9 mui-col-xs-8">';
+									html += '<p>' + item1.endtime + '</p></div></div>';
+								});
+								html += '</div></div>';
+								if(item.timeout != "1") {
+									html += '<div class="mui-card-footer">';
+									html += '<a data-key="' + item.title + '" data-data="' + item.alias + '" data-name="' + item.realname + '" data-date="' + item.date + '" class="mui-card-link submitPost">提交上级</a>';
+									var score_late = 0;
+									var score_leaveearly = 0;
+									var score_absenteeism = 0;
+									if(item.late == "1") {
+										score_late = 1;
+									}
+									if(item.leaveearly == "1") {
+										score_leaveearly = 1;
+									}
+									if(item.time_absenteeism > 5) {
+										score_absenteeism = 2;
+									} else {
+										score_absenteeism = 1;
+									}
+									html += '<a data-date="' + item.date + '" data-alias="' + item.alias + '" data-late="' + score_late + '" data-leaveearly="' + score_leaveearly + '" data-absenteeism="' + score_absenteeism + '" class="mui-card-link changeCredit">信用修改</a>';
+									html += '</div>';
+								}
+								html += '</div>';
+							});
+							box.innerHTML = html;
+						} else {
+							showWebviewToast(data.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast('网络异常!');
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

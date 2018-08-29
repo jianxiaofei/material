@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>通讯录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/iconfont.css" />
+
+		<style>
+			.mui-media-object {
+				border-radius: 50%;
+			}
+			/*跨webview需要手动指定位置*/
+			
+			.mui-plus header.mui-bar {
+				display: none!important;
+			}
+			
+			.mui-plus .mui-bar-nav~.mui-content {
+				padding: 0!important;
+			}
+			
+			.mui-plus .plus {
+				display: inline;
+			}
+			
+			.plus {
+				display: none;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			
+			p {
+				text-indent: 22px;
+			}
+			
+			.mui-content {
+				padding: 10px;
+			}
+			
+			header,
+			header a,
+			header h1 {
+				height: 48px;
+			}
+			
+			.mui-popup-input input {
+				height: auto;
+				padding: 1rem;
+				padding-top: .5rem;
+				padding-bottom: .5rem;
+			}
+			
+			.mui-popover {
+				height: 100px;
+			}
+			
+			.mui-table-view {
+				font-size: 14px;
+				color: #888888;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="margin-bottom: 44px;padding: 0;">
+			<ul class="mui-table-view" id="groupList">
+
+			</ul>
+			<div class="content-block" style="margin-top: 10px;">
+				<i class="mui-icon mui-icon-info-filled" style="color: #888;font-size: 1rem;">
+				<p style="color: #888;font-size: .8rem;">
+					友情提示：
+				</p>
+				<p style="color: #888;font-size: .8rem;">
+					1.好友信息左滑可日常评价、拨打电话、删除等。
+				</p>
+				<p style="color: #888;font-size: .8rem;">
+					2.分组信息长按可以删除分组。
+				</p> </i>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#bottomPopover" class="mui-navigate-right">
+						操作
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div id="bottomPopover" class="mui-popover mui-popover-bottom">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="javascript:void(0);" id="addUser">
+								添加好友
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="javascript:void(0);" id="addGroup">
+								添加分组
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js" charset="UTF-8"></script>
+		<script src="../js/utils.js" charset="UTF-8"></script>
+		<script>
+			var policenum;
+			var token;
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					drag: true, //默认为true
+					hold: true, //默认为false，不监听
+					release: true //默认为false，不监听
+				},
+				swipeBack: true
+			});
+//			document.getElementById("addGroup").addEventListener('tap', function(e) 
+//			{
+//			    //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+//			    e.detail.gesture.preventDefault(); 
+//			    var btnArray = ['取消', '确定'];
+//			    mui.prompt('', '性能好', 'Hello MUI', btnArray, function(e) 
+//			    {
+//			        if (e.index == 1) 
+//			        {
+//			            info.innerText = '谢谢你的评语：' + e.value;
+//			        } 
+//			        else 
+//			        {
+//			            info.innerText = '你点了取消按钮';
+//			        }
+//			    })
+//			});
+			document.getElementById("addGroup").addEventListener('tap', function(e) {
+					mui("#bottomPopover").popover("toggle")
+					e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+					var btnArray = ['取消', '确定'];
+					mui.prompt('请输入分组名称', '分组名称', '添加分组', btnArray, function(e) {
+						if(e.index == 1) {
+							var groupname = e.value;
+							if("" == groupname) {
+								mui.toast("分组名称不能为空！");
+								return;
+							}
+							mui.ajax(basePath + '/osapi/friend.php', {
+								data: {
+									action: 'creategroup',
+									userpnum: policenum,
+									groupname: groupname
+								},
+								beforeSend: function(request) {
+									request.setRequestHeader("U-Auth-Token", token);
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'POST', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if(data.code == "200") {
+										doRefresh();
+									} else {
+										mui.alert(data.msg);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请求失败！请检查网络是否异常!', '警告信息');
+								}
+							});
+						}
+					})
+				});
+				
+				var doRefresh = function() {
+					mui.ajax(basePath + '/osapi/friend.php', {
+						data: {
+							action: 'listmyfriend',
+							userpnum: policenum
+						},
+						beforeSend: function(request) {
+							request.setRequestHeader("U-Auth-Token", token);
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'POST', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(data.code == "200") {
+								var list = data.result;
+								var length = list.length;
+								var ul = document.body.querySelector('.mui-table-view');
+								ul.innerHTML = null;
+								var fragment = document.createDocumentFragment();
+								for(var i = 0; i < length; i++) {
+									var group = list[i];
+									var li = document.createElement('li');
+									li.className = "mui-table-view-cell mui-collapse group";
+									var home = "";
+									home += '<a class="mui-navigate-right group" href="#" data-key="' + list[i].groupid + '">' + list[i].groupname + '</a>';
+									home += '<div class="mui-collapse-content" style="padding-top: 0;"><ul class="mui-table-view" style="margin-top: 0;">';
+									var detail = list[i].users;
+									var html = "";
+									if(undefined != detail) {
+										var dlength = detail.length;
+										for(var j = 0; j < dlength; j++) {
+											var user = detail[j];
+											html += '<li class="mui-table-view-cell">' +
+												'<div class="mui-slider-right mui-disabled">' +
+												'<a class="mui-btn mui-btn-purple mui-icon mui-icon-star-filled addWeekEvaluate" data-key="' + user.friendpnum + '"></a>' +
+												'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone" href="tel:' + user.mobile + '"></a>' +
+												'<a class="mui-btn mui-btn-red mui-icon mui-icon-trash userDelete" data-key="' + user.friendpnum + '" data-data="' + user.userpnum + '"></a></div>' +
+												'<div class="mui-slider-handle">' +
+												'<a class="mui-navigate-right" href="javascript:;">' +
+												'<img class="mui-media-object mui-pull-left" src="' + basePath + '/osapi/avantar.php?policenum=' + user.friendpnum + '"/>' +
+												'<div class="mui-media-body"><span>' + user.friendname + '</span>' +
+												'<p class="aui-ellipsis-1">' + user.departname + '</p>' +
+												'</div></a></div></li>';
+										}
+									}
+									home += html;
+									home += '</ul></div>';
+									li.innerHTML = home;
+									fragment.appendChild(li);
+								}
+								ul.appendChild(fragment);
+							} else {
+								mui.alert(data.msg, '警告信息');
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.alert('请求失败！请检查网络是否异常!', '警告信息');
+						}
+					});
+				};
+				mui('#groupList').on('longtap', 'a.group', function() {
+					var groupid = this.getAttribute("data-key");
+					var btnArray = ['取消', '确认'];
+					mui.confirm('删除该分组，确认？', '友情提示', btnArray, function(e) {
+						if(e.index == 1) {
+							mui.ajax(basePath + '/osapi/friend.php', {
+								data: {
+									action: 'delgroup',
+									usernum: policenum,
+									groupid: groupid
+								},
+								beforeSend: function(request) {
+									request.setRequestHeader("U-Auth-Token", token);
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'POST', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if(data.code == "200") {
+										doRefresh();
+									} else {
+										mui.alert(data.msg);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请求失败！请检查网络是否异常!', '警告信息');
+								}
+							});
+						}
+					})
+				});
+
+				mui('#groupList').on('tap', 'a.addWeekEvaluate', function() {
+					var usernum = this.getAttribute('data-key');
+//					window.location.href = "judgments.php?usernum=" + usernum;
+					mui.openWindow({
+						url:'../pages/contacts/judgments.php',
+						id:'judgments.php',
+						extras:{
+							usernum:usernum
+						}
+					});
+				});
+
+				mui('#groupList').on('tap', 'a.userDelete', function() {
+					var userpnum = this.getAttribute("data-data");
+					var friendpnum = this.getAttribute("data-key");
+					var btnArray = ['否', '是'];
+					mui.confirm('删除该好友，确认？', '友情提示', btnArray, function(e) {
+						if(e.index == 1) {
+							mui.ajax(basePath + '/osapi/friend.php', {
+								data: {
+									action: 'delfriend',
+									userpnum: userpnum,
+									friendpnum: friendpnum
+								},
+								beforeSend: function(request) {
+									request.setRequestHeader("U-Auth-Token", token);
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'POST', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if(data.code == "200") {
+										doRefresh();
+									} else {
+										mui.alert(data.msg);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请求失败！请检查网络是否异常!', '警告信息');
+								}
+							});
+						}
+					});
+				});
+				document.getElementById("addUser").addEventListener('tap', function(e) {
+					//					window.location.href = "../pages/contacts/addUser.php";
+					mui("#bottomPopover").popover("toggle")
+					mui.openWindow('../pages/contacts/addUser.php');
+				});
+			//plus加载完毕回调
+			mui.plusReady(function() {
+				policenum = plus.storage.getItem("policenum");
+				token = plus.storage.getItem("token");
+				doRefresh();
+			});
+		</script>
+	</body>
+
+</html>

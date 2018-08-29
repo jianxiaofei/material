@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的明细</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="../../css/mui.min.css">
+	<link rel="stylesheet" href="../../css/my_detail.css">
+</head>
+<body>
+<header>
+	<span class="mui-icon mui-icon-back"></span>
+	<span> 我的明细</span>
+	<span class="times"></span>
+</header>
+<div class="mui-content">
+	111
+</div>
+<script src="../../js/mui.min.js"></script>
+<script>
+	mui.init();
+	(function ($) {
+		var getdata =new Date();
+		var get_years = getdata.getFullYear();
+		var get_mous = parseInt(getdata.getMonth()+1);
+		if(get_mous > 9){
+			return get_mous;
+		}else {
+			get_mous = "0"+get_mous;
+		}
+		var str = get_years+"年"+get_mous+"月";
+		var Otimes = document.getElementsByClassName("times")[0];
+		Otimes.innerHTML=str;
+	})(mui);
+</script>
+</body>
+</html>

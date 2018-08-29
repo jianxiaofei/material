@@ -1,0 +1,192 @@
+body {
+	background-color: #ffffff;
+}
+
+.mui-control-content {
+	background-color: #ffffff;
+	min-height: 215px;
+}
+
+.mui-content {
+	background-color: #ffffff;
+}
+
+.mui-segmented-control,
+.mui-segmented-control .mui-control-item {
+	border: none;
+	border-radius: 0;
+}
+
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+	border: none;
+}
+
+.mui-slider .mui-slider-group {
+	margin-top: 2%;
+}
+
+.mui-media-body {
+	color:#999999;
+}
+
+.mui-pull-left {
+	width: 3rem;
+	text-align: center;
+}
+
+.mui-ellipsis {
+	display:block ;
+	width: 5rem;
+	height: 1rem;
+	background-color: #00E8D7;
+	margin: 0;
+}
+
+#scroll1 .mui-scroll .mui-segmented-control .se_tab {
+	line-height: 23px;!important;
+}
+
+.mui-segmented-control .se_tab2 {
+	line-height: 23px;!important;
+}
+
+.gjc {
+	width: 94%;
+	margin:  0 auto;
+	border-bottom: 1px solid #eeeeee;
+	height: 2.8rem;
+}
+
+.gjc .gjc_left, .gjc .gjc_right {
+	float: left;
+	width: 50%;
+	height: 2.8rem;
+	padding-top: 6%;
+	padding-left: 9%;
+}
+
+.blue_box, .green_box {
+	width: .7rem;
+	height: .7rem;
+	background-color: #03a9f5;
+	margin-top: 1%;
+}
+
+.gjc_left div, .gjc_right div {
+	float: left;
+	text-align: center;
+
+}
+
+.gjc_left div:nth-of-type(2),
+.gjc_right div:nth-of-type(2){
+	width: 80%;
+	color:#03a9f5;
+	font-size: .6rem;
+	height: 1rem;
+}
+
+.gjc_right div:nth-of-type(2){
+	color:#01c796;
+}
+
+.green_box {
+	background-color: #01c796;
+}
+
+.mui-control-content {
+	min-height: 300px;
+}
+
+/*舆情趋势*/
+.content-rows {
+	width: 94%;
+	height: 3rem;
+	border-bottom: 1px solid #eeeeee;
+	margin: 2% auto;
+	line-height: 3rem;
+}
+
+.content_left span:nth-of-type(1) {
+	color: #03a9f5;
+	font-weight: 700;
+	font-size: .9rem;
+}
+
+.content_left span:nth-of-type(2) {
+	color: #01c796;
+	font-weight: 700;
+	font-size: .8rem;
+}
+
+.content_center {
+	font-size: .8rem;
+	color: #999999;
+}
+
+.content_right p {
+	width: 2rem;
+	height: 1rem;
+	background-color:#03a9f5 ;
+	margin: 0;
+}
+
+.content_right p:nth-of-type(2) {
+	width: 4rem;
+	background-color:#01c796 ;
+}
+
+.content_right {
+	margin-top: 3%;
+}
+/*精准舆情*/
+.num_left {
+	color: #03a9f5;
+	font-weight: bold;
+	font-size: .9rem;
+}
+
+.jz_yq {
+	height: 3rem;
+	border-bottom: 1px solid #eeeeee;
+	padding-top: 3%;
+	margin: 1% 0;
+}
+
+.negativeEvaluation,.positiveEvaluation {
+	width: 100%;
+	height: .8rem;
+	background-color:#03a9f5 ;
+	margin: 0;
+}
+
+.positiveEvaluation {
+	background-color:#fa7819 ;
+}
+
+.num_left {
+	line-height: 2.4rem;
+}
+
+.content-block {
+	margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

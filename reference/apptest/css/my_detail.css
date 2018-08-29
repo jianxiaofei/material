@@ -1,0 +1,18 @@
+html {
+	font-size: 20px;
+}
+
+header {
+	width: 100%;
+	height: 2rem;
+	background-color: #007aff;
+}
+
+header span{
+	color:#ffffff;
+	line-height: 2rem;
+}
+
+header span:last-child {
+	margin-left: 31%;
+}
