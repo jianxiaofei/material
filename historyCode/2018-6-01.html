@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        var arr =  ['love',123,'wer'];
+        //arr.splice(2,1);//删除 起始位置，个数
+        // arr.splice(2,0,'you','me');//插入
+        arr.splice(2,1,'you');//替换
+        console.log(arr)
+        */
+        /*
+        //数组迭代方法
+        1.every();
+        2.filter();
+        3.foreach();
+        4.map();
+        5.some();
+        */
+        /*
+        var arr = [1,2,3,4,5,11,4,10,15,13];
+       var arr1 = arr.every(function(item,index,arg1){
+            return item>10
+        });
+        console.log(arr1); //false 检测数组不是每一项都满足 所以返会false。
+    */
+    /* var arr = [1,2,3,4,5,11,4,10,15,13];
+    var testArr = arr.filter(function(item,index,arg){
+        return item > 10;
+    })
+    console.log(testArr); //[11,15,13]; 返回该函数为true条件下组成的数组（过滤效果）。 */
+
+    /* var arr = [1,2,3,4,5,11,4,10,15,13];
+    var ccArr = [];
+    arr.forEach(function(item,index,arg){
+        item +=5;
+        ccArr.push(item);
+    })
+    console.log(arr) //没有返回值，在forEach代码块中执行要操作的程序。
+    console.log(ccArr) */
+    
+     /* var arr = [1,2,3,4,5,11,4,10,15,13];
+     var test1 = arr.map(function(item,index,arg){
+         if (item>10){
+             return item +=10;
+         }else{
+             return item +=1;
+         }
+     })
+
+    console.log(test1); //返回该函数运行的结果组成的数组。 */
+
+   /* var arr = [1,2,3,4,5,11,4,10,15,13];
+   var test2 = arr.some(function(item,index,arg){
+       return item > -1;
+   })
+   console.log(test2);  //与every相似的返回执行结果的布尔值。 */
+
+  /*  var showDate = new Date (Date.now());
+    console.log(showDate);
+ */
+ /* var i ,re = null;
+ for (i=0; i<10; i++) {
+     re = /cat/g;
+     var x =re.test('catastrophe');
+     console.log(x)
+ }
+ for (i=0; i<10; i++) {
+     re = new RegExp('cat','g');
+     var z =re.test('catastrophe');
+     console.log(z)
+ }
+ */
+ /* function outer(){
+     inner();
+ }
+ function inner(){
+
+    //  alert(inner.caller);
+    alert(arguments.callee.caller);
+ }
+ outer() */
+/*  var o = { name: 'jxf'};
+ var name = 'jxfstyle';
+ function sayName(){
+     alert(this.name);
+ }
+ sayName();
+ sayName.call(o);
+ sayName.bind(o); */
+ /* var r = function(){
+     return typeof arguments;
+ }()
+ console.log(r) */
+ /* function fun (n,o) {
+     console.log(o);
+     return {
+         fun: function(m){
+             return fun(m,n);
+         }
+     }
+ }
+ var a = fun(0);
+ console.log(a);
+ var b =a.fun(1);
+ console.log(b);
+ var c =a.fun(2);
+ console.log(c);  */
+ function fun1(x) {
+     return function(y) {
+         return x+y;
+     }
+ }
+ var userFun = fun1(50);
+ alert(userFun(10));
+</script>
+<div 
+    style="float: left;
+        width: 300px;
+        border: 1px solid black; 
+        position: relative;
+        left: -150px;
+        margin-left:50%; 
+        ">
+        div
+    </div>
+</body>
+</html>

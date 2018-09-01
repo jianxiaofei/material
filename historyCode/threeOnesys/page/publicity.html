@@ -1,0 +1,207 @@
+<style>
+    #curStat {
+        background-image: url(../../image/body-bg.jpg);
+    }
+</style>
+<div class="page-wrapper col-lg-12 content-gs">
+    <div class="tabs-wrapper profile-tabs">
+        <ul id='curStat' class="nav nav-tabs">
+            <li class='active'><a href="#gs-content" data-toggle="tab">重大事项决策</a></li>
+            <li><a href="#gs-content" data-toggle="tab">重大人事任免</a></li>
+            <li><a href="#gs-content" data-toggle="tab">重大项目安排</a></li>
+            <li><a href="#gs-content" data-toggle="tab">大额资金使用</a></li>
+            <li class="pull-right">
+                <div class="input-group" style="width: 240px; margin-left: -5px;">
+                    <input type="text" title="" class="&qu·ot; form-control date-picker" id="dateTimeRange" value=""/>
+                    <span class="input-group-addon">
+                    <i class="fa fa-calendar bigger-110"></i>
+                    </span>
+                    <input type="hidden" name="beginTime" id="beginTime" value=""/>
+                    <input type="hidden" name="endTime" id="endTime" value=""/>
+                </div>
+                <!--<a href="javascript:;" onclick="begin_end_time_clear();">清除</a>-->
+            </li>
+        </ul>
+        <div id='select1' class="first">
+            <table class="table table-bordered nav-content" style="width:100%" id="gs-content">
+                <thead>
+                <tr>
+                    <th>业务编号</th>
+                    <th>业务名称</th>
+                    <th>申请人</th>
+                    <th>申请部门</th>
+                    <th>申请时间</th>
+                    <th>事项进度</th>
+                    <th>进度</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>210</td>
+                    <td>测试数据----111</td>
+                    <td>刘洲成</td>
+                    <td>信息中心</td>
+                    <td>2017-10-25</td>
+                    <td>办公室审核通过</td>
+                    <td><a class="btn btn-primary overlay search" data-toggle="modal" data-target="#detailModal1"
+                           data-bid="210">查看</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade in" id="detailModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="" style="background: rgba(0, 0, 0, 0.7);">
+            <div class="modal-dialog" style="width: 50%;height:100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">详细信息展示</h4>
+                    </div>
+                    <div class="modal-body " style="min-height:360px;height:auto;margin-bottom: 42px;min-width:200px;">
+                        <ul class="clearfixed">
+                            <li class="first">
+                                <h3>
+                                    项目申请
+                                </h3>
+                            </li>
+                            <li>
+                                <span><img src="../../image/th.png"></span>
+                            </li>
+                            <li class="second">
+                                <h3>
+                                    办公室审核
+                                </h3>
+
+                            </li>
+                            <li>
+                                <span><img src="../../image/th.png"></span>
+                            </li>
+                            <li class="five">
+                                <h3>
+                                    提交党组会议纪要
+                                </h3>
+                            </li>
+                            <li>
+                                <span><img src="../../image/th.png"></span>
+                            </li>
+                            <li class="last">
+                                <h3>
+                                    结果公示
+                                </h3>
+                            </li>
+
+                        </ul>
+                        <table id="rate_table" class="table table-bordered" style="width:90%;margin:0 auto;">
+                            <thead>
+                            <tr>
+                                <th style="width:20%">业务属性</th>
+                                <th>业务内容</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>业务编号</td>
+                                <td class="profession-num">520102-2016-CR-0024</td>
+                            </tr>
+                            <tr>
+                                <td>业务名称</td>
+                                <td class="profession-name">南明区龙洞堡小碧乡</td>
+                            </tr>
+                            <tr>
+                                <td>业务申请部门</td>
+                                <td class="profession-depat">贵阳市交通管理局</td>
+                            </tr>
+                            <tr>
+                                <td>业务申请人</td>
+                                <td class="profession-apply-person">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>业务详情</td>
+                                <td class="profession-apply-bdescribe">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>业务申请附件</td>
+                                <td class="profession-attachment" style=" max-width: 10%">
+                                    <ol style="list-style: none">
+                                        <li><a href="#">附件1</a></li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>公开级别</td>
+                                <td class="open-level">单位公开</td>
+                            </tr>
+                            <tr>
+                                <td>会议地点</td>
+                                <td class="profession-place">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>参会人员</td>
+                                <td class="profession-meeting-person">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>列席人员</td>
+                                <td class="delegate_people">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>监督人员</td>
+                                <td class="profession-supervise">刘洲成</td>
+                            </tr>
+                            <tr>
+                                <td>会议附件</td>
+                                <td class="profession-meeting-attachment">
+                                    <a href="#">附件1</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>投票结果</td>
+                                <td class="vote-result">单位公开</td>
+                            </tr>
+                            <tr>
+                                <td>结论</td>
+                                <td class="profession-result">调研论证审核通过</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="border-top:none;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-box clearfix project-box green-box">
+        <div class="name title-center">
+            贵阳市交通管理局三重一大事项上党组会议题账台
+            <div class="pull-right daterange-filter" id="reportrange3">
+                <i class="icon-calendar"></i>
+                <span id="timenum3" style="color:#000;font-size:14px;margin-left:15px;"></span> <b class="caret"
+                                                                                                   style="color:#000"></b>
+            </div>
+        </div>
+        <div class='content-tz' id="content_tz">
+            <table id="" class="table table-bordered tz" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 15%">
+                        <select id="select-tz" class="form-control">
+                            <option value="局领导">局领导(部门)</option>
+                            <option value="人事处">人事处(部门)</option>
+                        </select>
+                    </th>
+                    <th colspan="4" class="gong" style="width: 55%">申请了N起事项议题</th>
+                    <th class="pass" style="width: 15%">通过N起</th>
+                    <th class="stop" style="width: 15%">未通过N起</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="50">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

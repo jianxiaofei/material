@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象-继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 继承
+		 */
+		//原型链
+		//第一个原型
+		function One(){
+			this.OneProperty =true;
+		}
+
+		One.prototype.getOneValue = function (){
+			return this.OneProperty;
+		};
+		//第二个原型
+		function Two(){
+			this.TwoProperty = false;
+		}
+		Two.prototype = new One();
+		Two.prototype.getTwoValue = function(){
+			return this.TwoPoperty;
+		};
+		var example = new Two(); //用第二个对象实例化
+		console.log(example.getOneValue()); // 因为第二个对象继承了第一个对象，所以直接拿去第一个对象的属性为： true
+		//原型链的问题
+		function Father(){
+			this.skills = ['js','c++','java'];
+		}
+		function Son(){}
+		Son.prototype = new Father();
+		var grandson = new Son();
+		grandson.skills.push('php');
+		console.log(grandson.skills);
+		var granddaugther = new Son();
+		console.log(granddaugther.skills); //共享污染
+		//借用构造函数（经典继承）
+		function WangJianLin(other){
+			this.other = other;
+			this.pay = ['刷卡','现金'];
+		}
+		function WangSiChong(){
+			//这里继承他老子的付款方式.
+			WangJianLin.call(this,'赊账'); //子类型还可以向超类型传递参数
+		}
+		var WangSunZi1 = new WangSiChong();
+		WangSunZi1.pay.push('支付宝');
+		console.log(WangSunZi1.pay,WangSunZi1.other);
+		var WangSunZi2 = new WangSiChong();
+		WangSunZi2.pay.push('微信');
+		console.log(WangSunZi2.pay);
+
+		//组合继承
+		function Xman(name){
+			this.name = name;
+			this.hobby = ['篮球','乒乓球'];
+		}
+		Xman.prototype.sayName = function(){
+			console.log(this.name);
+		}
+		function Yman(name,age){
+			Xman.call(this,name);
+			this.age = age;
+		}
+		Yman.prototype = new Xman();
+		Yman.prototype.constructor = Yman;
+		Yman.prototype.sayAge = function(){
+			console.log(this.age);
+		};
+		//第一个实例继承
+		var zman = new Yman('李四',22);
+		zman.hobby.push('爬山');
+		console.log(zman.hobby);
+		zman.sayName();
+		zman.sayAge();
+		//第二个实例继承
+		var oman = new Yman('王五','24');
+		oman.hobby.push('桌球');
+		console.log(oman.hobby);
+		oman.sayName();
+		oman.sayAge();
+
+		//原型式继承
+		function object(o){
+			function F(){}
+			F.prototype =o;
+			return new F();
+		}
+		var person = {
+			name: '李四',
+			friends: ['张三','奥巴马']
+		};
+		// var anotherPerson = object(person);
+		// ES5 Object.create() 规范原型式继承
+		var anotherPerson = Object.create(person);
+		anotherPerson.name = '迪丽热巴';
+		anotherPerson.friends.push('杨幂');
+		// var yetAnotherPerson = object(person);
+		var yetAnotherPerson = Object.create(person);
+		yetAnotherPerson.name = '刘亦菲';
+		yetAnotherPerson.friends.push('钟欣潼');
+		console.log(person.friends);
+
+		//寄生式继承
+		function createAnother(original){
+			var clone = object(original);
+			clone.sayHi = function(){
+				console.log('你好！');
+			};
+			return clone;
+		}
+		var person = {
+			name: 'jxfstyle',
+			friends: ['刘毅','张家辉','刘德华']
+		}
+		var anotherPerson1 = createAnother(person);
+		anotherPerson1.sayHi();
+
+		//寄生组合继承
+		function inheritPrototype(two,one){
+			var prototype =object(one.prototype);
+			prototype.constructor = two;
+			two.prototype = prototype;
+		}
+		function One(name){
+			this.name = name;
+			this.friends = ['李娜','惠若琪','林丹'];
+		}
+		One.prototype.sayName = function (){
+			console.log(this.name);
+		};
+		function Two(name,age){
+			One.call(this,name);
+			this.age = age;
+		}
+		inheritPrototype(Two,One);
+		Two.prototype.sayAge = function(){
+			console.log(this.age);
+		};
+		
+
+
+
+
+			
+		
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+		}
+</body>
+</html>

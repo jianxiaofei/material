@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>color</title>
+</head>
+<body>
+	<div class="color" style="width: 100px; height: 100px; border: 1px solid #ccc"></div>
+	<button class="btn">更换颜色</button>
+	<script type="text/javascript">
+		var btn = document.getElementsByClassName('btn')[0];
+		var color = document.getElementsByClassName('color')[0];
+		btn.onclick=function(){
+			var x='#',y,z=[];
+			for (var i=0; i<=2; i++){
+				y =  parseInt(Math.random()*255);
+				x+= y.toString(16);
+				z.push(y)
+
+			}
+			color.style.backgroundColor= x;
+			color.innerHTML=x+z;
+			console.log(z)
+		}
+	</script>
+</body>
+</html>

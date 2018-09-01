@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	// Dropzone.autoDiscover = false;
+$(document).ready(function () {
+    // os 登录的时候记录登录用户信息
+    // 根据不同的登录用户显示不同的界面信息。
+    var perpage = 10;
+    var userstr = $.cookie('userinfo');
+    var loginUser = JSON.parse(userstr);
+    var findActive;
+    var taskrealname;
+    var imgName = [];
+    var daduiname = [];
+    var daduiid = [];
+    var daduipd;
+    var xzdata;
+    var liclickpd = true;
+    var qxtype;
+    var datasum = {};
+    getLogin();
+    checkAdminOfBig();
+
+    if (loginUser.policenum == '005985') {
+        $('.polymerization').show();
+        $('.TaskDistribution').show();
+    } else {
+        $('.polymerization').hide();
+        $('.TaskDistribution').hide();
+    }
+    //初始化窗口
+    $('#trajectory').css({
+        height: $(window).height()-50,
+    });
+    $('.loading').css({
+        height: $(window).height()-50,
+    });
+    $('.treeview').css({
+        height: ($(window).height() - 130),
+    });
+    $('.treeviewUl').css({
+        maxHeight: $(window).height() - 130,
+    });
+    $(window).resize(function () { //当浏览器大小变化时
+        $('#trajectory').css({
+            height: $(window).height()-50,
+        });
+        $('.loading').css({
+            height: $(window).height()-50,
+        });
+        $('.treeview').css({
+            height: $(window).height() - 130,
+        });
+        $('.treeviewUl').css({
+            maxHeight: $(window).height() - 130,
+        });
+    });
+
+
+    function newPoint() {
+        Model.publicTypeList({}, function (data) {
+            if (data.code == 200) {
+                var res = data.msg;
+                var opoint = '';
+                var map_add_name = ''
+                for (var i = 0; i < res.length; i++) {
+                    opoint += '<option data-id="' + res[i].id + '">' + res[i].policetype + '</option>'
+                    map_add_name += '<img data-id="' + res[i].id + '" src="../static/img/' + res[i].imagename + '.png">' + res[i].policetype
+                    imgName.push(res[i].imagename)
+                }
+                $('.policeTypes').html(opoint)
+                $('.mapdiv_index').html(map_add_name)
+            }
+        });
+        Model.stationList({}, function (data) {
+            if (data.code == 200) {
+                var res1 = data.msg;
+                // console.log(res1, 5555)
+                var oport = '';
+                for (var i = 0; i < res1.length; i++) {
+                    oport += '<option data-id="' + res1[i].id + '">' + res1[i].stationname + '</option>'
+                    // imgName.push(res[i].imagename)
+                }
+                $('.postType').html(oport)
+            }
+        })
+        Model.getBigdepByTaskId({
+                id: findActive
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "<option disabled selected>&nbsp;</option>";
+                    var res = data.msg;
+                    // console.log(res, 9999)
+                    for (var i = 0; i < res.length; i++) {
+                        if (daduipd.type == 1 || daduipd.type == 4) {
+                            // console.log(res[i].departmentid , daduipd.departmentid,9527)
+                            if (res[i].departmentid == daduipd.departmentid) {
+                                htm += '<option value="' + res[i].departmentid + '">' + res[i].departmentname + '</option>'
+                            }
+                        } else {
+                            htm += '<option value="' + res[i].departmentid + '">' + res[i].departmentname + '</option>'
+                        }
+
+                    }
+                    $('.production').html(htm);
+
+
+                }
+            })
+
+    }
+
+    function getLogin() {
+        Model.getLogin1({
+            policenum: loginUser.policenum
+        }, function (data) {
+            if (data.code == 200) {
+                daduipd = data.msg;
+                qxtype = data.msg.type;
+                var id = $('.production').val();
+                detachmentbm(id);
+                treeviewUl();
+                // getDepartmentnameCount()
+            }
+        })
+    }
+
+    function checkAdminOfBig() {
+        Model.checkAdminOfBig({
+            policenum: loginUser.policenum
+        }, function (data) {
+            if (data.code == 200) {
+                var msg = data.msg;
+                if (msg) {
+                    $('.rypz').show();
+                } else {
+                    $('.rypz').hide();
+                }
+            }
+        })
+    }
+
+    function detachmentbm(id) {
+        Model.getDepartmentByBig({
+                departmentid: id
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "";
+                    var res = data.msg;
+                    if ((daduipd.type == 1 || daduipd.type == 4) && daduipd.smallDepartmentid) {
+                        htm = '<option value="' + daduipd.smallDepartmentid + '">' + daduipd.smallDepartment + '</option>'
+                    } else {
+                        for (var i = 0; i < res.length; i++) {
+                            htm += '<option value="' + res[i].departmentid + '">' + res[i].departmentname + '</option>'
+                        }
+                    }
+
+                    $('.detachmentbm').html(htm);
+                }
+            })
+    }
+
+    function getBigdepByTaskId(id, nameul) {
+        Model.getBigdepByTaskId({
+                id: id
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "";
+                    var res = data.msg;
+                    // console.log(res, 9999)
+                    var rwid = nameul.prev('li').data('rwid');
+                    var realname = nameul.prev('li').data('realname');
+
+                    daduiname = [];
+                    daduiid = [];
+                    // console.log(nameul.parent('ul').prev('li').html())
+                    for (var i = 0; i < res.length; i++) {
+                        daduiname.push(res.departmentname);
+                        daduiid.push(res.departmentid);
+                        // console.log(daduipd.type)
+                        if (daduipd.type == 1 || daduipd.type == 4) {
+                            console.log(res[i].departmentid, daduipd.departmentid)
+                            if (res[i].departmentid == daduipd.departmentid) {
+                                htm += '<li class="list-group-item"  data-realname="' + realname + '" data-rwid="' + rwid + '" data-daduiid="' + res[i].departmentid + '" style="padding-left:20px"><i class="fa fa-plus" data-hierarchy="2" data-id="' + res[i].departmentid + '"></i>' + res[i].departmentname + '</li><ul style="display: none;"></ul>'
+                            }
+                        } else {
+                            htm += '<li class="list-group-item" data-realname="' + realname + '" data-rwid="' + rwid + '" data-daduiid="' + res[i].departmentid + '" style="padding-left:20px"><i class="fa fa-plus" data-hierarchy="2" data-id="' + res[i].departmentid + '"></i>' + res[i].departmentname + '</li><ul style="display: none;"></ul>'
+                        }
+
+                    }
+                    nameul.html(htm);
+                    nameul.slideToggle("slow");
+                }
+            })
+    }
+
+    function getCountByDeptid(id, nameul) {
+        // console.log(findActive,33333)
+        Model.getCountByDeptid({
+                taskid: findActive,
+                departmentid: id
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "";
+                    var res = data.msg;
+                    var rwid = nameul.prev('li').data('rwid');
+                    var daduiid = nameul.prev('li').data('daduiid');
+                    var zhongduiid = nameul.prev('li').data('zhongduiid');
+                    // var zhongduiname = nameul.prev('li').data('zhongduiid');
+                    for (var i = 0; i < res.length; i++) {
+                        // console.log(res[i].judement, 101010)
+                        if (res[i].judement == 1) {
+                            htm += '<li class="list-group-item" data-judgement="' + res[i].judement + '" data-rwid="' + rwid + '" data-daduiid="' + daduiid + '" data-zhongduiid="' + zhongduiid + '" data-lbid="' + res[i].policetypeid + '"  style="padding-left:40px">' + res[i].policetype + '<span class="badge badge-primary">' + res[i].count + '</span></li>'
+                        } else {
+                            htm += '<li class="list-group-item" data-judgement="' + res[i].judement + '" data-rwid="' + rwid + '" data-daduiid="' + daduiid + '" data-zhongduiid="' + zhongduiid + '" data-lbid="' + res[i].stationid + '"  style="padding-left:40px">' + res[i].stationname + '<span class="badge badge-success">' + res[i].count + '</span></li>'
+                        }
+                    }
+                    nameul.html(htm);
+                    nameul.slideToggle("slow");
+                }
+            })
+    }
+
+    function getDepartmentByBig(id, nameul) {
+        Model.getDepartmentByBig({
+                departmentid: id
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "";
+                    var res = data.msg;
+                    var rwid = nameul.prev('li').data('rwid');
+                    var daduiid = nameul.prev('li').data('daduiid');
+                    var realname = nameul.prev('li').data('realname');
+                    for (var i = 0; i < res.length; i++) {
+                        if (daduipd.type == 4) {
+                            if (res[i].departmentid == daduipd.smallDepartmentid) {
+                                htm += '<li class="list-group-item" data-realname="' + realname + '" data-rwid="' + rwid + '" data-daduiid="' + daduiid + '" data-zhongduiid="' + res[i].departmentid + '" style="padding-left:30px"><i class="fa fa-plus" data-hierarchy="3" data-id="' + res[i].departmentid + '"></i>' + res[i].departmentname + '</li><ul style="display: none;"></ul>'
+                            }
+                        } else {
+                            htm += '<li class="list-group-item" data-realname="' + realname + '" data-rwid="' + rwid + '" data-daduiid="' + daduiid + '" data-zhongduiid="' + res[i].departmentid + '" style="padding-left:30px"><i class="fa fa-plus" data-hierarchy="3" data-id="' + res[i].departmentid + '"></i>' + res[i].departmentname + '</li><ul style="display: none;"></ul>'
+                        }
+                    }
+                    nameul.html(htm);
+                    nameul.slideToggle("slow");
+                }
+            })
+    }
+
+    function treeviewUl() {
+        Model.jltaskList({
+                policenum: loginUser.policenum
+            },
+            function (data) {
+                if (data.code == 200) {
+                    var htm = "";
+                    var res = data.msg;
+                    var htm1 = "";
+                    for (var i = 0; i < res.length; i++) {
+                        htm1 += '<option value="' + res[i].id + '">' + res[i].taskname + '</option>';
+                        htm += '<li class="list-group-item" data-realname="' + res[i].taskname + '" data-rwid="' + res[i].id + '" style="padding-left:10px"><i class="fa fa-plus" data-hierarchy="1" data-id="' + res[i].id + '"></i>' + res[i].taskname + '</li><ul style="display: none;"></ul>'
+                    }
+                    $('.rwtaskName').html(htm1);
+                    $('.treeviewUl').html(htm);
+                    if (liclickpd) {
+                        if ($('.treeviewUl').children('li').length > 0) {
+                            $('.treeviewUl').children('li').eq(0).click();
+                        } else {
+                            ditu();
+                        }
+
+                        liclickpd = false;
+                    }
+                }
+            })
+    }
+
+    function historyLogtable(data) {
+        xzdata = data;
+        // console.log(xzdata,88888)
+        $("#historyLogtable").DataTable({
+            data: data,
+            columns: [{
+                "data": "taskname"
+            }, {
+                "data": "adminame"
+            }, {
+                "data": "policetypename"
+            }, {
+                "data": "nums"
+            }, {
+                "data": function (data) {
+                    return data.realname || "-"
+                }
+            }, {
+                "data": "departmentname"
+            }, {
+                "data": "name"
+            }, {
+                "data": "stationname"
+            }, {
+                "data": "task"
+            }, {
+                "data": "place"
+            }, {
+                "data": function (data) {
+                    if (qxtype == 3) {
+                        return '-'
+                    } else {
+                        return  '<span class="fa-stack editor" data-taskid="' + data.taskid + '" data-realname="' + data.realname + '" data-nums="' + data.nums + '" data-id="' + data.id + '" data-departmentid="' + data.departmentid + '" data-department="' + data.departmentname + '" data-policetype="' + data.policetype + ' "data-task="' + data.task + ' "data-name="' + data.name + '"><i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span>' +
+                                ' <span  data-id="' + data.id + '" class="fa-stack delete"><i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span>' +
+                                ' <span  data-id="' + data.id + '" class="fa-stack calendar" style="cursor: pointer" title="关联排班"><i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-calendar fa-stack-1x fa-inverse"></i></span>'
+                    }
+                }
+            }],
+            "fnInitComplete": function () {
+                this.fnAdjustColumnSizing(true);
+            },
+            "bDestroy": true,
+            "bLengthChange": false,
+            "bPaginate": true,
+            "oLanguage": { //国际化配置
+                "sProcessing": "正在获取数据，请稍后...",
+                "sLengthMenu": "显示 _MENU_ 条",
+                "sZeroRecords": "没有您要搜索的内容",
+                "sInfo": "从 _START_ 到  _END_ 条记录 总数据为 _TOTAL_ 条 </div>",
+                "sInfoEmpty": "数据为0",
+                "sInfoFiltered": "(全部数据 _MAX_ 条)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "最后一页"
+                }
+            }
+        });
+    }
+
+    function ditu(pdcs) {
+// 百度地图API功能
+//------------------------------------------------------------
+        // 百度地图API功能
+        var map = new BMap.Map("trajectory", {
+            enableMapClick: false
+        });
+        var point = new BMap.Point(106.636791, 26.653522);
+        myGeo = new BMap.Geocoder();
+        map.addControl(new BMap.MapTypeControl({
+            mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]
+        })); //添加地图类型控件
+        map.centerAndZoom(point, 11);//设置中心点和缩放级别
+        map.disableDoubleClickZoom();//禁用双击放大地图
+        map.enableScrollWheelZoom(true);
+        //------------------------------------
+
+        var styleOptions = {
+            strokeColor: "red",    //边线颜色。
+            fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+            strokeWeight: 1,       //边线的宽度，以像素为单位。
+            strokeOpacity: 0.6,	   //边线透明度，取值范围0 - 1。
+            fillOpacity: 0.3,      //填充的透明度，取值范围0 - 1。
+            strokeStyle: 'solid'   //边线的样式，solid或dashed。
+        }
+        //实例化鼠标绘制工具
+        var drawingManager = new BMapLib.DrawingManager(map, {
+            isOpen: false, //是否开启绘制模式
+            enableDrawingTool: true, //是否显示工具栏
+            drawingToolOptions: {
+                anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+                offset: new BMap.Size(80, 5), //偏离值
+                scale: 0.7,
+                drawingModes: [BMAP_DRAWING_POLYGON,BMAP_DRAWING_POLYLINE,BMAP_DRAWING_MARKER],
+            },
+
+            // circleOptions: styleOptions, //圆的样式
+            polylineOptions: styleOptions, //线的样式
+            polygonOptions: styleOptions, //多边形的样式
+            // rectangleOptions: styleOptions //矩形的样式
+        });
+        //添加鼠标绘制工具监听事件，用于获取绘制结果
+        drawingManager.addEventListener("markercomplete",function (e) {
+             pd = 1;
+            map.removeOverlay(e);  //删除默认点位---
+             newPoint();
+           if (qxtype == 3) {
+               return
+           }
+           var pt = e.point;
+            console.log(pt,111)
+            console.log(e.point.lng + "," + e.point.lat,1111);
+           $('.newEvent').data("la_lo", e.point.lng + "," + e.point.lat)
+            $('.taskName').text(taskrealname)
+            $('.policeTypes').val('保安');
+           $('.contact').val('');
+           $('.nums').val("");
+           $('.rwtaskName').val(-1);
+           $('.particulars').val("");
+           $('.detachmentbm').html("");
+           $('.postName').val("");
+           $('.policenameout').hide();
+           $('.tonybj').html('新建');
+           $('.policename').val('');
+           $('.newEventxg').hide();
+           $('.newEvent').show();
+           myGeo.getLocation(pt, function (rs) {
+               var addComp = rs.addressComponents;
+               $('.newEvent').data("place", rs.address);
+               console.log(rs.address,555)
+           });
+           $("#movePoliceModal").modal();
+            taskTime()
+        });
+        drawingManager.addEventListener("overlaycomplete",function (e) {
+                if (e.drawingMode=='marker'){ return }
+                var overlays  = [];
+                var  points=[];
+                overlays.push(e.overlay);
+                console.log(overlays,9999)
+                var path = e.overlay.getPath();//Array<Point> 返回多边型的点数组
+                for(var i=0;i<path.length;i++){
+                    // console.log("lng:"+path[i].lng+"\n lat:"+path[i].lat);
+                    points.push(path[i].lng+","+path[i].lat)
+                }
+                var lastP = points[points.length-1].split(',');
+                var lastpoint = new BMap.Point(lastP[0],lastP[1]);
+                console.log(points,9527)
+
+                newPoint();
+                $('.taskName').text(taskrealname)
+                if (qxtype == 3) {
+                    return
+                }
+                $('.newEvent').data("la_lo", points[points.length-1])
+                $('.newEvent').data("area", points)
+                $('.policeTypes').val('保安');
+                $('.contact').val('');
+                $('.nums').val("");
+                $('.rwtaskName').val(-1);
+                $('.particulars').val("");
+                $('.detachmentbm').html("");
+                $('.postName').val("");
+                $('.policenameout').hide();
+                $('.tonybj').html('新建');
+                $('.policename').val('');
+                $('.newEventxg').hide();
+                $('.newEvent').show();
+                myGeo.getLocation(lastpoint, function (rs) {
+                    var addComp = rs.addressComponents;
+                    $('.newEvent').data("place", rs.address);
+                    console.log(rs.address)
+                });
+                $("#movePoliceModal").modal();
+                taskTime()
+
+        });
+
+        function  showPolygon(){
+            var points = [[{lon:106.613609,lat:26.624049}, {lon:106.613415, lat:26.623105}, {lon:106.614848,lat:26.623355}],
+                          [{lon:106.613532,lat:26.623896}, {lon:106.613613,lat:26.623847}, {lon:106.613411,lat:26.622919}, {lon:106.613285,lat:26.622935}],
+                          [{lon:106.612894,lat:26.620646}, {lon:106.612634,lat:26.620682}, {lon:106.613011,lat:26.62222},  {lon:106.613267,lat:26.622208}]]
+            for (var i = 0; i < points.length; i++) {
+                var arrpoint = []
+                for (var j=0;j<points[i].length;j++) {
+                    arrpoint.push(new BMap.Point(points[i][j].lon,points[i][j].lat));
+                }
+                var polygon = new BMap.Polygon(arrpoint, styleOptions);  //创建多边形
+                map.addOverlay(polygon);   //增加多边形
+            }
+        }/*showPolygon()*/
+        //--------------------------------------
+        // 添加带有定位的导航控件
+        var navigationControl = new BMap.NavigationControl({
+            // 靠左上角位置
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            // LARGE类型
+            type: BMAP_NAVIGATION_CONTROL_LARGE,
+            offset: new BMap.Size(5, 50), //偏离值
+        });
+        var top_left_control = new BMap.ScaleControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            offset: new BMap.Size(80, 50), //偏离值
+
+        }); // 左上角，添加比例尺
+        map.addControl(top_left_control);
+        map.addControl(navigationControl);
+
+        var bounds = map.getBounds();
+        var sw = bounds.getSouthWest();
+        var ne = bounds.getNorthEast();
+        var lngSpan = Math.abs(sw.lng - ne.lng);
+        var latSpan = Math.abs(ne.lat - sw.lat);
+        var sContent = "";
+        var searchValue = $('#searchPoint').val();
+        var taskId = findActive;
+        // console.log(findActive,'任务1ID')
+        // 展示点位
+        if (pdcs) {
+            Model.fuzzySearch({
+                    taskid: findActive,//任务id
+                    condition: searchValue,//条件
+                },
+                function (data) {
+                    if (data.code == 200) {
+                        var dataold = data.msg;
+                        var res = [];
+                        res = dataold
+                        // historyLogtable(res)
+                        if (res.length == 0) {
+                            $.alert({
+                                title: "提示",
+                                content: "暂无数据",
+                                confirmButtonClass: 'btn-warning',
+                                confirm: function () {
+
+                                }
+                            });
+                        }
+                        var markers = [];
+                        // console.log(res,2222)
+                        for (var i = 0; i < res.length; i++) {
+                            var type;
+                            var point = new BMap.Point(res[i].lon, res[i].lat);
+                            markers.push(addMarker(point, res[i].imagename, res[i], map))
+
+                        }
+                        //------------------------加载点的同时加载覆盖区域
+                        /*for (var i = 0; i < points.length; i++) {
+                            var arrpoint = []
+                            for (var j=0;j<points[i].length;j++) {
+                                arrpoint.push(new BMap.Point(points[i][j].lon,points[i][j].lat));
+                            }
+                            var polygon = new BMap.Polygon(arrpoint, styleOptions);  //创建多边形
+                            map.addOverlay(polygon);   //增加多边形
+                        }*/
+                        var pdid = $('.polymerization').data('id');
+                        if (pdid == 1) {
+                            var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                                markers: markers
+                            });
+                        }
+
+                    }
+
+                })
+        } else {
+            Model.getCountByAll(datasum,
+                function (data) {
+                    if (data.code == 200) {
+                        console.log(data,666666)
+                        var dataold = data.msg;
+                        // var area = data[2].area;
+                        var res = [];
+                        res = dataold
+                        historyLogtable(res)
+                        if (res.length == 0) {
+                            $.alert({
+                                title: "提示",
+                                content: "暂无数据",
+                                confirmButtonClass: 'btn-warning',
+                                confirm: function () {
+
+                                }
+                            });
+                        }
+                        var markers = [];
+                        // console.log(res,2222)
+                        for (var i = 0; i < res.length; i++) {
+                            var type;
+                            var point = new BMap.Point(res[i].lon, res[i].lat);
+                            markers.push(addMarker(point, res[i].imagename, res[i], map))
+                        }
+                        //------------------------加载点的同时加载覆盖区域
+                        for (var k = 0; k < res.length; k++) {
+                            var arrpoint = [];
+                            console.log(res[k].area);
+                            if (res[k].area===null) continue ;
+                            var singlepoint= JSON.parse(res[k].area)
+                            console.log(singlepoint)
+                            // console.log(tests)
+                            for (var j=0;j<singlepoint.length;j++) {
+                                arrpoint.push(new BMap.Point(parseFloat(singlepoint[j].lon),parseFloat(singlepoint[j].lat)));
+                            }
+                            var polygon = new BMap.Polygon(arrpoint, styleOptions);  //创建多边形
+                            console.log(arrpoint)
+                            map.addOverlay(polygon);   //增加多边形
+                        }
+                        var pdid = $('.polymerization').data('id');
+                        if (pdid == 1) {
+                            var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                                markers: markers
+                            });
+                        }
+
+                    }
+
+                })
+        }
+
+        //双击获取点击的经纬度
+        map.addEventListener("dblclick", function (e) {
+           /* newPoint()
+            $('.taskName').text(taskrealname)
+            if (qxtype == 3) {
+                return
+            }
+            var pt = e.point;
+            // alert(e.point.lng + "," + e.point.lat);
+            $('.newEvent').data("la_lo", e.point.lng + "," + e.point.lat)
+            $('.policeTypes').val('保安');
+            $('.contact').val('');
+            $('.nums').val("");
+            $('.rwtaskName').val(-1);
+            $('.particulars').val("");
+            $('.detachmentbm').html("");
+            $('.postName').val("");
+            $('.policenameout').hide();
+            $('.tonybj').html('新建');
+            $('.policename').val('');
+            $('.newEventxg').hide();
+            $('.newEvent').show();
+            myGeo.getLocation(pt, function (rs) {
+                var addComp = rs.addressComponents;
+                $('.newEvent').data("place", rs.address);
+            });
+            $("#movePoliceModal").modal();*/
+        });
+        // 搜索
+        // 百度地图API功能
+        function G(id) {
+            return document.getElementById(id);
+        }
+
+        var ac = new BMap.Autocomplete( //建立一个自动完成的对象
+            {
+                "input": "suggestId",
+                "location": map
+            });
+
+        ac.addEventListener("onhighlight", function (e) { //鼠标放在下拉列表上的事件
+            var str = "";
+            var _value = e.fromitem.value;
+            var value = "";
+            if (e.fromitem.index > -1) {
+                value = _value.province + _value.city + _value.district + _value.street + _value.business;
+            }
+            str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+            value = "";
+            if (e.toitem.index > -1) {
+                _value = e.toitem.value;
+                value = _value.province + _value.city + _value.district + _value.street + _value.business;
+            }
+            str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+            G("searchResultPanel").innerHTML = str;
+        });
+
+        var myValue;
+        ac.addEventListener("onconfirm", function (e) { //鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+            G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+            setPlace();
+        });
+
+        function setPlace() {
+            // map.clearOverlays(); //清除地图上所有覆盖物
+            function myFun() {
+                var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+                map.centerAndZoom(pp, 18);
+                // map.addOverlay(new BMap.Marker(pp)); //添加标注
+            }
+
+            var local = new BMap.LocalSearch(map, { //智能搜索
+                onSearchComplete: myFun
+            });
+            local.search(myValue);
+        }
+    }
+
+    function taskTime() {
+        (function ($) {
+            $.fn.datepicker.dates['zh-CN'] = {
+                days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+                daysMin: ["日", "一", "二", "三", "四", "五", "六"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                today: "今日",
+                clear: "清除",
+                format: "yyyy年mm月dd日",
+                titleFormat: "yyyy年mm月",
+                weekStart: 1
+            };
+        }(jQuery));
+        var today = moment().format('YYYY-MM-DD');
+        var speciald=new Array();
+        speciald=["2017/11/5","2017/11/9","2017/11/22"];//此处为添加的特殊日期，也可以都设置为yyyy-mm-dd
+        $('#timeStart,#timeEnd').val(today).datepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            gotoCurrent: true,
+        });
+        $('#showTime').datepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayHighlight: true,
+            todayBtn: true,
+            beforeShowDay:function(date){
+                var d=date;
+                var curr_date=d.getDate();
+                var curr_month=d.getMonth()+1;
+                var curr_year=d.getFullYear();
+                var formatDate=curr_year+"/"+curr_month+"/"+curr_date;
+                //特殊日期的匹配
+                if($.inArray(formatDate,speciald)!=-1){
+                    return {classes:'specialdays title',
+
+                    };
+                }
+            }
+        },'show')
+
+        $('#daystart,#dayend').timepicker({
+            showMeridian: false
+        })
+
+    }
+
+// 编写自定义函数,创建标注~~~~~~
+    function addMarker(point, x, data, map) {
+        var myIcon = new BMap.Icon("../static/img/" + x + ".png", new BMap.Size(20, 20));
+        var marker = new BMap.Marker(point, {
+            icon: myIcon
+        }); // 创建标注
+        marker.setZIndex('zIndex', 4);
+        var realname = data.realname || "-";
+        var taskname = data.taskname || "-";
+
+        sContent =
+            "任务名称：" + taskname +
+            "<br/>管理人及电话：" + data.adminame +
+            "<br/>警种：" + data.policetypename +
+            "<br/>人数：" + data.nums +
+            "<br/>姓名：" + realname +
+            "<br/>中队：" + data.departmentname +
+            "<br/>岗位名称：" + data.name +
+            "<br/>岗位类型：" + data.stationname +
+            "<br/>任务详情：" + data.task +
+            "</div>";
+        // var label = new BMap.Label("a", {
+        //     offset: new BMap.Size(20, -10)
+        // });
+
+        var infoWindow = new BMap.InfoWindow(sContent); // 创建信息窗口对象
+        marker.addEventListener("mouseover", function () {
+            this.openInfoWindow(infoWindow);
+        })
+        marker.addEventListener("mouseout", function () {
+            this.closeInfoWindow(infoWindow);
+        });
+        // var marker = new BMap.Marker(point);
+        // map.addOverlay(marker);
+        // map.centerAndZoom(point, 15);
+        var removeMarker = function (e, ee, marker) {
+            var id = data.id;
+            $.confirm({
+                title: '通知',
+                content: '是否确定删除该条信息',
+                theme: 'black',
+                icon: 'fa fa-warning',
+                confirm: function () {
+                    Model.deleteDisPolice({
+                            id: id
+                        },
+                        function (data) {
+                            if (data.code == 200) {
+                                $.alert({
+                                    title: "提示",
+                                    content: "删除成功",
+                                    confirmButtonClass: 'btn-success',
+                                    confirm: function () {
+                                        ditu()
+                                        // getDepartmentnameCount()
+                                        // treeviewUl();//-------------------------------------------------不刷新菜单
+                                    }
+                                });
+                            }
+                        })
+                }
+            })
+            // map.removeOverlay(marker);
+        }
+        var updateDisPolice = function (e, ee, marker) {
+            // newPoint()
+            $('.tonybj').html('修改');
+            var newDepartmentName = '修改之前是' + data.departmentname.substring(0, 3)
+            console.log(newDepartmentName, 3434343)
+            $(".contact").val(data.adminame)
+            $(".policeTypes option:first").html(data.policetypename)
+            $(".production option:first").prop('selected', 'selected')
+            $(".production option:first").html(newDepartmentName) //----------!
+            if (data.policetypename == "民警") {
+                $('.policenameout').show();
+            } else {
+                $('.policenameout').hide();
+            }
+            $('.detachmentbm').html('<option value="' + data.departmentid + '">' + data.departmentname + '</option>')
+            $('.taskName').text(taskname);
+            $('.particulars').val(data.task);
+            $('.postName').val(data.name);
+            $('.postType').val(data.stationname);
+            $('.newEventxg').show();
+            $('.newEvent').hide();
+            if (data.policetypename == '民警') {
+                $('.policename').val(realname);
+            }
+            $('.rwtaskName').val(data.taskid)
+            $('.newEventxg').data('id', data.id);
+            $('#movePoliceModal').modal();
+        }
+        var markerMenu = new BMap.ContextMenu();
+        markerMenu.addItem(new BMap.MenuItem('<button type="button" class="btn btn-success" style="width: 100%;">修改</button>', updateDisPolice.bind(marker)));
+        markerMenu.addItem(new BMap.MenuItem('<button type="button" class="btn btn-success" style="width: 100%;">删除</button>', removeMarker.bind(marker)));
+        if (qxtype != 3) {
+            marker.addContextMenu(markerMenu);
+        }
+        var pdid = $('.polymerization').data('id');
+        if (pdid == 2) {
+            map.addOverlay(marker);
+        } else {
+            return marker
+        }
+        // marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        // marker.setLabel(label);
+    }
+
+    $(document)
+        .delegate('.searchpoint', 'click', function (e) {
+            var this_classname = 'searchpoint';
+            ditu(this_classname)
+        })
+        .delegate('.polymerization', 'click', function (event) {
+            event.stopPropagation()
+            $('#trajectory').html('')
+            var id = $(this).data('id');
+            if (id == 1) {
+                $(this).data('id', 2)
+            } else {
+                $(this).data('id', 1)
+            }
+            ditu();
+        })
+        .delegate('.production', 'change', function (e) {
+            var id = $(this).val();
+            if (id) {
+                detachmentbm(id);
+            }
+        })
+        .delegate('.newEvent', 'click', function (event) {
+            var contact = $('.contact').val();//联系人及电话
+                policeTypesid = $('.policeTypes option:selected').data('id'),//警种ID
+                productionid = $('.detachmentbm option:selected').val(),//中队名称
+                production = $('.detachmentbm option:selected').text(),//中队名称
+                stationTypeid = $('.postType option:selected').data('id'),//岗位类型ID
+                taskid = findActive,//任务ID
+                mjname = $('.policename').val(),//民警名称
+                taskName = taskrealname,//任务名称
+                postName = $('.postName').val(),//岗位名称
+                particulars = $('.particulars').val(),//任务详情
+                la_lo = $(this).data("la_lo").split(","),
+                la_lo = $(this).data("area"),
+                place = $('.newEvent').data("place");
+
+            if (!taskid) {
+                $.alert({
+                    title: "提示",
+                    content: "请选择任务名称",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                })
+                return
+            }
+            if (policeTypesid == "民警") {
+                if (!mjname) {
+                    $.alert({
+                        title: "提示",
+                        content: "请输入民警姓名",
+                        confirmButtonClass: 'btn-warning',
+                        confirm: function () {
+
+                        }
+                    })
+                    return
+                }
+            }
+
+            if (!postName) {
+                $.alert({
+                    title: "提示",
+                    content: "请输入岗位名称",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                })
+                return
+            }
+            if (!particulars) {
+                $.alert({
+                    title: "提示",
+                    content: "请输入任务详情",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                })
+                return
+            }
+            Model.saveDisPolice({
+                    taskid: taskid,
+                    adminame: contact,
+                    stationid: stationTypeid,
+                    policenum: loginUser.policenum,
+                    lon: la_lo[0],
+                    lat: la_lo[1],
+                    place: place,
+                    departmentid: productionid,
+                    departmentname: production,
+                    policetype: policeTypesid,
+                    name: postName,
+                    task: particulars,
+                    realname: mjname,
+                    nums: 1
+                },
+                function (data) {
+                    if (data.code == 200) {
+                        $.alert({
+                            title: "提示",
+                            content: "添加成功",
+                            confirmButtonClass: 'btn-success',
+                            confirm: function () {
+                                ditu()
+                                // getDepartmentnameCount()
+                                // treeviewUl();//-------------------------------------------------不刷新菜单
+                                $('#movePoliceModal').modal("hide")
+                                $('.postName').val('');//岗位名称
+                                var particulars = $('.particulars').val('');//任务详情
+                            }
+                        });
+
+                    }
+                })
+            // console.log(production, policeTypes, nums, taskName, particulars, la_lo)
+        })
+        .delegate('.togglemt', 'click', function (event) {
+            var id = $(this).data('id');
+            if (id == 1) {
+                $('.mapdiv').hide(300);
+                $('.tablediv').show(400);
+
+            } else if (id == 2) {
+                $('.mapdiv').show(400);
+                $('.tablediv').hide(300);
+            }
+        })
+        .delegate('.delete', 'click', function (event) {
+            var id = $(this).data('id');
+            $.confirm({
+                title: '通知',
+                content: '是否确定删除该条信息',
+                theme: 'black',
+                icon: 'fa fa-warning',
+                confirm: function () {
+                    Model.deleteDisPolice({
+                            id: id
+                        },
+                        function (data) {
+                            if (data.code == 200) {
+                                $.alert({
+                                    title: "提示",
+                                    content: "删除成功",
+                                    confirmButtonClass: 'btn-warning',
+                                    confirm: function () {
+                                        ditu()
+                                        // getDepartmentnameCount()
+                                        // treeviewUl();
+                                        // treeviewUl();//-------------------------------------------------不刷新菜单
+                                    }
+                                });
+                            }
+                        })
+                }
+            })
+
+        })
+        .delegate('.editor', 'click', function (event) {
+            $this = $(this).closest('tr').children('td');
+
+            $('.tonybj').html('修改');
+            $('.taskName').text($this.eq(0).text());
+            $('.contact').val($this.eq(1).text());
+            $('.policeTypes option:first').text($this.eq(2).text());
+            $('.production option:first').text($this.eq(5).text().substring(0, 3));
+            $('.postType option:first').text($this.eq(7).text());
+            if ($(this).data("policetype") == "民警") {
+                $('.policenameout').show();
+                $('.policename').val($(this).data("realname"))
+            } else {
+                $('.policenameout').hide();
+            }
+            $('.detachmentbm').html('<option value="' + $(this).data('departmentid') + '">' + $(this).data('department') + '</option>')
+            $('.rwtaskName').val($(this).data('taskid'))
+            $('.nums').val($(this).data("nums"));
+            $('.postName').val($(this).data("name"));
+            $('.particulars').val($(this).data("task"));
+            $('.newEventxg').show();
+            $('.newEvent').hide();
+            $('.newEventxg').data('id', $(this).data('id'));
+            $('#movePoliceModal').modal();
+        })
+        .delegate('.newEventxg', 'click', function (event) {
+            var id = $(this).data("id"),
+                contact = $('.contact').val(),//联系人及电话
+                detachmentbmid = $('.detachmentbm option:selected').val(),//中队ID
+                detachmentbm = $('.detachmentbm option:selected').text(),//中队名称
+                policeTypesid = $('.policeTypes option:selected').data('id'),//警种
+                policeTypes = $('.policeTypes option:selected').text(),//警种名称
+                postTypeid = $('.postType option:selected').data('id'),//岗位类型
+                mjname = $('.policename').val(),//民警姓名
+                postName = $('.postName').val(),//岗位名称
+                particulars = $('.particulars').val();//任务详情
+            if (policeTypes == "民警") {
+                if (!mjname) {
+                    $.alert({
+                        title: "提示",
+                        content: "请输入民警姓名",
+                        confirmButtonClass: 'btn-warning',
+                        confirm: function () {
+
+                        }
+                    })
+                    return
+                }
+            } else {
+                mjname = "-";
+            }
+            if (!postName) {
+                $.alert({
+                    title: "提示",
+                    content: "请输入岗位名称",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                })
+                return
+            }
+            if (!particulars) {
+                $.alert({
+                    title: "提示",
+                    content: "请输入任务详情",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                })
+                return
+            }
+            Model.updateDisPolice({
+                    id: id,
+                    // taskid: taskid,
+                    policenum: loginUser.policenum,
+                    adminame: contact,
+                    departmentid: detachmentbmid,
+                    departmentname: detachmentbm,
+                    policetype: policeTypesid,
+                    task: particulars,
+                    name: postName,
+                    stationid: postTypeid,
+                    realname: mjname,
+                    nums: 1
+                },
+                function (data) {
+                    if (data.code == 200) {
+                        $.alert({
+                            title: "提示",
+                            content: '修改成功',
+                            confirmButtonClass: 'btn-success',
+                            confirm: function () {
+                                ditu()
+                                // treeviewUl();//-------------------------------------------------不刷新菜单
+                                $('#movePoliceModal').modal("hide")
+                            }
+                        });
+
+                    }
+                })
+        })
+        .delegate('.submenu li', 'click', function () {
+            // datasum.policeTypes=policeTypes;
+            datasum.departmentname = $(this).data('departmentname');
+            datasum.policetype = $(this).data('policetypes');
+            ditu()
+        })
+        .delegate('.bmck', 'click', function (e) {
+            var departmentname = $(this).data('departmentname');
+            datasum.departmentname = departmentname;
+            datasum.policetype = "";
+            ditu()
+            // alert(1)
+        })
+        .delegate('.reset', 'click', function () {
+            datasum.departmentname = "";
+            datasum.policetype = "";
+            ditu();
+        })
+        .delegate('.policeTypes', 'change', function () {
+            var policeTypes = $('.policeTypes option:selected').text();
+            if (policeTypes == "民警") {
+                $('.policenameout').show();
+            } else {
+                $('.policenameout').hide();
+            }
+        })
+        .delegate('.treeviewUl li', 'click', function (e) {
+            e.stopPropagation()
+            var nameul = $(this).next('ul'),
+                ulbrother = $(this).siblings('ul'),
+                liborther = $(this).siblings('li');
+            liborther.children('i').addClass('fa-plus').removeClass('fa-minus');
+            if ($(this).children('i').is('.fa-plus')) {
+                ulbrother.slideUp('300')
+                $(this).children('i').removeClass('fa-plus').addClass('fa-minus');
+                var id = $(this).children('i').data('id');
+                var hierarchy = $(this).children('i').data('hierarchy');
+                if (nameul.html()) {
+                    nameul.slideDown("300");
+                    return;
+                }
+                if (hierarchy == 1) {
+                    getBigdepByTaskId(id, nameul)
+                } else if (hierarchy == 2) {
+                    getDepartmentByBig(id, nameul)
+                } else if (hierarchy == 3) {
+                    getCountByDeptid(id, nameul)
+                }
+            } else {
+                $(this).children('i').removeClass('fa-minus').addClass('fa-plus');
+                nameul.slideUp("300");
+            }
+        })
+        .delegate('.treeviewUl li', 'click', function (e) {
+            // e.stopPropagation()
+            if (!$(this).is('.liactive')) {
+                $('.treeviewUl li').removeClass('liactive');
+                $(this).addClass('liactive');
+                var rwid = $(this).data('rwid'),
+                    daduiid = $(this).data('daduiid'),
+                    zhongduiid = $(this).data('zhongduiid'),
+                    lbid = $(this).data('lbid');
+
+                datasum.taskid = rwid;
+                datasum.bigDeptid = daduiid;
+                datasum.departmentid = zhongduiid;
+                if ($(this).data('judgement') == 1) {
+                    datasum.policetype = lbid;
+                    datasum.stationid = '';
+                } else {
+                    datasum.policetype = '';
+                    datasum.stationid = lbid;
+                }
+
+                findActive = $(this).attr('data-rwid');
+                // console.log(findActive, 1123);
+                taskrealname = $(this).attr('data-realname');
+                console.log()
+                ditu();
+                newPoint()
+                // console.log(rwid, daduiid, zhongduiid, lbid)
+            }
+
+        })
+        .delegate('.downloadbtn', 'click', function () {
+            if (xzdata.length == 0) {
+                $.alert({
+                    title: "提示",
+                    content: "暂无数据",
+                    confirmButtonClass: 'btn-warning',
+                    confirm: function () {
+
+                    }
+                });
+                return
+            }
+            $(".sumexport").html('');
+            var $this = $(this);
+            var listhtm = '<div class="sumexportxz" style="width:100%"><table class="table" style="width:100%;">';
+            var tableheader = {
+                'taskname': '任务名称',
+                'adminame': '管理人及电话',
+                'kind': '警种',
+                'policenum': '人数',
+                'realname': '警员姓名',
+                'date': '所属中队',
+                'type': '岗位名称',
+                'stationType': '岗位类型',
+                'did': '任务详情',
+                'remarks': '地点'
+            };
+            listhtm += '<thead>';
+            var realname;
+            for (var key in tableheader) {
+                listhtm += '<th style="border:1px solid #999">' + tableheader[key] + '</th>';
+            }
+            listhtm += '</thead>';
+            for (var i = 0; i < xzdata.length; i++) {
+                realname = (!xzdata[i].realname ? '-' : xzdata[i].realname);
+                listhtm += '<tr>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].taskname + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].adminame + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].policetypename + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].nums + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + realname + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].departmentname + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].name + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].stationname + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].task + '</td>';
+                listhtm += '<td style="border:1px solid #999;text-align: center">' + xzdata[i].place + '</td>';
+                listhtm += '</tr>';
+            }
+            listhtm += '</table></div>';
+            $(".sumexport").html(listhtm);
+
+            function clickDownload(aLink) {
+                var classname = 'sumexportxz';
+                var str = $('.' + classname).html();
+                str = encodeURIComponent(str);
+                $('.downloadworklog').remove();
+                var src = "data:text/doc;charset=utf-8,\ufeff" + str;
+                var htmls = "全局"
+                if (datasum.departmentname) {
+                    htmls = datasum.departmentname + '(' + datasum.policetype + ')'
+                }
+                var htm = '<a class="downloadworklog" download="' + htmls + '警力分配.xls" href="' + src + '" style="display:none;"></a>';
+                $('body').append(htm);
+                $('.downloadworklog').get(0).click();
+            }
+
+            clickDownload($this.get(0));
+
+        })
+
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>table head change anyway</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <style type="text/css">
+    th,td{
+            border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+    <table id="assessmenttable" class="table table-bordered" style="width:100%">
+      <thead>
+
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+    <script scr=""></script><script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        assessmenttable()
+    function assessmenttable() {
+        var data = {
+            "data": 200,
+            "result": [{
+                'type': '共性考核项目,现场交通违法查处' ,
+            }, {
+                'type': '共性考核项目,现场交通违法查处'
+            }, {
+                'type': '共性考核项目,现场交通违法查处'
+            }, {
+                'type': '共性考核项目,现场重点交通违法查处量'
+            }, {
+                'type': '共性考核项目,1,1,1'
+            }, {
+                'type': '共性考核项目,非现场查处量'
+            }, {
+                'type': '共性考核项目,123,123123'
+            }, {
+                'type': '共性考核项目,执法记录仪录入时长,123123,11'
+            }, {
+                'type': '个性考核项目,执法记录仪录入时长,123123'
+            }, {
+                'type': '个性考核项目,专项违法查处量,电瓶车查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,摩托车整治,整治收扣量,以强凭为准'
+            }, {
+                'type': '个性考核项目,专项违法查处量,摩托车整治,现场查处量,以简易、通知书为准'
+            }, {
+                'type': '个性考核项目,专项违法查处量,行人查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,酒后驾驶查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,机动车超员查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,大型货车查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,客运车辆查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,鸣号查处量'
+            }, {
+                'type': '个性考核项目,专项违法查处量,行政拘留量'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,应用使用情况'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,及时签收率'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,上传图片数,上传图片数'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,上传图片数,现场查处量'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,上传图片数,拦截车辆数'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,现场查处量'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,勤务排版信息'
+            }, {
+                'type': '个性考核项目,城市公路防控体系建设及应用情况,检查登记数'
+            }, {
+                'type': '其他考核项目,加分项,禁毒工作'
+            }, {
+                'type': '其他考核项目,加分项,五进工作开展情况'
+            }, {
+                'type': '其他考核项目,扣分项,执勤执法规范'
+            }, {
+                'type': '其他考核项目,扣分项,事故方面工作'
+            }, {
+                'type': '其他考核项目,扣分项,重点路段交通秩序'
+            }, {
+                'type': '其他考核项目,扣分项,夜巡巡查情况'
+            }, {
+                'type': '其他考核项目,扣分项,信息报送'
+            }, {
+                'type': '其他考核项目,扣分项,设施损坏排查'
+            }]
+        }
+
+        var res = data.result;
+        console.log(data, 2222)
+        var name = [];
+        var num = [];
+        var htm = [];
+        var lenghts = [];
+        var lenght = 5;
+        for (var i = 0; i < res.length; i++) {
+            var typesz = res[i].type.split(",");
+            for(var j=0;j<typesz.length;j++){
+                if(res[i+1]){
+                    var pdnum=1;
+                    for(var x=j-1;x>=0;x--){
+                        if(res[i+1].type.split(",")[x]!=typesz[x]){
+                            pdnum=2
+                        }
+                    }
+                    if(res[i+1].type.split(",")[j]==typesz[j]&&pdnum==1){
+                        if(!num[j]){
+                            num[j]=1
+                        }
+                        num[j]++;
+                    }else if(j!=typesz.length-1){
+                        htm[j]+='<th colspan=' + num[j] + '>' + typesz[j] + '</th>';
+                        num[j]=1
+                    }else{
+                        htm[j]+='<th colspan=' + num[j] + ' rowspan="'+(lenght-j)+'">' + typesz[j] + '</th>';
+                        num[j]=1
+                    }
+                }else{
+                    if(j!=typesz.length-1){
+                        htm[j]+='<th colspan=' + num[j] + '>' + typesz[j] + '</th>';
+                        num[j]=1
+                    }else{
+                        htm[j]+='<th colspan=' + num[j] + ' rowspan="'+(lenght-j)+'">' + typesz[j] + '</th>';
+                        num[j]=1
+                    }
+                }
+            }
+        }
+
+        var htmnum = '';
+        for (var i = 0; i < htm.length; i++) {
+            htmnum += '<tr>' + htm[i] + '</tr>';
+        }
+        // console.log(htmnum)
+        $('#assessmenttable thead').html(htmnum)
+
+    }
+  </script>
+</body>
+</html>
+

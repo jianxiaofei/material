@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas</title>
+	<style type="text/css">
+		#canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='canvas'></canvas>
+	<script type="text/javascript">
+		function draw(){
+			var canvas = document.getElementById('canvas');
+		if (canvas.getContext){
+			/*
+			*fillStyle--填充颜色
+			*fillRect()--x,y,width,height 绘制矩形坐标和宽高
+			*clearRect()--x,y,width,height 清除一个区域大小和宽高
+			*strokeRect()--x,y,width,height 绘制一个矩形边框的宽高坐标
+			*beginPath()--
+			*closePath()--
+			*stroke()--描边
+			*fill()--
+			*arc(x, y, radius, startAngle, endAngle, anticlockwise)
+				--画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。
+			*radians（弧度）=(Math.PI/180)*degrees
+			*/
+			var ctx = canvas.getContext("2d");
+
+				ctx.beginPath()
+				ctx.moveTo(75,50)
+				ctx.lineTo(95,50)
+				ctx.lineTo(95,70)
+				ctx.fill()
+
+			}
+		}
+		draw()
+	</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>函数表达式</title>
+</head>
+<body>
+	 <script type="text/javascript">
+	 //递归函数
+	 function digui(num){
+	 	if (num<=1){
+	 		return 1;
+	 	}else{
+	 		return num * digui(num-1);
+	 	}
+	 }	
+	 console.log(digui(3));
+	 var giveMe = digui;
+	 digui = null;
+	 //console.log(giveMe(5)); //报错
+	 // arguments.callee 是一个指向正在指向函数的指针
+	 function digui1(num){
+	 	if (num <=1){
+	 		return 1;
+	 	}else{
+	 		return num * arguments.callee(num-1)
+	 	}
+	 }
+	 var giveMe1 = digui1;
+	 digui =null;
+	 console.log(giveMe1(5));
+	 //严格模式下arguments.callee 会导致出错，解决方案如下
+	 var digui2 = (function f(num){
+	 	if(num <=1){
+	 		return 1;
+	 	}else{
+	 		return num * f(num-1);
+	 	}
+	 });
+	 var giveMe2 = digui2;
+	 digui2 =null;
+	 console.log(giveMe2(5));
+
+	 function bibao(){
+	 	var arr = new Array();
+	 	for (var i=0; i<10; i++){
+	 		arr[i] = function(){
+	 			return i;
+	 		};
+	 	}
+	 	return arr;
+	 }
+	 console.log(bibao()[1]()); //返回10;
+
+	 function bibao1() {
+	 	var arr = [];
+	 	for(var i=0; i<10; i++){
+	 		arr[i] = function(num){
+	 			return function(){
+	 				return num;
+	 			};
+	 		}(i);
+	 	}
+	 	return arr;
+	 }
+	 var arrFun = bibao1();
+	 console.log(bibao1()[1]());//返回1;
+
+	 var name = '哪吒';
+	 var obj = {
+	 	name: '孙悟空',
+	 	getFun: function(){
+	 		var _this = this;
+	 		return function() {
+	 			// return this.name;//this 只能访问活动对象的变量 因此不会访问到外部函数的 this
+	 			return _this.name;
+	 		}
+	 	}
+	 };
+	 console.log(obj.getFun()());
+	 var name = '哪吒';
+	 var obj2 = {
+	 	name: '孙悟空',
+	 	getName: function(){
+	 		return this.name;
+	 	}
+	 };
+	 console.log(obj2.getName());
+	 console.log((obj2.getName)());
+	 console.log((obj25 = obj2.getName)());
+
+	 // 私有变量
+	 function Person(name){
+	 	this.getName = function(){
+	 		return name
+	 	}
+	 	this.setName =function(value){
+	 		name = value;
+	 	}
+	 }
+	 var man  = new Person();
+	 man.setName('李四');
+	 console.log(man.getName());
+	 
+	 //静态私有变量
+	 (function(){
+	 	var name ='';
+	 	One = function(value) {
+	 		name = value;
+	 	};
+	 	One.prototype.getName = function(){
+	 		return name;
+	 	};
+	 	One.prototype.setName =function(value){
+	 		name = value;
+	 	};
+	 }());
+	 var babay = new One('张丽');
+	 console.log(babay.getName());
+	 babay.setName('李芳');
+	 console.log(babay.getName());
+
+	 //组合模块化 书中没搞懂 new BaseComponent() --这样导致报错
+	 var car = function(){
+	 	var prices = new Array();
+	 	function BasePrice(){}
+	 	var bmw = new BasePrice('10');
+	 	bmw.getPrice = function(){
+	 		return prices.length;
+	 	};
+	 	bmw.payPrice =function(price){
+	 		if (price%10 == 0){
+	 			prices.push(price);
+	 			console.log(prices)
+	 		}
+	 	};
+	 	return bmw;
+	 }();
+	 car.payPrice(30);
+	 car.payPrice(60);
+	 console.log(car.getPrice());
+	 </script>
+</body>
+</html>

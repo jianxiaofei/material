@@ -1,0 +1,19 @@
+	<meta charset="UTF-8">
+	<title>事件</title>
+<!DOCTYPE html>
+</body>
+</head>
+</html>
+<body>
+<head>
+<html lang="en">
+<input type="number" min="0" max="10" step="2" maxlength="6">
+<input type="text" pattern="[0-9]*" name="count"> <!-- 类型必须时 number -->
+<script type="text/javascript">
+    var inputE = document.getElementsByTagName('input')[1];
+                // console.log(e.keyCode);
+        console.log(inputE.checkValidity());
+        inputE.addEventListener('textInput',function(e){ //textInput事件主要使用在输入框输入时使用！
+        },false); 
+          
+    </script>

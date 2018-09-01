@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>面向对象编程-创建对象(即封装)</title>
+</head>
+<body>
+	<script type="text/javascript">
+	/*	function Person(){}
+		
+		var friends = new Person();
+	Person.prototype.sayInfo = function() {
+		alert('hello')
+	}; */
+	/*Person.prototype = {
+	name: '李四',
+		age: 24,
+		job: 'web engineer',
+		sayInfo: function(){
+			alert(this.name + '<br/>' + this.age + '<br/>' + '<br/>' + this.job + '<br/>');
+		}
+	};
+	friends.sayInfo();
+	*/
+
+	/*function Person(){}
+	Person.prototype = {
+		constructor: Person,
+		name: 'jxfstyle',
+		age: 24,
+		job: 'soft Engineer',
+		friends: ['zhangsan','lisi'],
+		sayInfo: function(){
+			document.write(this.name + '<br/>' +this.age+ '<br/>' +this.job +'<br/>' + this.friends + '<br/>');
+		}
+	}
+	var person1 = new Person();
+	var person2 = new Person();
+
+	person1.friends.push('马云');
+
+	console.log(person1.friends);
+	console.log(person2.friends);
+	console.log(person1.friends == person2.friends) //true  --单独属性却造成共享*/
+
+	// --函数与原型模式的组合使用
+	/**创建自定义类型的最常见方式
+	 * 组合使用构造函数与原型模式
+	 * 构造函数模式用于定义实例属性
+	 * 原型函数模式用于定义方法和共享的属性
+	 */
+	//组合式封装
+	function Person(name,age,job){
+		this.name = name;
+		this.age ·= age;
+		this.job = job;
+		this.friends = ['张军','李丽'];
+	}
+	Person.prototype  = {
+		sayInfo: function(){
+			document.write(this.name + '<br/>' +this.age+ '<br/>' +this.job +'<br/>' + this.friends + '<br/>');	
+		}
+	};
+	var person1 = new Person('张三',22,'web Engineer');
+	var person2 = new Person('李四',25,'soft Engineer');
+	person1.sayInfo();
+	person2.friends.push('王五');
+	person2.sayInfo();
+
+	//寄生构造函数
+		/*function SpecialArray(){
+			var Value = new Array();
+			Value.push.apply(Value,arguments);
+			Value.toPopedString = function (){
+				return this.join("|");
+			};
+			return Value;
+		}
+		var colors = new SpecialArray('red','yellow','green');
+		console.log(colors.toPopedString());
+
+	//稳妥构造函数
+		function Person(name,age,job){
+			var o = new Object ();
+			o.sayName = function (){
+				console.log(name);
+			}
+			return o;
+		}*/
+
+	</script>
+	<div style="color: #000"></div>
+</body>
+</html>

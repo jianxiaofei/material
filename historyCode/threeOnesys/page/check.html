@@ -1,0 +1,179 @@
+<div class="page-wrapper col-lg-12 content-sh">
+    <div class="name title-center">
+        <span>调研论证</span>
+        <div class="pull-right daterange-filter" id="reportrange">
+            <i class="icon-calendar"></i>
+            <span id="timenum"></span><b class="caret" style="color:#000"></b>
+        </div>
+    </div>
+    <table id="research" class="table table-bordered " style="width:100%;">
+        <thead>
+        <tr>
+            <th>事项名称</th>
+            <th>申请部门</th>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>事项性质</th>
+            <th>审核状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>三重一大事项一</td>
+            <td>贵阳市公安交通管理局信息中心</td>
+            <td>张三</td>
+            <td>2016-11-14 00:00:00</td>
+            <td>重大事项决策</td>
+            <td>
+                <a class="btn btn-primary overlay" data-toggle="modal" data-model="" data-target="#detailModal">待审核</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade in" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="background: rgba(0, 0, 0, 0.7);">
+        <div class="modal-dialog" style="width: 50%;height:100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">审核信息展示</h4>
+                </div>
+                <div class="modal-body " style="min-height:360px;height:auto;margin-bottom: 42px;min-width:200px;">
+                    <table id="researchShow" class="table table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>事项名称</th>
+                            <th>重大资金使用</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td class="title">申请时间</td>
+                            <td class="applyTime">南明区龙洞堡小碧乡</td>
+                        </tr>
+                        <tr>
+                            <td class="title">事项性质</td>
+                            <td class="applyProto">南明区龙洞堡小碧乡</td>
+                        </tr>
+                        <tr>
+                            <td class="title">事项级别</td>
+                            <td class="applyLeve">南明区龙洞堡小碧乡</td>
+                        </tr>
+                        <tr>
+                            <td class="title">附件</td>
+                            <td class="applyAttach">
+                                <a href="#">附件</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">是否已征求列席处室意见</td>
+                            <td id="delegate">否
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">是否已报请分管领导同意</td>
+                            <td id="branched">是
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">是否已报请主要领导同意</td>
+                            <td id="principal">是
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">是否属于"三重一大"事项</td>
+                            <td id="belong">是
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">办公室结论</td>
+                            <td class="radioResult">
+                                <input type="radio" value="1" id="agree" name="agree">
+                                <label for="agree">同意</label>
+                                <input type="radio" value="0" id="disagree" name="agree">
+                                <label for="disagree">不同意</label>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="title">办公室意见</td>
+                            <td class="opinoin">
+                                <input type="checkbox" id="appname">
+                                <label for="appname">无</label>
+                                <input type="text" placeholder="请输入意见..." class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr class="form-group" name="show-group">
+                            <td for="ctime">参会时间:</td>
+                            <td>
+                                <input type="text" id="ctime" class="form-control" placeholder="请填写会议时间"></td>
+                        </tr>
+                        <tr class="form-group" name="show-group">
+                            <td for="cwhere">参会地点:</td>
+                            <td>
+                                <input type="text" id="cwhere" class="form-control" placeholder="请填写会议地点"></td>
+                        </tr>
+                        <tr class="form-group" name="show-group">
+                            <td for="cperson">与会人员:</td>
+                            <td>
+                                <input type="text" id="cperson" class="form-control" placeholder="请填写与会人员"></td>
+                        </tr>
+                        <tr class="form-group" name="show-group">
+                            <td for="cmaster">会议主持人:</td>
+                            <td>
+                                <input type="text" id="cmaster" class="form-control" placeholder="请填写会议主持人"></td>
+                        </tr>
+                        <tr role="row" class="odd jjtd" style="display:none;">
+                            <td class="title">纪检结论</td>
+                            <td class="jjResult">
+                                <input type="radio" value="1" id="jjagree" name="jjagree">
+                                <label for="jjagree">同意</label>
+                                <input type="radio" value="0" id="jjdisagree" name="jjagree">
+                                <label for="jjdisagree">不同意</label>
+                            </td>
+                        </tr>
+                        <tr role="row" class="odd lasttd" style="display:none;">
+                            <td class="title">第三级结论</td>
+                            <td class="lastResult">
+                                <input type="radio" value="1" id="lastagree" name="lastagree">
+                                <label for="lastagree">同意</label>
+                                <input type="radio" value="0" id="lastdisagree" name="lastagree">
+                                <label for="lastdisagree">不同意</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">纪检意见</td>
+                            <td class="jjopinoin">
+                                <select class="form-control" style="width: 30%">
+                                    <option>议题范围清晰议题范围界限清晰</option>
+                                    <option>其他意见其他意见</option>
+                                    <option>议题范围界限清晰</option>
+                                    <option>议题范围界限清晰</option>
+                                </select>
+                                <input type="text" placeholder="请输入意见..." class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="btn btn-warning btn-sm saveconsumable "><i class="glyphicon glyphicon-floppy-disk"></i>
+                                    保存
+                                </button>
+                                <button class="btn btn-danger btn-sm saveconsumable " data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>
+                                    取消
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer" style="border-top:none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
