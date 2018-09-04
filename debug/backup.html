@@ -82,6 +82,7 @@
     <img src="__ROOT__/Public/hd/img/album/album61/left_page.png" id="left-arrow" alt="左箭头">
     <div id="img-container">
         <img id="img-current" style="width: 500px;height: 500px" src="" alt="">
+        <p></p>
     </div>
     <img src="__ROOT__/Public/hd/img/album/album61/right_page.png" id="right-arrow" alt="右箭头">
 </div>
@@ -174,7 +175,6 @@
                             beforeMoveChange: onBeforeMoveChange,
                         })
                 }
-
             }
         };
         initCount();
@@ -232,9 +232,8 @@
                         beforeMoveChange: onBeforeMoveChange,
                     }
                 );
-
+                renderImg(count); //初始化图片
                 G('iframe').style.display = 'block';
-                renderImg(count);
                 break;
             case useType === 'video':
                 try {
@@ -331,14 +330,26 @@
             return count;
         };
         changeCount();
-        imgWrap.replaceChild(loader[count - 1], imgWrap.firstElementChild);
-        arrow(count - 1, httpImg.length - 1);
+       var timer = setInterval(function () {
+           if (loader[count - 1].complete){
+               imgWrap.replaceChild(loader[count - 1],imgWrap.firstElementChild);
+               arrow(count - 1, httpImg.length - 1);
+               clearInterval(timer)
+           }else{
+               var str = document.createElement('p');
+               str.innerText = "正在加载……";
+               imgWrap.replaceChild(str,imgWrap.firstElementChild);
+               return false;
+           }
+       },50)
+
     }
 
     function createImg(count, httpImg) {
         for (var i = 0; i < httpImg.length; i++) {
             var img = new Image();
-            img.src = '{$resourcesUrl}' + httpImg[i];
+            // img.src = '{$resourcesUrl}' + httpImg[i];
+            img.src = httpImg[i];
             loader.push(img);
         }
     }
@@ -425,7 +436,6 @@
                 }
             });
         }
-
     }
 
 </script>

@@ -1,101 +1,56 @@
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Tip</title>
-<style type="text/css">
-#div1{
-    background-color: #2189c0;
-    width: 200px;
-    height: 200px;
-}
-#div2{
-    background-color: #aad7ff;
-    color: white;
-    width: 200px;
-    height: 200px;
-    visibility: hidden;
-}
-</style>
+    <title></title>
 </head>
 <body>
+    <div id="div">
+        <img  id="img" src="">
+        <p></p>
+    </div>
+    <button id="btn">按钮</button>
+    <script type="text/javascript">
+        var img = document.getElementById('img');
+        var divE = document.getElementById('div');
+        var btn = document.getElementById('btn');
+        var str=document.createElement("p");
+        str.innerHTML = '123213'
 
-<div id="div1">div1</div>
-<div id="div2">div2</div>
+        var count = 0;
+    var loader = [];
 
-<button id="show">显示</button>
-<button id="hide">隐藏</button>
+    function renderImg(direction) {
+        var imgWrap = G('img-container');
+        var reImg = new Image();
+        imgWrap.removeChild(imgWrap.firstElementChild);
+        var videoIndex = parseInt(G(homeActiveEnterKeyId).getAttribute("videoDataIndex"));
+        var httpImg = newData[videoIndex].content_desc;
+        var changeCount = function () {
+            if (direction === 'left') {
+                count = Math.max(1, count -= 1)
+            } else {
+                count = Math.min(httpImg.length, count += 1)
+            }
+            return count;
+        };
+        changeCount();
+       var timer = setInterval(function () {
+           if (loader[1].complete){
+               imgWrap.appendChild(loader[count - 1]);
+               arrow(count - 1, httpImg.length - 1);
+               clearInterval(timer)
+           }
+       },50)
 
-<button id="test1">显示测试</button>
-<button id="test2">隐藏测试</button>
- <script type="text/javascript">
-
-(function(window, undefined) {
-    function JsClassName(cfg) {
-        var config = cfg || {};
-        this.get = function(n) {
-            return config[n];
-        }
-        this.set = function(n, v) {
-            config[n] = v;
-        }
-        this.init();
     }
-    JsClassName.prototype = {
-        init: function(){
-            this.createDom();
-            this.bindEvent();
-        },
-        createDom: function(){
-            var div1=document.getElementById('div1');
-            var div2=document.getElementById('div2');
 
-            var showButton=document.getElementById('show');
-            var hideButton=document.getElementById('hide');
-
-            this.set("div1",div1);
-            this.set("div2",div2);
-            this.set("showButton",showButton);
-            this.set("hideButton",hideButton);
-        },
-        bindEvent:function(){
-            var that=this;
-            var div1=that.get("div1");
-            var showButton=that.get("showButton");
-            var hideButton=that.get("hideButton");
-
-            showButton.onclick=function(){
-                that.show();
-            };
-            hideButton.onclick=function(){
-                that.hide();
-            };
-        },
-        show:function(){
-        	console.log(this.get.config)
-            var that=this;
-            var div2=that.get("div2");
-            div2.style.visibility='visible';
-        },
-        hide:function(){
-            var that=this;
-            var div2=that.get("div2");
-            div2.style.visibility='hidden';
+    function createImg(count, httpImg) {
+        for (var i = 0; i < httpImg.length; i++) {
+            var img = new Image();
+            img.src = '{$resourcesUrl}' + httpImg[i];
+            loader.push(img);
         }
-    };
-    var obj=new JsClassName();
-
-    window.show=function(e){
-        obj.show.call(obj)
     }
-    window.hide=function(e){
-        obj.hide.call(obj)
-    }
-})(window);
-
-var button1=document.getElementById("test1");
-button1.onclick=show;
-var button2=document.getElementById("test2");
-button2.onclick=hide;
- </script>
+    </script>
 </body>
 </html>

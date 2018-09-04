@@ -25,6 +25,27 @@
         <button id="btn-next">下一张</button>
     </div>
     <script>
+        /*{
+        title:"dsfasdf",
+        content_type:"1",
+        content_desc: ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+            "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
+            "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+            "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
+        ]
+
+    },{
+        title:"12312312",
+        content_type:"1",
+        content_desc: ["http://pic1.win4000.com/wallpaper/f/51c3bb99a21ea.jpg",
+            "https://jxfdemo.github.io/material/static/image/banner01.jpg",
+            "https://jxfdemo.github.io/material/static/image/banner02.jpg",
+            "https://jxfdemo.github.io/material/static/image/banner03.jpg",
+            "https://jxfdemo.github.io/material/static/image/banner04.jpg"
+        ]
+
+    }
+    */
     var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
@@ -42,7 +63,17 @@
 
         function replaceDom() {
             currentCount()
-            img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
+            var timer = setInterval(function() {
+                if (loader[count - 1].complete) {
+                    img_wrap.replaceChild(loader[count - 1],img_wrap.firstElementChild);
+                    clearInterval(timer)
+                } else {
+                    var str = document.createElement('p');
+                    str.innerText = "正在加载……"
+                    img_wrap.replaceChild(str,img_wrap.firstElementChild);
+                    return false;
+                }
+            }, 50)
         }
 
         function preloaderImg() {
