@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM</title>
+</head>
+<body>
+	<div>never</div>
+	<script type="text/javascript">
+		//对文本节点的操作
+		/*var div = document.getElementsByTagName('div')[0].firstChild;
+		
+		console.log(div);
+		div.appendData(' give up');
+		div.deleteData(5,3);
+		div.insertData(5,'love');
+		div.replaceData(5,4,' gi');
+		var x =div.splitText(5);
+		console.log(document.getElementsByTagName('div')[0].childNodes.length);
+		var str = div.substringData(1,2);
+		console.log(str);
+		console.log()
+		document.getElementsByTagName('div')[0].normalize();
+		console.log(document.getElementsByTagName('div')[0].childNodes.length);*/
+
+		var div = document.getElementsByTagName('div');
+
+		for(var i=0,len = div.length;i<len; i++) { //将查询DOM得到的值保存下来。避免下次在去查询DOM
+			var copyDiv = document.createElement('div');
+				copyDiv.appendChild(document.createTextNode('qwer'));
+				document.body.appendChild(copyDiv);
+		}
+
+	</script>
+</body>
+</html>

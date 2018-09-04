@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑",sans-serif;background: url("../../image/wallpaper7.jpg")}
+        #allmap {height:100%; width: 100%;}
+        #control{width:100%;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5pWvFQEXgAUWWWOfYyjk65KjG7luKV0E"></script>
+    <title>网格信息</title>
+</head>
+<body>
+<div id="allmap"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+
+    var wsmap = {
+        map: null,
+        XY: null,
+
+        mapLoad: function () {
+            this.map = new BMap.Map("allmap");
+            this.map.centerAndZoom(new BMap.Point(106.636791, 26.653522), 18);
+            this.map.disableDoubleClickZoom();//禁用双击放大地
+            this.map.disableScrollWheelZoom();
+            var bottom_right_navigation = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_ZOOM }); //缩放按钮
+            var bottom_left_control = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT, offset: new BMap.Size(0, 30) }); //比例尺
+            this.map.addControl(bottom_left_control);
+            this.map.addControl(bottom_right_navigation);    //添加地图类型控件
+
+            this.showPolyline();
+            this.map.addEventListener("dragend", function () { wsmap.showPolyline(); });
+            this.map.addEventListener("zoomend", function () { wsmap.showPolyline(); });
+            this.map.addEventListener("click", function (e) { wsmap.createMark(e.point,e); });
+        },
+        createMark: function(node, e){
+            var _this = this;
+            var Point =  new BMap.Point(node.lng, node.lat);
+            var marker = new BMap.Marker(Point);
+            this.map.addOverlay(marker);  //-----若需要点位就将标注添加到地图中
+            var myGeo = new BMap.Geocoder();
+            var bsdis= this.map.getDistance(new BMap.Point(106.630027, 26.656218), new BMap.Point(106.631024, 26.65621));
+            console.log(bsdis);
+            myGeo.getLocation(node, function (rs) {
+                var addr = rs.address;
+                var sContent =
+                    "<div>" +
+                    "<br/>地点：" + addr +
+                    "<br/>经度：" + e.point.lng +
+                    "<br/>纬度：" + e.point.lat +
+                    "<br/>横向第"+ Math.ceil(e.offsetX/wsmap.bs().x1)+"单元格"+
+                    "<br/>纵向第"+ Math.ceil(e.offsetY/wsmap.bs().x2)+"单元格"+
+                    "</div>";
+                var infoWindow = new BMap.InfoWindow(sContent, {title: '<span style="color: darkgoldenrod">该点位置信息</span>'
+                });  // 创建信息窗口对象
+                _this.map.openInfoWindow(infoWindow,Point); //开启信息窗口
+                _this.map.removeOverlay(marker); //-----不需要就删除他
+            });
+        },
+        bs: function () {
+            var bs = this.map.getBounds();
+            console.log(bs)
+            var bssw = bs.getSouthWest();
+            var bsne = bs.getNorthEast();
+            return { 'x1': bssw.lng, 'y1': bssw.lat, 'x2': bsne.lng, 'y2': bsne.lat};
+        },
+        showPolyline: function () {
+            var zoome = this.map.getZoom();
+            var styleOptions = {
+                strokeColor: "blue",    //边线颜色。
+                strokeWeight: 1,        //边线的宽度，以像素为单位。
+                strokeOpacity:.8,	    //边线透明度，取值范围0 - 1。
+                strokeStyle: 'dashed'   //边线的样式，solid或dashed。
+            };
+            this.map.clearOverlays();
+            if (zoome > 12) {  //判断放大级别开始画网格
+                this.XY = this.bs();
+                var polyline = null;
+                for (var i = this.XY.x1; i < this.XY.x2; i = i + 0.001) {
+                      polyline = new BMap.Polyline([
+                        new BMap.Point(i, this.XY.y1),
+                        new BMap.Point(i, this.XY.y2)
+                    ],styleOptions);
+                    this.map.addOverlay(polyline);
+                }
+
+                for (var j = this.XY.y1; j < this.XY.y2; j = j + 0.001) {
+                      polyline = new BMap.Polyline([
+                        new BMap.Point(this.XY.x1, j),
+                        new BMap.Point(this.XY.x2, j)
+                    ],styleOptions);
+                    this.map.addOverlay(polyline);
+                }
+            }
+        }
+    };
+    wsmap.mapLoad();
+</script>

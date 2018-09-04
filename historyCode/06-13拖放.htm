@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖放</title>
+	<style type="text/css">
+		div#beSetDown{
+			width: 500px;
+			height: 600px;
+			background: green;
+			position: relative;
+			z-index: 0;
+		}
+		div#beDrag{
+			width: 200px;
+			height: 200px;
+			background: yellow;
+			position: absolute;
+			z-index: 10;
+		} 
+
+	</style>
+</head>
+<body>
+	<!-- <div id="beDrag" draggable='true' ></div> -->
+	<div id="beSetDown">
+		<div id="beDrag" draggable='true' ></div>
+	</div>
+	<script type="text/javascript">
+		var div1 = document.getElementById('beDrag');
+		var div2 = document.getElementById('beSetDown');
+		var diffX,diffY;
+		
+		div1.ondragstart = function(e){
+			e.dataTransfer.effectAllowed = 'all';
+			diffX = e.clientX - div1.offsetLeft;
+			diffY = e.clientY - div1.offsetTop;
+		};
+		// div1.ondrag = function(e){};
+		div1.ondragend = function(e){
+			var left = e.clientX - diffX;
+			var top = e.clientY - diffY;
+			if(left<0){  
+                left=0;  
+            }else if(left > div2.offsetWidth - div1.offsetWidth){  
+                left = div2.offsetWidth - div1.offsetWidth;  
+            }  
+            if(top<0){  
+                top=0;  
+            }else if(top > div2.offsetHeight -div1.offsetHeight){  
+                top = div2.offsetHeight -div1.offsetHeight;  
+            }
+			div1.style.left = left + 'px';
+			div1.style.top = top + 'px';
+		};
+		div2.ondragenter = function(e){
+			e.preventDefault();
+		};
+		div2.ondragover = function(e){
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+		};
+		/*div2.ondrop = function(e){
+			// e.target.appendChild(div1);
+		};*/
+
+
+
+		/*div1.onmousedown = function(e){
+			e.stopPropagation();
+			diffX = e.clientX - div1.offsetLeft;
+			diffY = e.clientY - div1.offsetTop;
+		};
+		div1.onmousemove = function(e){
+			e.stopPropagation();
+			var left = e.clientX - diffX;
+			var top = e.clientY - diffY;
+			console.log(left,div2.offsetWidth)
+			if(left<0){  
+                left=0;  
+            }else if(left > div2.offsetWidth - div1.offsetWidth){  
+                left = div2.offsetWidth - div1.offsetWidth;  
+            }  
+            if(top<0){  
+                top=0;  
+            }else if(top > div2.offsetHeight -div1.offsetHeight){  
+                top = div2.offsetHeight -div1.offsetHeight;  
+            }
+			div1.style.left = left + 'px';
+			div1.style.top = top + 'px';
+		};
+		div1.onmouseup = function(e){
+			e.onmousemove = null;
+			e.onmouseup = null;
+		};*/
+	</script>
+</body>
+</html>

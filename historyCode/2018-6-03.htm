@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>面向对象编程-创建对象(即封装)</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*var person = {
+		name: 'jxfstyle',
+		age: 27,
+		job: 'web engineer',
+		sayInfo:function () {
+			return document.write(this.name + '<br/>' + this.age + '<br/>' + this.job);
+		}
+	}
+	person.sayInfo();
+	Object.defineProperty(person,'name',{
+		configurable: true,
+		writable: true,
+	})
+	document.write('<br/>')
+	person.name = 'zhangsan';
+	delete person.age;
+	person.sayInfo();*/
+
+	/*//创建对象工厂模式 
+	function createPersonInfo(name,age,job){
+		var o = new Object();
+		o.name = name;
+		o.age = age;
+		o.job = job;
+		o.sayInfo = function() {
+			document.write(this.name + '<br/>' + this.age + '<br/>' + this.job+'<br/>');
+		}
+		return o;
+	}
+	var person1 = createPersonInfo('jxfstyle',27,'web engineer');
+	var person2 = createPersonInfo('zhangsan',22,'student');
+	person1.sayInfo();
+	person2.sayInfo();*/
+
+	/*//构造函数模式
+	function Person(name,age,job){
+		this.name = name;
+		this.age = age;
+		this.job = job;
+		this.sayInfo = function(){
+			document.write(this.name + '<br/>' + this.age + '<br/>' + this.job+'<br/>');
+		}
+	}
+	var person1 = new Person('lis',23,'game');
+	var person2 = new Person('wangwu',25,'teacher');
+	person1.sayInfo();
+	person2.sayInfo();	
+	console.log(person1.sayInfo == person2.sayInfo); //指向对象不同；*/
+	
+
+	//原型模式
+	function Person(){};
+	Person.prototype.name = 'WangMaZi';
+	Person.prototype.age = 22;
+	Person.prototype.job = 'web engineer';
+	Person.prototype.sayInfo = function(){
+			document.write(this.name + '<br/>' + this.age + '<br/>' + this.job+'<br/>');	
+	}
+	var person1 = new Person();
+	person1.name = '马云';
+	person1.age = 55;
+	person1.job = 'CEO By Ailibaba';
+	var person2 = new Person();
+	person1.sayInfo();//来自实例---
+	person2.sayInfo();//来自原型---
+	console.log(person1.sayInfo == person2.sayInfo); //同一个原型链
+	//取得对象上所有可以枚举的属性与方法！
+	var keys = Object.keys(Person.prototype);
+	console.log(keys);
+	//取得对象上所有无论是否可以被枚举的属性
+	var allKeys = Object.getOwnPropertyNames(Person.prototype);
+	console.log(allKeys);
+	var ArrayFun = Object.keys(String.prototype);
+	console.log(ArrayFun);
+	String.prototype.clear = function(){
+		//添加原生字符串的方法--不建议添加
+		}
+	
+	var str = 'hello,wor ld!';
+	str.clear()
+	console.log(str）
+	// console.log(str.job());
+
+</script>
+</body>
+</html>

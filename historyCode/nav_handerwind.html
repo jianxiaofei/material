@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>手风琴菜单</title>
+</head>
+<body>
+    <div class="menu_list">
+      <div class="menu menu1">
+        <p class="menu_head current" data-id="1">一类考核</p>
+        <div style="display:block" class=menu_body>
+          <ul>
+            <li><a href="#">一分局</a></li>
+            <li><a href="#">二分局</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="menu menu2">
+        <p class="menu_head" data-id="2">二类考核</p>
+        <div style="display:none" class=menu_body>
+          <ul>
+            <li><a href="#">三分局</a></li>
+            <li><a href="#">五分局</a></li>
+            <li><a href="#">六分局</a></li>
+            <li><a href="#">七分局</a></li>
+            <li><a href="#">八分局</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="menu menu3">
+        <p class="menu_head" data-id="3">三类考核</p>
+        <div style="display:none" class=menu_body>
+          <ul>
+            <li><a href="#">开阳大队</a></li>
+            <li><a href="#">息烽大队</a></li>
+            <li><a href="#">清镇大队</a></li>
+            <li><a href="#">修文大队</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+  <script type="text/javascript">
+  	$(".menu").click(function () {
+    $(this).find('p.menu_head').toggleClass("current").next("div.menu_body").slideToggle(300);
+    $(this).siblings('.menu').find('div.menu_body').stop().slideUp(300);
+    $(this).siblings('.menu').find('p.menu_head').removeClass("current");
+  });
+  //阻止事件冒泡
+  $('.menu_body,.menu li,.menu_head input').click(function (e) {
+    e.stopPropagation()
+  })
+  </script>
+</body>
+</html>

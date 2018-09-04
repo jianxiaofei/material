@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function Person(){}
+
+    var friends = new Person();
+    /*Person.prototype.sayInfo = function() {
+        alert('hello')
+    }; */
+    Person.prototype = {
+        name: '李四',
+        age: 24,
+        job: 'web engineer',
+        sayInfo: function(){
+            alert(this.name + '<br/>' + this.age + '<br/>' + '<br/>' + this.job + '<br/>')
+        }
+    };
+    friends.sayInfo();
+    var x = undefined;
+</script>
+<div style="color: #000"></div>
+</body>
+</html>
