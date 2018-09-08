@@ -1,56 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body {
+        text-align: center;
+    }
+
+    img {
+        max-width: 500px;
+        height: 200px;
+    }
+    </style>
 </head>
+
 <body>
-    <div id="div">
-        <img  id="img" src="">
-        <p></p>
+    <div id="img-wrap">
+        <img src="" alt="">
     </div>
-    <button id="btn">按钮</button>
-    <script type="text/javascript">
-        var img = document.getElementById('img');
-        var divE = document.getElementById('div');
-        var btn = document.getElementById('btn');
-        var str=document.createElement("p");
-        str.innerHTML = '123213'
-
-        var count = 0;
-    var loader = [];
-
-    function renderImg(direction) {
-        var imgWrap = G('img-container');
-        var reImg = new Image();
-        imgWrap.removeChild(imgWrap.firstElementChild);
-        var videoIndex = parseInt(G(homeActiveEnterKeyId).getAttribute("videoDataIndex"));
-        var httpImg = newData[videoIndex].content_desc;
-        var changeCount = function () {
-            if (direction === 'left') {
-                count = Math.max(1, count -= 1)
-            } else {
-                count = Math.min(httpImg.length, count += 1)
-            }
-            return count;
-        };
-        changeCount();
-       var timer = setInterval(function () {
-           if (loader[1].complete){
-               imgWrap.appendChild(loader[count - 1]);
-               arrow(count - 1, httpImg.length - 1);
-               clearInterval(timer)
-           }
-       },50)
-
-    }
-
-    function createImg(count, httpImg) {
-        for (var i = 0; i < httpImg.length; i++) {
-            var img = new Image();
-            img.src = '{$resourcesUrl}' + httpImg[i];
-            loader.push(img);
+    <div id="btn-wrap">
+        <button id="btn-prev">上一张</button>
+        <button id="btn-next">下一张</button>
+    </div>
+    <script>
+    (function(window, undefined) {
+        function JxfSub(cfg) {
+            var config = cfg || {};
+            this.get = function(n) {
+                return config[n];
+            };
+            this.set = function(n, v) {
+                config[n] = v;
+            };
+            this.init();
         }
-    }
+        JxfSub.prototype = {
+            init: function() {
+                this.set("count", 0);
+                this.set("loader", []);
+                this.set("use", []);
+                this.bindEvent();
+                this.createImg();
+            },
+            bindEvent: function() {
+                var that = this;
+                var btn_wrap = this.get('btn_wrap');
+                btn_wrap.addEventListener('click', function(e) {
+                    that.renderImg(e.target.id);
+                }, true);
+            },
+            renderImg: function(ID) {
+                var count = this.get('count');
+                var httpImg = this.get("data");
+                var img_wrap = this.get('img_wrap');
+                var loader = this.get("loader");
+
+                count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
+                this.set("count", count);
+                var currentImg = img_wrap.firstElementChild;
+                img_wrap.replaceChild(loader[count - 1], img_wrap.firstElementChild);
+                console.log(currentImg, loader[count-1]);
+                if (loader.length < 4 ) {
+                   loader.forEach(function(item,index,self){
+                        if (self.indexOf(item)!== index){
+                            loader.splice(index,1);
+                        }
+                    });
+                    this.createImg(); //避免重复创建image对象
+                }
+            },
+            createImg: function() {
+               
+                var _this = this;
+                var httpImg = this.get('data');
+                var count = this.get('count');
+                var loader = this.get("loader");
+                var img = new Image();
+                img.src = httpImg[count];
+                loader.push(img);
+                var use = this.get("use");
+                
+                 use = loader.filter(function(item,index,self){
+                    return self.indexOf(item) === index;
+                });
+                 console.log(use)
+            }
+        };
+        window.JxfSub = JxfSub;
+    }(window));
+    var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
+    ];
+    var obj = new JxfSub({
+        data: httpImg,
+        img_wrap: document.getElementById('img-wrap'),
+        btn_wrap: document.getElementById('btn-wrap')
+    });
     </script>
 </body>
+
 </html>

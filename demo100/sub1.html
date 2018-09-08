@@ -54,7 +54,7 @@
             img.src = this.httpImg[this.count];
             this.loader.push(img);
         }
-    }
+    };
 
     var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
@@ -68,7 +68,6 @@
     });
     var btn_wrap = document.getElementById('btn-wrap');
     btn_wrap.addEventListener('click', function(e) {
-        e.stopPropagation();
         obj.replaceImg(e.target.id);
     }, true);
     </script>

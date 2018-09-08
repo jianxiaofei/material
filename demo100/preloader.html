@@ -58,22 +58,23 @@
 
     function renderImg(ID) {
         function currentCount() {
-            return count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
+             count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
+            return count;
         }
 
         function replaceDom() {
-            currentCount()
+            currentCount();
             var timer = setInterval(function() {
                 if (loader[count - 1].complete) {
                     img_wrap.replaceChild(loader[count - 1],img_wrap.firstElementChild);
-                    clearInterval(timer)
+                    clearInterval(timer);
                 } else {
                     var str = document.createElement('p');
-                    str.innerText = "正在加载……"
+                    str.innerText = "正在加载……";
                     img_wrap.replaceChild(str,img_wrap.firstElementChild);
                     return false;
                 }
-            }, 50)
+            }, 50);
         }
 
         function preloaderImg() {

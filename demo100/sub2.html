@@ -28,8 +28,6 @@
     (function(window, undefined) {
         function JxfSub(cfg) {
             var config = cfg || {};
-            this.count = 0;
-            this.loader = [];
             this.get = function(n) {
                 return config[n];
             };
@@ -40,59 +38,76 @@
         }
         JxfSub.prototype = {
             init: function() {
-                this.createDom();
-                this.bindEvent();
+                this.set("count", 0);
+                this.set("loader", []);
                 this.createImg();
             },
-            $: function(el) {
-                var dom;
-                switch (true) {
-                    case el.slice(0, 1) === '#':
-                         dom = document.getElementById(el.slice(1));
+            countInit: function(Id) {
+                var count = this.get("count");
+                var data = this.get("data");
+                switch (Id) {
+                    case "btn-prev":
+                        this.set("count", Math.max(1, count -= 1));
                         break;
-                    case el.slice(0,1) === '.':
-                         dom = document.getElementsByClassName(el.slice(1));
-                    default:
-                        dom = document.getElementsByTagName(el);
+                    case "btn-next":
+                        this.set("count", Math.min(data.length, count += 1));
                         break;
                 }
-                return dom;
             },
-            createDom: function() {
-                var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
-                    "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
-                    "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
-                    "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
-                ];
-                this.set("btn_wrap", this.$('#btn-wrap'));
-                this.set("img_wrap", this.$('#img-wrap'));
-                this.set("httpImg", httpImg);
-            },
-            bindEvent: function() {
+            renderImg: function(Id) {
+                this.countInit(Id);
                 var that = this;
-                var btn_wrap = this.get('btn_wrap');
-                btn_wrap.addEventListener('click', function(e) {
-                    that.renderImg(e.target.id);
-                }, true);
-            },
-            renderImg: function(ID) {
-                var httpImg = this.get('httpImg');
                 var img_wrap = this.get('img_wrap');
-                this.count = ID == 'btn-prev' ? Math.max(1, this.count -= 1) : Math.min(httpImg.length, this.count += 1);
-                img_wrap.replaceChild(this.loader[this.count - 1], img_wrap.firstElementChild);
-                this.loader.length < httpImg.length && this.createImg(); //避免重复创建image对象
+                var loader = this.get("loader");
+                var flagCount = loader[that.get("count") - 1];
+                var timer = setInterval(function() {
+                    if (flagCount && flagCount.complete) {
+                        img_wrap.replaceChild(loader[that.get("count") - 1], img_wrap.firstElementChild);
+                        clearInterval(timer);
+                    } else {
+                        var div = document.createElement("div");
+                        div.style.width = "500px";
+                        div.style.height = "200px";
+                        div.style.background = "url(http://img.zcool.cn/community/01930a582bcdc3a84a0d304fec5f14.gif) no-repeat center";
+                        img_wrap.replaceChild(div, img_wrap.firstElementChild);
+                    }
+                    loader.length < that.get("data").length + 1 && that.createImg(); //避免多创建image对象
+                }, 50);
             },
             createImg: function() {
-                var httpImg = this.get('httpImg');
+                var httpImg = this.get('data');
+                var count = this.get('count');
+                var loader = this.get("loader");
                 var img = new Image();
-                img.src = httpImg[this.count];
-                this.loader.push(img);
+                img.src = httpImg[count];
+                if (loader.length == 0) {
+                    loader.push(img);
+                } else { // 截流阀
+                    var flag = true;
+                    for (var i = 0; i < loader.length; i++) {
+                        if (loader[i].src == img.src) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        loader.push(img);
+                    }
+                }
             }
         };
-        var obj = new JxfSub();
-        window.$ = obj.$;
+        window.JxfSub = JxfSub; // 向外暴露组件
     }(window));
-    console.log($("#btn-prev"))
+    var httpImg = [ "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
+                    "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
+        ];
+
+    var obj = new JxfSub({ // 传递img数组
+        data: httpImg,
+        img_wrap: document.getElementById('img-wrap'), // 传递容器
+    }, true);
+    document.addEventListener("click", function(e) {
+        obj.renderImg(e.target.id);
+    });
     </script>
 </body>
 

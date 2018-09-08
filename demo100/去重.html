@@ -1,8 +1,30 @@
 <script type="text/javascript">
 	var r,
-     arr = ['apple', 'strawberry', 'banana', 'pear', 'apple', 'orange', 'orange', 'strawberry'];
- r = arr.filter(function (element, index, self) {
+     arr = [{id:1,x:5},{id:1,x:4},{id:2,y:3}];
+ /*r = arr.filter(function (element, index, self) {
      return self.indexOf(element) === index;
- });
- console.log(r);
+ });*/
+/* arr.filter(function(item,index,self){
+    if (index !== self.indexOf(item)){
+        delete arr[index];
+    }
+ });*/
+/* arr = arr.filter(function(item,index,self){
+   return item === self[index];
+ });*/
+
+ // 数组中对象去重
+ var allArr = [];
+ for(var i=0;i<arr.length;i++){
+　　var flag = true;
+　　for(var j=0;j<allArr.length;j++){
+　　　　if(arr[i].id == allArr[j].id){
+　　　　　　flag = false;
+　　　　}
+　　}
+　　if(flag){
+　　　　allArr.push(arr[i]);
+　　}
+}
+ console.log(allArr);
 </script>

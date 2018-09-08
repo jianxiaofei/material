@@ -1,31 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list id="7c89ae04-7841-4c98-a5f8-55635cdf4ba0" name="ignore" comment="" />
-    <list default="true" id="c569da8d-a28a-4942-ba39-dd996e9e9823" name="Default" comment="">
+    <list default="true" id="c569da8d-a28a-4942-ba39-dd996e9e9823" name="Default" comment=" longmaster">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debug/test1.html" beforeDir="false" afterPath="$PROJECT_DIR$/debug/test1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo100/preloader.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/preloader.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo100/sub1.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/sub1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo100/sub2.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/sub2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo100/去重.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/去重.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/historyCode/bt.html" beforeDir="false" afterPath="$PROJECT_DIR$/historyCode/bt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/historyCode/colors.html" beforeDir="false" afterPath="$PROJECT_DIR$/historyCode/colors.html" afterDir="false" />
     </list>
+    <list id="7c89ae04-7841-4c98-a5f8-55635cdf4ba0" name="ignore" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1072242511">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="gitignore" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PLAIN_TEXT" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="-962605793">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="html" value="1" />
+          <entry key="json" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="1" />
+          <entry key="JSON" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="html" value="46" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="HTML" value="46" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/demo100/sub2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="333">
+              <caret line="107" selection-start-line="107" selection-end-line="107" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/debug/test.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/debug/test.json" />
+        <option value="$PROJECT_DIR$/demo100/sub2.html" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="20" />
@@ -39,7 +122,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -47,10 +129,21 @@
               <item name="material" type="b2602c69:ProjectViewProjectNode" />
               <item name="material" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="material" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+              <item name="debug" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="material" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+              <item name="demo100" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -58,403 +151,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/.project</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/policeinfo.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/storage_name.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/下拉刷新主页面.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/下拉刷新子页面.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/代码块.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/附件测试.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/页面部件.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/content/项目进度.txt</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/app.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/appstyle.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/attendance_management.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/calendar.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/common.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/iconfont.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/mui.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/mui.min.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/mui.picker.min.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/my_attention.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/my_detail.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/prew_picture.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/css/style.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/fonts/iconfont.eot</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/fonts/iconfont.svg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/fonts/iconfont.ttf</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/fonts/iconfont.woff</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/fonts/mui.ttf</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/01.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/01111.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/02.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/0211.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/03.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/03111.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/04.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/04111.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/05.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/05111.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/07.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/08.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/1.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/10.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/11.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/2.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/3.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/3333.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/4.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/5.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/5487a3042b042.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/6.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/7.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/8.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/9.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/attachment-delete.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/attachment.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/avantar.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/bg_login.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/bottom_blue_point.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/bottom_green_point.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/calendar_33.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/calendar_99.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/cancelapply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/cbd.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/center-bg1.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/code.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/createtime.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/facility_register.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/gyjj_banner.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/gzrz.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list1.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list2.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list3.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list4.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list5.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/icon_list6.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/iconfont-tianjia.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/img.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/kqcl.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/lunbo_1.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/lunbo_dbsx.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/lunbo_tzgg.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/memorandum.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/morning.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/muwu.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/myapplytime-red.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/myapplytime.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/nodata.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/nopassapply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/notice.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/overtime.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/passapply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/pdf.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/policehome.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/qr_code.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/readyapply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/revocation_apply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/shuijiao.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/splah_logo2.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/splah_logo3.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/splah_logo4.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/starttime.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/task_fj.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/task_wc.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/task_zf.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/temp1.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/time_zhou.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/time_zhou2.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/txt.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/user.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/waitapply.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/wdgz.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/wdpj.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/wdshshwtg.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/wdsqshtg.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/ycjk.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/yuantiao.jpg</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/zhzxlist.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/公文包.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/关注.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/发布任务.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/处理中.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/我发出的.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/我收到的.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/报警处理.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/日程.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/images/监控.png</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/index.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/calendar.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/common.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/demo.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/echarts-all.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/feedback-page.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/feedback.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/feedback2.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/jquery.cookie.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/jquery.min.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/layer.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/model/attachment_model.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.min.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.picker.min.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.poppicker.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.previewimage.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.pullToRefresh.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.pullToRefresh.material.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.view.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/mui.zoom.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/new_file.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/sm.min.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/textareaAutoHeight.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/utils.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/js/zepto.min.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/manifest.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/my/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/my/list.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/my/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/my/submain.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/department.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/finish.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/list.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/listown.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/one.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/own.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/subException/department.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/subException/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/abnormal/other/subown.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/action/index.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/action/month/evaluate.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/action/month/judgements.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/action/month/list.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/apply/applyErrorList.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/apply/attendanceDetail.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/apply/leaveDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/apply/overtimeDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/applyErrorList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/attendanceDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/finish.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/finishAttendance.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/finishLeave.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/finishOvertime.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/index.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/leaveDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/approve/overtimeDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/finishNeedApply.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/finishRecord.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/list/audioApplyList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/list/audioNoApplyList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/list/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/list/needApplyList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/list/workLogList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/needApplyDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/fujing/recordDetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/main.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mealPreparation.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mine/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mine/list.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mineSelf/detail.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mineSelf/list.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mineexception/doChangeCredit.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mineexception/index.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mineexception/submitPost.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/mobileattendance.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/myApplication.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/offwork/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/offwork/leaverule.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendance/schedule/main.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendanceManagement/attendance_management.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/attendanceManagement/my_detail.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/commandcenter/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/commandcenter/judgments.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/commandcenter/list.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/commandcenter/repeating.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/commandcenter/response.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/contacts/addUser.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/contacts/judgments.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/facility_register/facility_add.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/facility_register/facility_details.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/facility_register/facility_list.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/jcj_detail/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/commondetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/demo.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/index.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/judgments/taskdetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main-tab-webview-subpage-addworklog.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main-tab-webview-subpage-contacts.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main-tab-webview-subpage-mainpage.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main-tab-webview-subpage-mine.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main-tab-webview-subpage-mytask.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/main.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/message/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/message/mdetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/mine/changepassword.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/mine/feedback.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/mine/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/mine/qrcode.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/myRicheng/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/myScheduling/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/my_approval/my_approval.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/my_attention/commondetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/my_attention/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/my_attention/timeline.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/addNotice.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/addTopic.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/detail.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/list.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/list_main.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/reply.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/tdetail.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/tdetail_list.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/topic.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/notice/topic_main.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/apply/applyNum.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/audit_detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/finishTask.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/list.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/originalNum/list_audit.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/comment.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/finishTask.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/main.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/task.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/taskList.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/taskdetail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/taskforward.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/task/taskresponse.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/workrecord/add.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/workrecord/detail.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/workrecord/index.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/workrecord/search.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/pages/workrecord/update.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/unpackage/.confirmed_dependencies</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/unpackage/.dependencies</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/unpackage/release/H524BD421_0418164338.apk</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/apptest/unpackage/release/H524BD421_0419093027.apk</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/interviewQuestion/interviewQ1.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/navRotate.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/组件封装.html</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/reference/预加载图片.html</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\material" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -484,6 +186,10 @@
       <workItem from="1534470263591" duration="616000" />
       <workItem from="1534727144197" duration="53000" />
       <workItem from="1535509504675" duration="350000" />
+      <workItem from="1536022803503" duration="428000" />
+      <workItem from="1536318018072" duration="10000" />
+      <workItem from="1536412103246" duration="1020000" />
+      <workItem from="1536414584197" duration="204000" />
     </task>
     <task id="LOCAL-00001" summary=" longmaster">
       <created>1534294260321</created>
@@ -492,36 +198,43 @@
       <option name="project" value="LOCAL" />
       <updated>1534294260321</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary=" longmaster">
+      <created>1536023034499</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1536023034499</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3728000" />
+    <option name="totallyTimeSpent" value="5390000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24027778" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24011713" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Gulp" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50069445" side_tool="true" weight="0.32985657" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49930555" weight="0.32985657" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49930555" weight="0.32941177" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50069445" side_tool="true" weight="0.32985657" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="Gulp" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -538,19 +251,31 @@
     <entry file="file://$PROJECT_DIR$/document/epg  开发技术文档">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
-          <caret line="24" column="102" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/document/epg  开发技术文档">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
           <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/_config.yml" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo100/sub2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/debug/test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
