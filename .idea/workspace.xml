@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c569da8d-a28a-4942-ba39-dd996e9e9823" name="Default" comment=" longmaster">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debug/test1.html" beforeDir="false" afterPath="$PROJECT_DIR$/debug/test1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo100/preloader.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/preloader.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo100/sub1.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/sub1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo100/sub2.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/sub2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo100/去重.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/去重.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/historyCode/bt.html" beforeDir="false" afterPath="$PROJECT_DIR$/historyCode/bt.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/historyCode/colors.html" beforeDir="false" afterPath="$PROJECT_DIR$/historyCode/colors.html" afterDir="false" />
     </list>
     <list id="7c89ae04-7841-4c98-a5f8-55635cdf4ba0" name="ignore" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,32 +35,35 @@
     <session id="-962605793">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.10" value="2" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="1" />
+          <entry key="html" value="2" />
+          <entry key="jpg" value="1" />
           <entry key="json" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="1" />
+          <entry key="HTML" value="2" />
+          <entry key="Image" value="1" />
           <entry key="JSON" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="46" />
+          <entry key="html" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="46" />
+          <entry key="HTML" value="69" />
         </counts>
       </usages-collector>
     </session>
@@ -76,8 +73,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/demo100/sub2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="107" selection-start-line="107" selection-end-line="107" />
+            <state relative-caret-position="173">
+              <caret line="106" column="21" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/debug/test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -100,6 +106,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/debug/test.json" />
+        <option value="$PROJECT_DIR$/debug/test.html" />
         <option value="$PROJECT_DIR$/demo100/sub2.html" />
       </list>
     </option>
@@ -137,7 +144,13 @@
             <path>
               <item name="material" type="b2602c69:ProjectViewProjectNode" />
               <item name="material" type="462c0819:PsiDirectoryNode" />
-              <item name="demo100" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="material" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="image" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -190,6 +203,8 @@
       <workItem from="1536318018072" duration="10000" />
       <workItem from="1536412103246" duration="1020000" />
       <workItem from="1536414584197" duration="204000" />
+      <workItem from="1536418032271" duration="129000" />
+      <workItem from="1536418913923" duration="2363000" />
     </task>
     <task id="LOCAL-00001" summary=" longmaster">
       <created>1534294260321</created>
@@ -209,7 +224,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5390000" />
+    <option name="totallyTimeSpent" value="7882000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -263,17 +278,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demo100/sub2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/debug/test.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/debug/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/image/f9.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo100/sub2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="106" column="21" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="25" />
         </state>
       </provider>
     </entry>
