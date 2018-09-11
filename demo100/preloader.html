@@ -9,90 +9,152 @@
         text-align: center;
     }
 
-    img {
-        max-width: 500px;
-        height: 200px;
+    #btn-wrap {
+        position: absolute;
+        top: 0;
+        left: 40%;
+    }
+
+    #btn-wrap>* {
+        width: 100px;
+        height: 30px;
+        background: tan;
+        outline: none;
+        border: none;
+    }
+
+    .loading {
+        width: 100px;
+        margin: 100px auto;
+    }
+
+    .loading span {
+        float: left;
+    }
+
+    .point {
+        /*width: 10px;*/
+        /*height: 10px;*/
+        background: transparent;
+        /*border-radius: 50%;*/
+        margin-left: 5px;
+        animation: myAnima 120ms ease-in-out infinite;
+    }
+
+    .span2 {
+        animation-delay: 40ms;
+    }
+
+    .span3 {
+        animation-delay: 80ms;
+    }
+
+    @keyframes myAnima {
+        from {
+            opacity: .8
+        }
+        to {
+            opacity: 0
+        }
     }
     </style>
 </head>
 
 <body>
     <div id="img-wrap">
-        <img id="img" src="" alt="">
+        <img src="" alt="">
     </div>
     <div id="btn-wrap">
         <button id="btn-prev">上一张</button>
         <button id="btn-next">下一张</button>
     </div>
     <script>
-        /*{
-        title:"dsfasdf",
-        content_type:"1",
-        content_desc: ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
-            "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
-            "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
-            "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
-        ]
+    (function(window, undefined) {
+        function JxfSub(cfg) {
+            var config = cfg || {};
+            this.get = function(n) {
+                return config[n];
+            };
+            this.set = function(n, v) {
+                config[n] = v;
+            };
 
-    },{
-        title:"12312312",
-        content_type:"1",
-        content_desc: ["http://pic1.win4000.com/wallpaper/f/51c3bb99a21ea.jpg",
-            "https://jxfdemo.github.io/material/static/image/banner01.jpg",
-            "https://jxfdemo.github.io/material/static/image/banner02.jpg",
-            "https://jxfdemo.github.io/material/static/image/banner03.jpg",
-            "https://jxfdemo.github.io/material/static/image/banner04.jpg"
-        ]
+            this.init();
 
-    }
-    */
+        }
+        JxfSub.prototype = {
+            init: function() {
+                this.set("count", 0);
+                this.set("loader", []);
+                this.createImg();
+            },
+            countInit: function(Id) {
+                var count = this.get("count");
+                var data = this.get("data");
+                switch (Id) {
+                    case "btn-prev":
+                        this.set("count", Math.max(1, count -= 1));
+                        break;
+                    case "btn-next":
+                        this.set("count", Math.min(data.length, count += 1));
+                        break;
+                }
+            },
+            renderImg: function(Id) {
+                this.countInit(Id);
+                var that = this;
+                var img_wrap = this.get('img_wrap');
+                var loader = this.get("loader");
+                var flagCount = loader[that.get("count") - 1];
+                // 若图片加载完成即显示--
+                var timer = setInterval(function() {
+                    if (flagCount && flagCount.complete) {
+                        img_wrap.replaceChild(loader[that.get("count") - 1], img_wrap.firstElementChild);
+                        clearInterval(timer);
+                    } else {
+                        // 若未完成提示加载中-- 可扩展svg、canvas、gif
+                        var div = document.createElement("div");
+                        div.className = 'loading';
+                        div.innerHTML = '<span>loading</span>';
+                        for (var i = 0; i < 3; i++) {
+                            div.innerHTML += "<span class='point span" + i + "'>.</span>";
+                        }
+                        img_wrap.replaceChild(div, img_wrap.firstElementChild);
+                    }
+                    loader.length < that.get("data").length && that.createImg(); //避免多创建image对象
+                }, 200);
+            },
+            createImg: function() {
+                var httpImg = this.get('data');
+                var count = this.get('count');
+                var loader = this.get("loader");
+                var img = new Image();
+                img.src = httpImg[count];
+                if (loader.length == 0) {
+                    loader.push(img);
+                } else { // 截流阀
+                    var flag = loader.every(function(item) {
+                        return item.src != img.src;
+                    });
+                    flag && loader.push(img);
+                }
+            }
+        };
+        window.JxfSub = JxfSub; // 向外暴露组件
+    }(window));
     var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
     ];
-    var btn_wrap = document.getElementById('btn-wrap');
-    var img_wrap = document.getElementById('img-wrap');
-    var count = 0;
-    var loader = [];
-
-    function renderImg(ID) {
-        function currentCount() {
-             count = ID == 'btn-prev' ? Math.max(1, count -= 1) : Math.min(httpImg.length, count += 1);
-            return count;
-        }
-
-        function replaceDom() {
-            currentCount();
-            var timer = setInterval(function() {
-                if (loader[count - 1].complete) {
-                    img_wrap.replaceChild(loader[count - 1],img_wrap.firstElementChild);
-                    clearInterval(timer);
-                } else {
-                    var str = document.createElement('p');
-                    str.innerText = "正在加载……";
-                    img_wrap.replaceChild(str,img_wrap.firstElementChild);
-                    return false;
-                }
-            }, 50);
-        }
-
-        function preloaderImg() {
-            loader.length < httpImg.length && createImg(count);
-        }
-        replaceDom();
-        preloaderImg();
-    }
-
-    function createImg(count) {
-        var img = new Image();
-        count < httpImg.length && count >= 0 && (img.src = httpImg[count]);
-        loader.push(img);
-    }
-    createImg(count);
-    btn_wrap.addEventListener('click', function(e) {
-        renderImg(e.target.id);
+    var obj = new JxfSub({
+        data: httpImg, // http 图片数组
+        img_wrap: document.getElementById('img-wrap'), // 传递容器
     }, true);
+
+    document.addEventListener("click", function(e) {
+        obj.renderImg(e.target.id); // 上一个固定按钮Id -> btn-prev|| 下一张固定按钮Id -> btn-next;
+    });
     </script>
 </body>
 

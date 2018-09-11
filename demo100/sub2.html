@@ -9,17 +9,53 @@
         text-align: center;
     }
 
-#btn-wrap{
-    position: absolute;
-    top: 0;
-    left: 45%;
-}
+    #btn-wrap {
+        position: absolute;
+        top: 0;
+        left: 40%;
+    }
+
     #btn-wrap>* {
         width: 100px;
         height: 30px;
         background: tan;
         outline: none;
         border: none;
+    }
+
+    .loading {
+        width: 100px;
+        margin: 100px auto;
+    }
+
+    .loading span {
+        float: left;
+    }
+
+    .point {
+        /*width: 10px;*/
+        /*height: 10px;*/
+        background: transparent;
+        /*border-radius: 50%;*/
+        margin-left: 5px;
+        animation: myAnima 120ms ease-in-out infinite;
+    }
+
+    .span2 {
+        animation-delay: 40ms;
+    }
+
+    .span3 {
+        animation-delay: 80ms;
+    }
+
+    @keyframes myAnima {
+        from {
+            opacity: .8
+        }
+        to {
+            opacity: 0
+        }
     }
     </style>
 </head>
@@ -42,7 +78,9 @@
             this.set = function(n, v) {
                 config[n] = v;
             };
+
             this.init();
+
         }
         JxfSub.prototype = {
             init: function() {
@@ -68,20 +106,23 @@
                 var img_wrap = this.get('img_wrap');
                 var loader = this.get("loader");
                 var flagCount = loader[that.get("count") - 1];
+                // 若图片加载完成即显示--
                 var timer = setInterval(function() {
                     if (flagCount && flagCount.complete) {
                         img_wrap.replaceChild(loader[that.get("count") - 1], img_wrap.firstElementChild);
-                        clearInterval(timer);  
+                        clearInterval(timer);
                     } else {
+                        // 若未完成提示加载中-- 可扩展svg、canvas、gif
                         var div = document.createElement("div");
-                        div.style.width = "300px"; 
-                        div.style.height = "300px";
-                        div.style.margin = "100px auto";
-                        div.style.background = "url(../static/image/loading.gif) no-repeat center";
+                        div.className = 'loading';
+                        div.innerHTML = '<span>loading</span>';
+                        for (var i = 0; i < 3; i++) {
+                            div.innerHTML += "<span class='point span" + i + "'>.</span>";
+                        }
                         img_wrap.replaceChild(div, img_wrap.firstElementChild);
                     }
-                    loader.length < that.get("data").length + 1 && that.createImg(); //避免多创建image对象
-                }, 20);
+                    loader.length < that.get("data").length && that.createImg(); //避免多创建image对象
+                }, 200);
             },
             createImg: function() {
                 var httpImg = this.get('data');
@@ -92,39 +133,25 @@
                 if (loader.length == 0) {
                     loader.push(img);
                 } else { // 截流阀
-                    var flag = true;
-                    for (var i = 0; i < loader.length; i++) {
-                        if (loader[i].src == img.src) {
-                            flag = false;
-                        }
-                    }
-                    if (flag) {
-                        loader.push(img);
-                    }
+                    var flag = loader.every(function(item) {
+                        return item.src != img.src;
+                    });
+                    flag && loader.push(img);
                 }
             }
         };
         window.JxfSub = JxfSub; // 向外暴露组件
     }(window));
-    var httpImg = ["https://jxfdemo.github.io/material/static/image/f1.jpg",
-        "https://jxfdemo.github.io/material/static/image/f2.jpg",
-        "https://jxfdemo.github.io/material/static/image/f3.jpg",
-        "https://jxfdemo.github.io/material/static/image/f4.jpg",
-        "https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
+    var httpImg = ["https://www.longmaster.com.cn/templates/lmweb/images/1-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/2-04.jpg",
         "https://www.longmaster.com.cn/templates/lmweb/images/3-04.jpg",
-        "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg",
-        "https://jxfdemo.github.io/material/static/image/f5.jpg",
-        "https://jxfdemo.github.io/material/static/image/f6.jpg",
-        "https://jxfdemo.github.io/material/static/image/f7.jpg",
-        "https://jxfdemo.github.io/material/static/image/f8.jpg",
-        "https://jxfdemo.github.io/material/static/image/f9.jpg",
-        "https://jxfdemo.github.io/material/static/image/f10.jpg",
+        "https://www.longmaster.com.cn/templates/lmweb/images/4-04.jpg"
     ];
-    var obj = new JxfSub({ // 传递img数组
+    var obj = new JxfSub({
         data: httpImg, // http 图片数组
         img_wrap: document.getElementById('img-wrap'), // 传递容器
     }, true);
+
     document.addEventListener("click", function(e) {
         obj.renderImg(e.target.id); // 上一个固定按钮Id -> btn-prev|| 下一张固定按钮Id -> btn-next;
     });

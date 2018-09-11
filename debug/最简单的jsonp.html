@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+<script>
+    var showName = function(data){
+        document.getElementsByTagName('body')[0].innerHTML=JSON.stringify(data);
+        document.getElementsByTagName('head')[0].removeChild(script);
+    };
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "http://image.baidu.com/channel/listjson?pn=0&rn=1000&tag1=%E5%A3%81%E7%BA%B8&tag2=%E5%85%A8%E9%83%A8&ie=utf8&callback=showName";
+    document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+</body>
+
+</html>
