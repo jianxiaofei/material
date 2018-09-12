@@ -5,15 +5,18 @@
 	<title>ajax -- JSON</title>
 </head>
 <body>
+	<img src="http://e.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d3d97acddb950a304e241f5890.jpg">
 	<script type="text/javascript">
+		var test = null;
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET","../requestFile/wallpaper.json");
-		xhr.send();
+		xhr.open("GET","../requestFile/wallpaper.json",false);
 		xhr.onreadystatechange = function(){
 			if (xhr.readyState == 4 && xhr.status == 200){
-				console.log(JSON.parse(xhr.responseText));
+				test = JSON.parse(xhr.responseText);
 			}
 		};
+		xhr.send();
+		console.log(test);
 	</script>
 </body>
 </html>
