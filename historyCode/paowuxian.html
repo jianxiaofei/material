@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 0px;
+            height: 0px;
+            margin-left: 500px;
+            margin-top: 500px;
+            position: relative;
+        }
+
+        .dian {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            margin-left: -2px;
+            margin-top: -2px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .row {
+            position: absolute;
+            left: 50%;
+            margin-left: -250px;
+            width: 500px;
+            height: 1px;
+            background-color: green;
+        }
+
+        .col {
+            position: absolute;
+            top: 50%;
+            margin-top: -250px;
+            width: 1px;
+            height: 500px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div class="row"></div>
+    <div class="col"></div>
+    <div class="dian"></div>
+</div>
+<script>
+    var x = -100
+    setInterval(function () {
+        x = x + 2;
+        var y = -x * x / 100 + x / 100 + 30;
+        var dian = document.querySelector('.dian');
+        dian.style.left = x + 'px';
+        dian.style.top = -y + 'px';
+    }, 10)
+
+
+</script>
+</body>
+
+</html>

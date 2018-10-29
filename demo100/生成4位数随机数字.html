@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>生成四位数的随机数字</title>
+</head>
+
+<body>
+    <script>
+    function randoms() {
+        var y = Math.random() * 10000;
+        var rand = y < 1000 ? randoms() : parseInt(y);
+        return rand;
+    }
+    console.log(randoms()) // 第一种方法--->递归调用
+
+    var y1 = Math.random() * 10000;
+    var rand1 = y1 < 1000 ? parseInt(y1).toString()+parseInt(Math.random()*10) : parseInt(y1);
+    console.log(rand1) // 第二种方法--->字符串拼接
+    </script>
+</body>
+
+</html>
