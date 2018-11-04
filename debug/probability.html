@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>经典概率算法</title>
+    </head>
+    <body>
+        <script>
+
+            function getResult(arr){
+                var leng = 0;
+                for(var i=0; i<arr.length; i++){
+                    leng+=arr[i]
+                }
+                for(var i=0; i<arr.length; i++){
+                    var random = parseInt(Math.random()*leng);
+                    if(random<arr[i]){
+                        return i
+                    }
+                    else {
+                        leng-=arr[i]
+                    }
+                }
+            }
+
+           /* var pArr = [1,4,2,3];
+            for(var i=0; i<10; i++){
+                console.log(getResult(pArr))
+            }*/
+
+            var gifts = [
+                {
+                    "name":"mac",
+                    "prop":1
+                },
+                {
+                    "name":"红米",
+                    "prop":10
+                },
+                {
+                    "name":"u盘",
+                    "prop":40
+                },
+                {
+                    "name":"香皂",
+                    "prop":49
+                }
+            ];
+
+            var gArr = [];
+            for(var i=0; i<gifts.length; i++){
+                gArr.push(gifts[i]['prop'])
+            }
+            console.log(gifts[getResult(gArr)]['name'])
+            document.onclick =function(e){
+                    console.log(e)
+            }
+        </script>
+    </body>
+</html>

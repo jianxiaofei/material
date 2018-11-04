@@ -2,9 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c569da8d-a28a-4942-ba39-dd996e9e9823" name="Default" comment="private file">
-      <change afterPath="$PROJECT_DIR$/debug/keyframes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo100/常用前端样式.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo100/常用前端样式.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/probability.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/requestanimationframe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/debug/test5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/123.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/ajax.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/echarts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/img3Drole.htm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/line-marker.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/moveHeight.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/naimate.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/sub3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/test.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/test1.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/historyCode/驱蚊器无.html" afterDir="false" />
     </list>
     <list id="7c89ae04-7841-4c98-a5f8-55635cdf4ba0" name="ignore" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,25 +36,25 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="7" />
-          <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="gitignore" value="1" />
-          <entry key="html" value="4" />
+          <entry key="gitignore" value="2" />
+          <entry key="html" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="4" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="HTML" value="6" />
+          <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -94,22 +112,9 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demo100/常用前端样式.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1504">
-              <caret line="100" column="6" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/debug/keyframes.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/debug/probability.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -163,7 +168,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -171,10 +175,21 @@
               <item name="material" type="b2602c69:ProjectViewProjectNode" />
               <item name="material" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="material" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+              <item name="debug" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="material" type="b2602c69:ProjectViewProjectNode" />
+              <item name="material" type="462c0819:PsiDirectoryNode" />
+              <item name="historyCode" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -186,11 +201,14 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\material\historyCode" />
+      <recent name="C:\Users\Administrator\Desktop\material\debug" />
+      <recent name="C:\Users\Administrator\Desktop\material\demo100" />
+      <recent name="C:\Users\Administrator\Desktop\material" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\material\demo100" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\material" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -239,6 +257,7 @@
       <workItem from="1540381219624" duration="29000" />
       <workItem from="1540817735884" duration="3191000" />
       <workItem from="1541241715991" duration="635000" />
+      <workItem from="1541295215102" duration="241000" />
     </task>
     <task id="LOCAL-00001" summary=" longmaster">
       <created>1534294260321</created>
@@ -268,15 +287,28 @@
       <option name="project" value="LOCAL" />
       <updated>1540817814768</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="private file">
+      <created>1541295235882</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1541295235882</updated>
+    </task>
+    <task id="LOCAL-00006" summary="private file">
+      <created>1541295310088</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1541295310088</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19128000" />
+    <option name="totallyTimeSpent" value="19369000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19106881" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -320,7 +352,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_config.yml" />
-    <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/static/image/f9.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -358,19 +389,32 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/debug/paowuxian.html" />
+    <entry file="file://$PROJECT_DIR$/debug/keyframes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/demo100/常用前端样式.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1504">
+        <state relative-caret-position="587">
           <caret line="100" column="6" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/debug/keyframes.html">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+        <state relative-caret-position="224">
+          <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/historyCode/echarts.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/debug/probability.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .container{
+            position: relative;
+            margin-top: 200px;
+            width: 150px;
+            height: 100px;
+            background: tan;
+            border-radius: 20px;
+        }
+        img{
+            position: absolute;
+            bottom: 0;
+            max-height: 100px;
+            width: 100px;
+            transition: max-height 1s;
+        }
+       /*  img:hover{
+           max-height: 250px;
+       } */
+        .container:hover{
+            width: 160px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="img" src="../static/image/c.png" alt="">
+    </div>
+    <script type="text/javascript">
+        window.onload = function(){
+            document.getElementById('img').style.cssText = "max-height: 250px;";
+           setTimeout(function(){
+             if (document.getElementById('img').style.maxHeight == "250px") {
+                callback();
+            }
+           },1000);
+        };
+        function callback(){
+            document.getElementById('img').style.cssText = "height: 100px;";
+        }
+    </script>
+</body>
+</html>

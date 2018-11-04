@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="position: absolute;border-radius: 50%;background-color: red;width:15px;height: 15px" id="cart"></div>
+    <script>
+    // x = 100,y = 400,h = 2000ms
+    (function() {
+        var x = 200;
+        var $cart = document.getElementById('cart');
+        // 距离底部的位置
+        var offsetBottom = document.documentElement.clientHeight -$cart.offsetHeight - 300;
+
+        var xh = 700,
+            yh = offsetBottom,
+            p = xh * xh / (-2 * yh);
+        var timer = setInterval(flicker, 10);
+
+        function flicker() {
+            // 抛物线公式：x2=-2py
+            // x 可以控制速度
+            x += 10;
+            y = (x * x) / (-2 * p) + 100;
+
+            $cart.style.left = x + "px";
+            $cart.style.top = y + "px";
+        if (x > xh) clearInterval(timer);
+        }
+    })();
+    </script>
+</body>
+
+</html>

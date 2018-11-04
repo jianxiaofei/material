@@ -1,0 +1,167 @@
+{
+	"result": 0,
+	"data": {
+		"subject_list": [{
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"alias_name": "album63",
+			"show_status": "1",
+			"model_type": "0",
+			"image_url": "",
+			"modify_dt": "2018-10-22 15:32:03"
+		}],
+		"video_list": [{
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1183",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "秋季调脾养胃",
+			"title": "《脾胃乃后天之本 调脾之余该如何养胃》",
+			"image_url": "\/imgs\/630092\/video\/20180807\/180.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program180",
+				"gq_ftp_url": "Program180"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1086",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "胃出血的症状",
+			"title": "胃出血的表现及原因",
+			"image_url": "\/imgs\/630092\/video\/20180807\/83.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program83",
+				"gq_ftp_url": "Program83"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1088",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "胃溃疡病因",
+			"title": "胃溃疡是怎么引起的",
+			"image_url": "\/imgs\/630092\/video\/20180807\/85.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program85",
+				"gq_ftp_url": "Program85"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1090",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "正确治疗胃溃疡",
+			"title": "胃溃疡如何规范的治疗",
+			"image_url": "\/imgs\/630092\/video\/20180807\/87.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program87",
+				"gq_ftp_url": "Program87"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1182",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "调理孩子脾胃",
+			"title": "《孩子脾胃虚弱该如何饮食调理》",
+			"image_url": "\/imgs\/630092\/video\/20180807\/179.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program179",
+				"gq_ftp_url": "Program179"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1083",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "胃癌的发病概况",
+			"title": "胃癌的发病概况",
+			"image_url": "\/imgs\/630092\/video\/20180807\/80.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program80",
+				"gq_ftp_url": "Program80"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1084",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "胃癌早期发现",
+			"title": "胃癌如何早期发现",
+			"image_url": "\/imgs\/630092\/video\/20180807\/81.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program81",
+				"gq_ftp_url": "Program81"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}, {
+			"subject_id": "53",
+			"subject_name": "胃 你还好吗？",
+			"source_id": "1840",
+			"content_type": "0",
+			"content_desc": [],
+			"show_title": "胃癌怎么治疗",
+			"title": "治疗肺动脉高压的药物有哪些？",
+			"image_url": "\/imgs\/630092\/video\/20180807\/875.png",
+			"ftp_url": {
+				"bq_ftp_url": "Program875",
+				"gq_ftp_url": "Program875"
+			},
+			"user_type": "2",
+			"free_seconds": "30",
+			"intro_image_url": "",
+			"intro_txt": "",
+			"price": "0",
+			"valid_duration": "0"
+		}]
+	}
+}

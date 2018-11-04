@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    	.container{
+    		width: 500px;
+    		height: 200px;
+    		overflow: hidden;
+    		position: relative;
+    	}
+		.map{
+			width: 200%;
+			height: 100%;
+			position: absolute;
+		}
+    </style>
+</head>
+<body>
+	<div class="container">
+		<img class="map" src="../static/image/timg.jpg">
+	</div>
+	<button class="btn-start">start</button>
+	<button class="btn-stop">stop</button>
+	<script type="text/javascript">
+		var map = document.getElementsByClassName("map")[0];
+		var btnStart = document.getElementsByClassName("btn-start")[0];
+		var btnStop = document.getElementsByClassName("btn-stop")[0];
+		var timer,x,y,n = 0, c = getComputedStyle(document.getElementsByClassName("container")[0],null).width;
+
+		btnStart.onclick = function(){
+			 timer = setInterval(function(){
+			if (n == parseInt(c))  n = 0;
+			n-=10;
+			map.style.left = n + "px";
+			// stop(n);
+		},50);
+		};
+
+		function stop(n){
+			Math.abs(n) == parseInt(c)  && clearInterval(timer);
+ 		}
+		btnStop.onclick = function(){
+			clearInterval(timer);
+		};
+
+	</script>
+</body>
+</html>

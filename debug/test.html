@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="{CHARSET}">
+        <title></title>
+        <style type="text/css">
+            #box{background: greenyellow;
+                border-radius: 50%;
+                width: 90px;
+                height: 90px;
+                position: absolute;
+                left: 20px;
+                top: 200px;                
+                }
+        </style>
+        <script type="text/javascript">
+            onload=function(){
+                var oBox=document.getElementById("box");
+                //给一个速度
+                //水平速度
+                var xSpeed=10;
+                //垂直速度
+                var ySpeed=.5;
+                var timer=setInterval(function(){
+                    xSpeed+=3;
+                    ySpeed+=3;
+                    oBox.style.left=xSpeed+oBox.offsetLeft+"px";
+                    oBox.style.top=ySpeed+oBox.offsetTop+"px";
+                    //边界判断
+                    var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+                    if (oBox.offsetTop>=clientHeight-oBox.offsetHeight) {
+                        //修正位置，正好触底
+                        oBox.style.top=clientHeight-oBox.offsetHeight+"px";
+                   oBox.offsetLeft>clientHeight <=0 ? clearInterval(timer) : ""; }
+                },100)
+            }
+        </script>
+    </head>
+    <body>
+        <div id="box" >
+            
+        </div>
+    </body>
+</html>
