@@ -1,50 +1,56 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CSS 常见样式/按钮、背景、边框</title>
     <style>
-    body{
-        background: #c0c0c0;
-        padding: 10px;
-    }
-    body>div{
-        margin-top: 20px
-    }
-    /*按钮*/
-        button{
+        body {
+            background: #c0c0c0;
+            padding: 10px;
+        }
+
+        body > div {
+            margin-top: 20px
+        }
+
+        /*按钮*/
+        button {
             padding: .3em .8rem;
-            border:1px solid rgba(0,0,0,.1);
-            background: #58a line-gradient(hsla(0,0%,100%,.2),transparent);
+            border: 1px solid rgba(0, 0, 0, .1);
+            background: #58a line-gradient(hsla(0, 0%, 100%, .2), transparent);
             border-radius: .2rem;
-            box-shadow: 0 .05em .25em rgba(0,0,0,.5);
+            box-shadow: 0 .05em .25em rgba(0, 0, 0, .5);
             color: white;
-            text-shadow:  0 -.05em .05em rgba(0,0,0,.5);
+            text-shadow: 0 -.05em .05em rgba(0, 0, 0, .5);
             font-size: 125%;
             line-height: 1.5;
             cursor: pointer;
             user-select: none;
         }
-        button.ok{
+
+        button.ok {
             background-color: #6b0;
         }
-        button.cancel{
+
+        button.cancel {
             background-color: #c00;
         }
-    /*半透明边框*/
-        .half-alpha{
+
+        /*半透明边框*/
+        .half-alpha {
             margin-top: 30px;
-            border:1px dotted hsla(0,0%,100%,.5);
+            border: 1px dotted hsla(0, 0%, 100%, .5);
             outline: 5px solid deeppink;
             background: white;
             background-clip: padding-box;
             /*多重边框*/
             box-shadow: 0 0 0 10px #655,
-                        0 0 0 15px deeppink,
-                        0 2px 5px 15px rgba(0,0,0,.6);
+            0 0 0 15px deeppink,
+            0 2px 5px 15px rgba(0, 0, 0, .6);
         }
-    /*背景多样性*/
-        .background{
+
+        /*背景多样性*/
+        .background {
             margin-top: 30px;
             width: 100px;
             height: 100px;
@@ -73,35 +79,39 @@
                 <rect y='50' width='50' height='50' />\
                 </svg>");
             background-size: 30px 30px;
-      }
-    /*边框多样性*/
-      @keyframes ants{ to {background-position: 100%} }
-      .border{
-        padding: 1em;
-        border: 1px solid transparent;
-        background: 
-                    linear-gradient(white, white) padding-box,
-                    repeating-linear-gradient(-45deg,
-                        black 0, black 25%, white 0, white 50%)
-                         0 / .6em .6em;
-                    animation: ants 12s linear infinite;
-      }
+        }
+
+        /*边框多样性*/
+        @keyframes ants {
+            to {
+                background-position: 100%
+            }
+        }
+
+        .border {
+            padding: 1em;
+            border: 1px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+            repeating-linear-gradient(-45deg,
+                    black 0, black 25%, white 0, white 50%) 0 / .6em .6em;
+            animation: ants 12s linear infinite;
+        }
     </style>
 </head>
 <body>
-    <div>
-        let's test css special!
-    </div>
-    <button class="ok">yes</button>
-    <button class="cancel">Cancel</button>
-    <div class="half-alpha">
-        this is half border alpha.
-    </div>
-    <div class="background">
-        more background methods.
-    </div>
-    <div class="border">
-        more border methods.
-    </div>
+<div>
+    let's test css special!
+</div>
+<button class="ok">yes</button>
+<button class="cancel">Cancel</button>
+<div class="half-alpha">
+    this is half border alpha.
+</div>
+<div class="background">
+    more background methods.
+</div>
+<div class="border">
+    more border methods.
+</div>
 </body>
 </html>
