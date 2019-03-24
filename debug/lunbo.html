@@ -2,9 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>39健康-共享分页(青海电信)</title>
 </head>
 <body>
-$END$
+
+<div id="carousel-wrapper">
+    <img id="carousel-link" src="/Public/common/imgs/spacer.gif" alt="">
+    <img id="arrow-prev" src="/Public/hd/img/menu/prev.png" alt="">
+    <img id="prev-container" src="/Public/hd/img/home/V7/tab1/carousel1.png" alt="">
+    <img id="current-container" src="/Public/hd/img/menu/carousel2.png" alt="">
+    <img id="next-container" src="/Public/hd/img/menu/carousel3.png" alt="">
+    <img id="arrow-next" src="/Public/hd/img/menu/next.png" alt="">
+    <ul id="point">
+        <li id="point-1" class="currentImg"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<script>
+    var n = 0;
+    var status = 0;
+    var timer = null;
+    var prevImg = document.getElementById("prev-container");
+    var currentImg = document.getElementById("current-container");
+    var nextImg = document.getElementById("next-container");
+    var point = document.getElementById("point").children;
+    var carouselTimer = setInterval(loop, 2000);
+    var moveLeft;
+    var moveTop = 20;
+    var moveRight = 166;
+    var moveWidth = 518;
+    var moveHeight = 256;
+    var imgArr = ["/Public/hd/img/home/V7/tab1/carousel1.png", "/Public/hd/img/home/V7/tab1/carousel2.png", "/Public/hd/img/home/V7/tab1/carousel3.png", "/Public/hd/img/home/V7/tab1/carousel3.png", "/Public/hd/img/home/V7/tab1/carousel3.png"];
+
+    function loop(direction) {
+        if (direction == "right") {
+            imgArr.unshift(imgArr.pop());
+        } else {
+            imgArr.push(imgArr.shift());
+        }
+
+        for (var i = 0; i < point.length; i++) {
+            point[i].className = ""
+        }
+
+        function styleMove() {
+            moveRight = Math.min(323, moveRight += 10);
+            moveWidth = Math.min(625, moveWidth += 10);
+            moveHeight = Math.min(300, moveHeight += 10);
+            moveTop = Math.max(0, moveTop -= 2);
+            if (moveRight < 323) {
+                timer = setTimeout(function () {
+                    styleMove();
+                    nextImg.style.top  = moveTop +"px";
+                    nextImg.style.right  = moveRight +"px";
+                    nextImg.style.width  = moveWidth +"px";
+                    nextImg.style.height  = moveHeight +"px";
+                }, 12);
+            }else {
+                clearTimeout(timer);
+                setTimeout(function () {
+                    prevImg.src = imgArr[0];
+                    currentImg.src = imgArr[1];
+                    nextImg.src = imgArr[2];
+                },300)
+            }
+            console.log(moveRight)
+        }
+        styleMove();
+        n = n == 4 ? 0 : Math.min(4, n += 1);
+        point[n].className = "currentImg";
+    }
+</script>
 </body>
 </html>
